@@ -16,24 +16,6 @@ namespace Auth.WebApp.IdentityServer4
         {
             new Client
             {
-                ClientId = "spa angular",
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-                AllowedGrantTypes = GrantTypes.Code,
-                RequirePkce = true,
-                AllowedScopes =
-                {
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
-                },
-                RedirectUris = new List<string> { "http://localhost:8100/auth-callback" },
-                PostLogoutRedirectUris = new List<string> { "http://localhost:8100/" },
-                AllowAccessTokensViaBrowser = true
-            },
-            new Client
-            {
                 ClientId = "ionic",
                 ClientSecrets =
                 {
@@ -47,8 +29,8 @@ namespace Auth.WebApp.IdentityServer4
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                 },
-                RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback" },
-                PostLogoutRedirectUris = new List<string> { "https://ionic-hats.com/" },
+                RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback", "http://localhost:8100/auth-callback" },
+                PostLogoutRedirectUris = new List<string> { "https://ionic-hats.com/", "http://localhost:8100/" },
                 FrontChannelLogoutUri = "http://localhost:8100/",
                 AllowAccessTokensViaBrowser = true
             }
