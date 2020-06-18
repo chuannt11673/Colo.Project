@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { UserManagerSettings } from 'oidc-client';
+import { UserManagerSettings, WebStorageStateStore } from 'oidc-client';
 
 export const environment = {
   production: false  
@@ -18,7 +18,10 @@ export const clientSetting: UserManagerSettings = {
   scope: 'openid profile',
   filterProtocolClaims: true,
   loadUserInfo: true,
+  userStore: new WebStorageStateStore({ store: window.localStorage })
 };
+
+export const httpEndpoint: string = 'https://localhost:5006/';
 
 /*
  * For easier debugging in development mode, you can import the following file

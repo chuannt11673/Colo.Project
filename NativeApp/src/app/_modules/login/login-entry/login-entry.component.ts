@@ -1,5 +1,6 @@
 import { AuthService } from './../../../_core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { TranslateConfigService } from 'src/app/_core/services/translate-config.service';
 
 @Component({
   selector: 'app-login-entry',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginEntryComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
     this.authService.completeSignOut();
@@ -16,5 +17,9 @@ export class LoginEntryComponent implements OnInit {
 
   logIn() {
     this.authService.startAuthentication();
+  }
+
+  changeLanguage(code: string) {
+    this.translateConfigService.setLanguage(code);
   }
 }

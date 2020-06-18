@@ -1,3 +1,4 @@
+import { LocalstorageService } from './localstorage.service';
 import { Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { NavController } from '@ionic/angular';
@@ -17,7 +18,10 @@ export class AuthService {
 
   constructor(private navController: NavController) {
     this.manager = new UserManager(getClientSettings());
-    this.manager.getUser().then(user => {
+  }
+
+  initUser() {
+    return this.manager.getUser().then(user => {
       this.user = user;
     });
   }
@@ -42,7 +46,7 @@ export class AuthService {
   }
 
   completeAuthentication(): Promise<void> {
-    return this.manager.signinPopupCallback().then(() => { }).catch(() => {});
+    return this.manager.signinPopupCallback().then(() => { }).catch(() => { });
   }
 
   signOut() {
@@ -52,6 +56,6 @@ export class AuthService {
   }
 
   completeSignOut() {
-    this.manager.signoutPopupCallback().then(() => {}).catch(() => {});
+    this.manager.signoutPopupCallback().then(() => { }).catch(() => { });
   }
 }

@@ -12,7 +12,6 @@ export class ExceptionInterceptor implements HttpInterceptor {
     constructor(private toast: ToastController) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        console.log('hehee')
         return next.handle(req)
             .pipe(retry(0), catchError(error => {
                 return throwError(error);

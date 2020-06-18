@@ -1,29 +1,29 @@
 <ion-content>
     <ion-tabs>
         <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="message">
+                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                <ion-label>{{translateConfigService.text.home_message_tab}}</ion-label>
+            </ion-tab-button>
+
             <ion-tab-button tab="news">
                 <ion-icon name="globe-outline"></ion-icon>
-                <ion-label>News</ion-label>
+                <ion-label>{{translateConfigService.text.home_news_tab}}</ion-label>
             </ion-tab-button>
 
             <ion-tab-button tab="friend">
                 <ion-icon name="people-outline"></ion-icon>
-                <ion-label>Friends</ion-label>
+                <ion-label>{{translateConfigService.text.home_friends_tab}}</ion-label>
             </ion-tab-button>
 
             <ion-tab-button tab="dating">
                 <ion-icon name="heart-outline"></ion-icon>
-                <ion-label>Dating</ion-label>
-            </ion-tab-button>
-
-            <ion-tab-button tab="message">
-                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-label>Message</ion-label>
+                <ion-label>{{translateConfigService.text.home_dating_tab}}</ion-label>
             </ion-tab-button>
 
             <ion-tab-button tab="userInfo">
                 <ion-icon name="person-outline"></ion-icon>
-                <ion-label>User Info</ion-label>
+                <ion-label>{{translateConfigService.text.home_more_tab}}</ion-label>
             </ion-tab-button>
         </ion-tab-bar>
     </ion-tabs>

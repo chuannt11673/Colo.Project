@@ -17,3 +17,5 @@ export const clientSetting: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage }),
   popupNavigator: new CordovaPopupNavigator()
 };
+
+export const httpEndpoint: string = 'https://localhost:5006/';
