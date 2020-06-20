@@ -1,0 +1,16 @@
+{
+    "login_welcome_title": "Welcome",
+    "login_welcome_description": "Chào thân ái bạn đã sử dụng ứng dụng <b>Colo App</b> của chúng tôi",
+    "login_introduce_title": "Colo App là gì?",
+    "login_introduce_description": "<b>Colo App</b> là ứng dụng tạo ra nhằm giải quyết vấn đề có quá nhiều FA hiện nay. Kết nối bạn bè, thay mặt bác sĩ hối thúc các FA mau sớm lập gia đình, bất chấp không gian và thời gian",
+    "login_introduce_appflow_title": "Quy trình của Colo App?",
+    "login_introduce_appflow_description": "<b>Colo App</b> cung cấp các quy trình sáng tạo, bất ngờ và tiên tiến nhất hiện nay, được đội ngũ chuyên gia với kinh nghiệm FA lâu năm nghiên cứu tạo thành.",
+    "login_ready_title": "Bạn đã sẵn sàng?",
+    "login_ready_description": "Hãy đăng nhập và kết thúc sự FA của mình",
+
+    "home_message_tab": "Tin nhắn",
+    "home_news_tab": "Nhật ký",
+    "home_friends_tab": "Bạn bè",
+    "home_dating_tab": "Hẹn hò",
+    "home_more_tab": "Thêm"
+}

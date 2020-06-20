@@ -8,12 +8,17 @@ import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginEntryComponent
   },
   {
     path: 'auth-callback',
     component: AuthCallbackComponent
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
 ];
 

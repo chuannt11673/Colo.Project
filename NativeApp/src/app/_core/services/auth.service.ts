@@ -1,4 +1,3 @@
-import { LocalstorageService } from './localstorage.service';
 import { Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { NavController } from '@ionic/angular';
@@ -40,7 +39,6 @@ export class AuthService {
 
   startAuthentication(): Promise<any> {
     return this.manager.signinPopup().then(user => {
-      this.user = user;
       this.navController.navigateForward('/home');
     }).catch(() => { });
   }

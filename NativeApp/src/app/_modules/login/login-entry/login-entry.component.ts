@@ -12,7 +12,6 @@ export class LoginEntryComponent implements OnInit {
   constructor(private authService: AuthService, public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
-    this.authService.completeSignOut();
   }
 
   logIn() {

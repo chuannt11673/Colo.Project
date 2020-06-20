@@ -8,14 +8,19 @@ export const environment = {
   production: false  
 };
 
+export const oidcGrantTypes = {
+  authorizationCode: 'code',
+  implicit: 'id_token token'
+}
+
 export const clientSetting: UserManagerSettings = {
   authority: 'https://192.168.0.102:5001/',
-  client_id: 'ionic',
+  client_id: 'ionic-angular',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
   post_logout_redirect_uri: 'http://localhost:8100/',
-  response_type: "code",
-  scope: 'openid profile api1',
+  response_type: oidcGrantTypes.implicit,
+  scope: 'openid profile colo.netcore.api',
   filterProtocolClaims: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: window.localStorage })

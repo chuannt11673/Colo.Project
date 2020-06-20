@@ -5,10 +5,10 @@
 
 running on virtual device
 - ionic cordova emulate android --livereload
-- ionic cordova run android -l
+- ionic cordova run android --prod -l
 
 if you would like to use debug mode
-- ionic cordova run android --device
+- ionic cordova run android --prod --device
 
 If an error related to istrusted when calling api
 - go to resource/android/xml/network_security_config.xml
