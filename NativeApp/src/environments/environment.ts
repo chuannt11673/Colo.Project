@@ -15,7 +15,7 @@ export const clientSetting: UserManagerSettings = {
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
   post_logout_redirect_uri: 'http://localhost:8100/',
   response_type: "code",
-  scope: 'openid profile',
+  scope: 'openid profile api1',
   filterProtocolClaims: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: window.localStorage })

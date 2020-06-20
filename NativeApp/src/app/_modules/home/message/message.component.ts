@@ -1,3 +1,4 @@
+import { AuthService } from './../../../_core/services/auth.service';
 import { HttpService } from './../../../_core/services/http.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessageComponent implements OnInit {
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private authService: AuthService) { }
 
   ngOnInit() {
     this.httpService.get('weatherforecast').subscribe(res => {
@@ -16,5 +17,7 @@ export class MessageComponent implements OnInit {
     });
   }
 
-
+  logout() {
+    this.authService.signOut();
+  }
 }
