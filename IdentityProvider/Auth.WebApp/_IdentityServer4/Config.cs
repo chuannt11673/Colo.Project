@@ -6,6 +6,10 @@ namespace Auth.WebApp.IdentityServer4
 {
     public static class Config
     {
+        public static IEnumerable<ApiResource> ApiResources => new List<ApiResource> {
+            new ApiResource("api1","my api")
+        };
+
         public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
@@ -22,12 +26,14 @@ namespace Auth.WebApp.IdentityServer4
                     new Secret("secret".Sha256())
                 },
                 AllowedGrantTypes = GrantTypes.Code,
+                RequireConsent = false,
                 RequirePkce = true,
                 AllowOfflineAccess = true,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    "api1"
                 },
                 RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback", "http://localhost:8100/auth-callback" },
                 PostLogoutRedirectUris = new List<string> { "https://ionic-hats.com/", "http://localhost:8100/" },

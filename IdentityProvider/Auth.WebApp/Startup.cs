@@ -14,6 +14,7 @@ namespace Auth.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             var builder = services.AddIdentityServer()
+                .AddInMemoryApiResources(Config.ApiResources)
                .AddInMemoryIdentityResources(Config.IdentityResources)
                .AddInMemoryClients(Config.Clients);
 
@@ -31,7 +32,7 @@ namespace Auth.WebApp
             {
                 opts.AddPolicy("MyPolicy", builder =>
                 {
-                    builder.WithOrigins("*", "http://localhost:8100", "http://localhost")
+                    builder.WithOrigins("*", "http://localhost:8100", "http://localhost", "http://localhost:5006")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
