@@ -7,7 +7,7 @@ namespace Auth.WebApp.IdentityServer4
     public static class Config
     {
         public static IEnumerable<ApiResource> ApiResources => new List<ApiResource> {
-            new ApiResource("api1","my api")
+            new ApiResource("colo.netcore.api", "colo api")
         };
 
         public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource>
@@ -20,7 +20,7 @@ namespace Auth.WebApp.IdentityServer4
         {
             new Client
             {
-                ClientId = "ionic",
+                ClientId = "ionic-native",
                 ClientSecrets =
                 {
                     new Secret("secret".Sha256())
@@ -33,10 +33,31 @@ namespace Auth.WebApp.IdentityServer4
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "api1"
+                    "colo.netcore.api"
                 },
                 RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback", "http://localhost:8100/auth-callback" },
                 PostLogoutRedirectUris = new List<string> { "https://ionic-hats.com/", "http://localhost:8100/" },
+                FrontChannelLogoutUri = "http://localhost:8100/",
+                AllowAccessTokensViaBrowser = true
+            },
+            new Client
+            {
+                ClientId = "ionic-angular",
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+                AllowedGrantTypes = GrantTypes.Implicit,
+                RequireConsent = false,
+                AllowOfflineAccess = true,
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "colo.netcore.api"
+                },
+                RedirectUris = new List<string> { "http://localhost:8100/auth-callback" },
+                PostLogoutRedirectUris = new List<string> { "http://localhost:8100/" },
                 FrontChannelLogoutUri = "http://localhost:8100/",
                 AllowAccessTokensViaBrowser = true
             }
