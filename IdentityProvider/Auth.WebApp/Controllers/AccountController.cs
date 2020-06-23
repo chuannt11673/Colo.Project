@@ -236,7 +236,6 @@ namespace Auth.WebApp.Controllers
             return View();
         }
 
-
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/

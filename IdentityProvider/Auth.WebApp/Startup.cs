@@ -1,7 +1,13 @@
+using Auth.WebApp._Data;
+using Auth.WebApp._Services;
 using Auth.WebApp.IdentityServer4;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -9,14 +15,28 @@ namespace Auth.WebApp
 {
     public class Startup
     {
+        private readonly IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
             var builder = services.AddIdentityServer()
                 .AddInMemoryApiResources(Config.ApiResources)
-               .AddInMemoryIdentityResources(Config.IdentityResources)
-               .AddInMemoryClients(Config.Clients);
+                .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryClients(Config.Clients)
+                .AddAspNetIdentity<ApplicationUser>();
 
             builder.AddDeveloperSigningCredential();
 
@@ -39,8 +59,12 @@ namespace Auth.WebApp
                 });
             });
 
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
             services.AddAuthorization();
-            services.AddControllersWithViews().AddXmlSerializerFormatters().AddNewtonsoftJson();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,11 +79,13 @@ namespace Auth.WebApp
             app.UseRouting();
             app.UseCors("MyPolicy");
             app.UseIdentityServer();
-            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(
+                 name: "default",
+                 pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
