@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Auth.WebApp._Data;
 using Auth.WebApp.IdentityServer4;
 using Auth.WebApp.Models;
 using Auth.WebApp.Utilities;
@@ -16,6 +17,7 @@ using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -37,22 +39,27 @@ namespace Auth.WebApp.Controllers
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            TestUserStore users = null)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection
             // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-            _users = users ?? new TestUserStore(TestUsers.Users);
+            _users = new TestUserStore(TestUsers.Users);
 
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -112,11 +119,11 @@ namespace Auth.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                var validateCredentialsResult = await ValidateUserCredentials(model.Username, model.Password);
+                if (validateCredentialsResult.Item1)
                 {
-                    var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.ClientId));
+                    var user = validateCredentialsResult.Item2;
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.ClientId));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -130,13 +137,7 @@ namespace Auth.WebApp.Controllers
                         };
                     };
 
-                    // issue authentication cookie with subject ID and username
-                    var isuser = new IdentityServerUser(user.SubjectId)
-                    {
-                        DisplayName = user.Username
-                    };
-
-                    await HttpContext.SignInAsync(isuser, props);
+                    await _signInManager.SignInAsync(user, props);
 
                     if (context != null)
                     {
@@ -208,8 +209,7 @@ namespace Auth.WebApp.Controllers
 
             if (User?.Identity.IsAuthenticated == true)
             {
-                // delete local authentication cookie
-                await HttpContext.SignOutAsync();
+                await _signInManager.SignOutAsync();
 
                 // raise the logout event
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
@@ -227,7 +227,7 @@ namespace Auth.WebApp.Controllers
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
-            return View("LoggedOut", vm);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -239,6 +239,13 @@ namespace Auth.WebApp.Controllers
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
+        private async Task<Tuple<bool, ApplicationUser>> ValidateUserCredentials(string username, string password)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+            return new Tuple<bool, ApplicationUser>(isPasswordValid, user);
+        }
+
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);

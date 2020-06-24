@@ -14,7 +14,7 @@ namespace Auth.WebApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls("https://*:5002");
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
