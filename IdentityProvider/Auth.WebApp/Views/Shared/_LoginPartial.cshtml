@@ -20,7 +20,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="/identity/account/register">Register</a></li>
-        <li><a href="/account/login">Login</a></li>
+        <li><a href="/identity/account/register?returnUrl=@(ViewContext.RouteData.Values["returnUrl"] ?? '/')">Register</a></li>
+        <li><a href="/account/login?returnUrl=@(ViewContext.RouteData.Values["returnUrl"] ?? '/')">Login</a></li>
     </ul>
 }

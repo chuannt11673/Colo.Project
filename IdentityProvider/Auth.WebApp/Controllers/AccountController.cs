@@ -227,13 +227,13 @@ namespace Auth.WebApp.Controllers
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
-            return RedirectToAction("LoggedOut");
+            return RedirectToAction(nameof(LoggedOut), new { logoutId = vm.LogoutId });
         }
 
         [HttpGet]
-        public IActionResult LoggedOut()
+        public async Task<IActionResult> LoggedOut(string logoutId)
         {
-            return View();
+            return View(await BuildLoggedOutViewModelAsync(logoutId));
         }
 
         [HttpGet]
@@ -264,7 +264,7 @@ namespace Auth.WebApp.Controllers
                 {
                     EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
-                    Username = context?.LoginHint,
+                    Username = context.LoginHint,
                 };
 
                 if (!local)
