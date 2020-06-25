@@ -227,7 +227,7 @@ namespace Auth.WebApp.Controllers
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LoggedOut");
         }
 
         [HttpGet]
