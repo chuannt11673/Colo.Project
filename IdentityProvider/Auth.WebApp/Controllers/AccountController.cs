@@ -231,6 +231,12 @@ namespace Auth.WebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult LoggedOut()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
