@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{translateConfigService.text.user_info_title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1593697821028-7cc59cfd7399?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="John" style="width:100%">
+        <h3>John Doe</h3>
+        <p>Something about you here...</p>
+        <section>
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col size="5">
+                    <ion-button (click)="mode = modeTypes.diary" size="small" expand="full" [color]="mode == modeTypes.diary ? 'primary' : 'light'">{{translateConfigService.text.user_info_diary}}</ion-button>
+                </ion-col>
+                <ion-col size="5">
+                    <ion-button (click)="mode = modeTypes.album" size="small" expand="full" [color]="mode == modeTypes.album ? 'primary' : 'light'">{{translateConfigService.text.user_info_album}}</ion-button>
+                </ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+        </section>
+    </div>
+    <div class="card">
+        <ion-card-content>
+            content here
+        </ion-card-content>
+    </div>
+</ion-content>

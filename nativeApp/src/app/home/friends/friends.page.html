@@ -1,0 +1,24 @@
+<app-header [enablePersonAdd]="true"></app-header>
+<ion-content>
+    <ion-item-group>
+        <ion-item lines="none" (click)="navigateToFriendRequests()">
+            <ion-icon slot="start" color="warning" name="person-circle-outline"></ion-icon>
+            <ion-label>{{translateConfigService.text.friends_requests}}</ion-label>
+        </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+        <ion-item-divider>
+            <ion-label>{{translateConfigService.text.friends_list}}</ion-label>
+        </ion-item-divider>
+
+        <ion-item>
+            <ion-label>Angola</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Argentina</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Armenia</ion-label>
+        </ion-item>
+    </ion-item-group>
+</ion-content>

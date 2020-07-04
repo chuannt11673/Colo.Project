@@ -1,0 +1,29 @@
+{
+    "search": "Search",
+
+    "login_welcome_title": "Welcome",
+    "login_welcome_description": "Welcome you to visit our <b>Colo App</b>",
+    "login_introduce_title": "What is Colo App?",
+    "login_introduce_description": "<b>Colo App</b> is an application was built to resolve a problem that we have so many FA so far. Connect the world arround you, we will be behalf on doctor to push you marry ASAP, no matter space and time.",
+    "login_introduce_appflow_title": "What is Colo App Flow?",
+    "login_introduce_appflow_description": "<b>Colo App</b> provide the modern, creative and newest method, was made by our professors who has been FA-ing for so many years.",
+    "login_ready_title": "Ready to Play?",
+    "login_ready_description": "Login and stop your FA",
+
+    "home_message_tab": "Message",
+    "home_news_tab": "Diary",
+    "home_friends_tab": "Friends",
+    "home_dating_tab": "Dating",
+    "home_more_tab": "More",
+
+    "header_searchbar_placeholder": "Searching by email",
+
+    "friends_requests": "Friend requests",
+    "friends_list": "Friend list",
+    "friend_request_title": "Add friend using email",
+    "friend_request_notfound": "We couldn't find any user using this email. Please try with another email!",
+
+    "user_info_title": "User Info",
+    "user_info_diary": "Diary",
+    "user_info_album": "Album"
+}

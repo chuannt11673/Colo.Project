@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-searchbar slot="start" type="email" placeholder="{{translateConfigService.text.header_searchbar_placeholder}}" inputmode="email" color="primary"></ion-searchbar>
+        <ion-buttons slot="secondary">
+            <ion-button *ngIf="enableChatbubble">
+                <ion-icon slot="icon-only" color="light" name="chatbubble-ellipses-outline"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="enableAdd">
+                <ion-icon slot="icon-only" color="light" name="add-outline"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="enablePersonAdd" (click)="addFriend()">
+                <ion-icon slot="icon-only" color="light" name="person-add-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>

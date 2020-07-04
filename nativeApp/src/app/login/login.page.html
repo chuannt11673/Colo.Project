@@ -1,0 +1,37 @@
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+    <ion-slides mode="ios" pager="true">
+        <ion-slide>
+            <div class="slide">
+                <img src="/assets/images/slide-1.png" />
+                <h2 [innerHtml]="translateConfigService.text.login_welcome_title"></h2>
+                <p [innerHtml]="translateConfigService.text.login_welcome_description"></p>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <img src="/assets/images/slide-2.png" />
+            <h2 [innerHtml]="translateConfigService.text.login_introduce_title"></h2>
+            <p [innerHtml]="translateConfigService.text.login_introduce_description"></p>
+        </ion-slide>
+        <ion-slide>
+            <img src="/assets/images/slide-3.png" />
+            <h2 [innerHtml]="translateConfigService.text.login_introduce_appflow_title"></h2>
+            <p [innerHtml]="translateConfigService.text.login_introduce_appflow_description"></p>
+        </ion-slide>
+        <ion-slide>
+            <img src="/assets/images/slide-4.png" />
+            <h2 [innerHtml]="translateConfigService.text.login_ready_title"></h2>
+            <p [innerHtml]="translateConfigService.text.login_ready_description"></p>
+        </ion-slide>
+    </ion-slides>
+    <ion-toolbar>
+        <ion-button color="primary" expand="full" shape="round" (click)="logIn()">LOGIN</ion-button>
+    </ion-toolbar>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-toolbar>
+        <div class="language">
+            <span (click)="changeLanguage('vi-VN')">Tiếng Việt</span>
+            <span (click)="changeLanguage('en')">English</span>
+        </div>
+    </ion-toolbar>
+</ion-footer>
