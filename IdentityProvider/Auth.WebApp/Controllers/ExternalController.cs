@@ -97,7 +97,12 @@ namespace Auth.WebApp.Controllers
 
             // lookup our user and external provider info
             var (user, provider, providerUserId, claims) = await FindUserFromExternalProvider(result);
-            var additionalLocalClaims = new List<Claim>();
+            var additionalLocalClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
             var localSignInProps = new AuthenticationProperties();
             ProcessLoginCallbackForOidc(result, additionalLocalClaims, localSignInProps);
 

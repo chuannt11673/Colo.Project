@@ -2,6 +2,7 @@ using Auth.WebApp._Data;
 using Auth.WebApp._Services;
 using Auth.WebApp.IdentityServer4;
 using IdentityServer4;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +34,8 @@ namespace Auth.WebApp
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddProfileService<ProfileService>();
 
             builder.AddDeveloperSigningCredential();
 
@@ -57,6 +59,7 @@ namespace Auth.WebApp
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IProfileService, ProfileService>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddAuthorization();

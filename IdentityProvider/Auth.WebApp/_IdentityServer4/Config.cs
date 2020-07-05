@@ -14,7 +14,7 @@ namespace Auth.WebApp.IdentityServer4
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResources.Email()            
+            new IdentityResources.Email()         
         };
 
         public static IEnumerable<Client> Clients => new List<Client>
