@@ -1,3 +1,5 @@
+import { UserInfoService } from './../_services/user-info.service';
+import { UserService } from './../_services/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +16,10 @@ import { AddFriendsPage } from './add-friends.page';
     FormsModule,
     IonicModule,
     AddFriendsPageRoutingModule
+  ],
+  providers: [
+    UserService,
+    UserInfoService
   ],
   declarations: [AddFriendsPage]
 })

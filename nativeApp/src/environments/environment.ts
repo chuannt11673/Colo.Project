@@ -19,7 +19,7 @@ export const clientSetting: UserManagerSettings = {
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
   post_logout_redirect_uri: 'http://localhost:8100/',
   response_type: oidcGrantTypes.implicit,
-  scope: 'openid profile colo.netcore.api',
+  scope: 'openid profile email colo.netcore.api',
   filterProtocolClaims: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: window.localStorage })

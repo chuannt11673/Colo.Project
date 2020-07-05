@@ -1,5 +1,6 @@
+import { AuthService } from './_core/services/auth.service';
 import { HttpRequetsInterceptor } from './_core/interceptors/http-requets.interceptor';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -15,6 +16,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
+export function initApp(authService: AuthService) {
+  return () => authService.initUser();
 }
 
 @NgModule({
@@ -37,6 +42,12 @@ export function LanguageLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: APP_INITIALIZER,
+      deps: [AuthService],
+      useFactory: initApp,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequetsInterceptor,

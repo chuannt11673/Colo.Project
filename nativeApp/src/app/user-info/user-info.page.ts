@@ -1,5 +1,9 @@
+import { AuthService } from './../_core/services/auth.service';
 import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../_services/user.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'oidc-client';
 
 @Component({
   selector: 'app-user-info',
@@ -13,9 +17,18 @@ export class UserInfoPage implements OnInit {
     album: 2
   }
   mode: number = this.modeTypes.diary;
-  constructor(public translateConfigService: TranslateConfigService) { }
+  user: any;
+  loggedInUser: User;
+  constructor(public translateConfigService: TranslateConfigService, private route: ActivatedRoute,
+    private userService: UserService,
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.loggedInUser = this.authService.getUserProfile();
+    let email = this.route.snapshot.params['email'];
+    this.userService.searchEmail(email).subscribe(user => {
+      this.user = user;
+    });
   }
 
 }

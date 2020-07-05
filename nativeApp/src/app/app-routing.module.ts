@@ -15,7 +15,7 @@ const routes: Routes = [
     loadChildren: () => import('./friend-request/friend-request.module').then( m => m.FriendRequestPageModule)
   },
   {
-    path: 'user-info',
+    path: 'user-info/:email',
     loadChildren: () => import('./user-info/user-info.module').then( m => m.UserInfoPageModule)
   },
   {

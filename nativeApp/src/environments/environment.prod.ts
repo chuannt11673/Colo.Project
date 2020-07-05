@@ -16,7 +16,7 @@ export const clientSetting: UserManagerSettings = {
   popup_redirect_uri: 'https://ionic-hats.com/auth-callback',
   post_logout_redirect_uri: 'https://ionic-hats.com/',
   response_type: oidcGrantTypes.authorizationCode,
-  scope: 'openid profile colo.netcore.api',
+  scope: 'openid profile email colo.netcore.api',
   filterProtocolClaims: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: window.localStorage }),

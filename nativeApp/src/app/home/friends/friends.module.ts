@@ -1,5 +1,5 @@
+import { UserService } from './../../_services/user.service';
 import { WeatherForecastService } from './../../_services/weather-forecast.service';
-import { HttpService } from './../../_core/services/http.service';
 import { HeaderComponent } from './../../_core/components/header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,8 +23,8 @@ import { FriendsPage } from './friends.page';
     HeaderComponent
   ],
   providers: [
-    HttpService,
-    WeatherForecastService
+    WeatherForecastService,
+    UserService
   ]
 })
 export class FriendsPageModule {}

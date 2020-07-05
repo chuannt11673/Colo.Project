@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HttpService {
 
     public endpoint = httpEndpoint;

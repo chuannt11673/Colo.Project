@@ -1,3 +1,5 @@
+import { UserInfoService } from './../_services/user-info.service';
+import { UserService } from './../_services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { TranslateConfigService } from '../_core/services/translate-config.service';
 import { AlertController, NavController } from '@ionic/angular';
@@ -10,13 +12,28 @@ import { AlertController, NavController } from '@ionic/angular';
 export class AddFriendsPage implements OnInit {
 
   public email: string = '';
-  constructor(public translateConfigService: TranslateConfigService, public alertController: AlertController, private navController: NavController) { }
+  isLoading: boolean = false;
+  constructor(public translateConfigService: TranslateConfigService,
+    public alertController: AlertController,
+    private navController: NavController,
+    private userService: UserService) { }
 
   ngOnInit() {
   }
 
   search() {
-    this.navController.navigateForward('user-info');
+    if (!this.email)
+      return;
+
+    this.isLoading = true;
+    this.userService.searchEmail(this.email).subscribe(user => {
+      this.isLoading = false;
+      if (user) {
+        this.navController.navigateForward(`user-info/${this.email}`);
+      }
+      else
+        this.presentAlert();
+    });
   }
 
   async presentAlert() {
