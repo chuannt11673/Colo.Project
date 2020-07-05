@@ -6,11 +6,14 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using Elect.DI;
 using IdentityServer4.AccessTokenValidation;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +35,11 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CoreDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddElectDI();
+
             IdentityModelEventSource.ShowPII = true;
             services.AddCors(opts =>
             {
@@ -80,10 +88,12 @@ namespace WebApi
 
         private static HttpClientHandler GetHandler()
         {
-            var handler = new HttpClientHandler();
-            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-            handler.SslProtocols = SslProtocols.Tls12;
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            var handler = new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                SslProtocols = SslProtocols.Tls12,
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
             return handler;
         }
     }

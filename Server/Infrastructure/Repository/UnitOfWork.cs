@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using Elect.DI.Attributes;
+using Infrastructure.Data;
 using System;
 
 namespace Infrastructure.Repository
@@ -8,7 +9,8 @@ namespace Infrastructure.Repository
         CoreDbContext Context { get; }
         void Commit();
     }
-
+    
+    [ScopedDependency(ServiceType = typeof(IUnitOfWork))]
     public class UnitOfWork : IUnitOfWork
     {
         public CoreDbContext Context { get; }

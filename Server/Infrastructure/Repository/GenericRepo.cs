@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Elect.DI.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,6 +18,7 @@ namespace Infrastructure.Repository
         void Update(T entity);
     }
 
+    [ScopedDependency(ServiceType = typeof(IGenericRepo<>))]
     public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
     {
         private readonly IUnitOfWork _unitOfWork;
