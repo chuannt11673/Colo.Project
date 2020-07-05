@@ -14,18 +14,4 @@ export class FriendRequestPage implements OnInit {
 
   ngOnInit() {
   }
-
-  search() {
-    this.navController.navigateForward('user-info');
-  }
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: this.translateConfigService.text.friend_request_title,
-      message: this.translateConfigService.text.friend_request_notfound,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
 }

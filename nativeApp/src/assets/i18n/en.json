@@ -1,5 +1,6 @@
 {
     "search": "Search",
+    "accept": "Accept",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Welcome you to visit our <b>Colo App</b>",
@@ -22,8 +23,12 @@
     "friends_list": "Friend list",
     "friend_request_title": "Add friend using email",
     "friend_request_notfound": "We couldn't find any user using this email. Please try with another email!",
+    "friend_request_say_hello": "Hi, nice to meet you",
 
     "user_info_title": "User Info",
     "user_info_diary": "Diary",
-    "user_info_album": "Album"
+    "user_info_album": "Album",
+    "user_info_make_friend_title": "Make friend to have a great conversion together",
+    "user_info_make_friend_add": "Add friend",
+    "user_info_make_friend_chat": "Chat"
 }

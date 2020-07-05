@@ -23,10 +23,23 @@
                 <ion-col></ion-col>
             </ion-row>
         </section>
-    </div>
-    <div class="card">
+        <app-divider></app-divider>
         <ion-card-content>
-            content here
+            <p>{{translateConfigService.text.user_info_make_friend_title}}</p>
+            <ion-toolbar>
+                <section>
+                    <ion-row>
+                        <ion-col></ion-col>
+                        <ion-col size="4">
+                            <ion-button size="small" expand="full" shape="round" color="primary">{{translateConfigService.text.user_info_make_friend_add}}</ion-button>
+                        </ion-col>
+                        <ion-col size="4">
+                            <ion-button size="small" expand="full" shape="round" color="light">{{translateConfigService.text.user_info_make_friend_chat}}</ion-button>
+                        </ion-col>
+                        <ion-col></ion-col>
+                    </ion-row>
+                </section>
+            </ion-toolbar>
         </ion-card-content>
     </div>
 </ion-content>

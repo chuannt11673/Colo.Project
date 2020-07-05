@@ -1,5 +1,6 @@
 {
     "search": "Tìm kiếm",
+    "accept": "Đồng ý",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Chào mừng bạn đã sử dụng ứng dụng <b>Colo App</b> của chúng tôi",
@@ -22,8 +23,12 @@
     "friends_list": "Danh sách bạn bè",
     "friend_request_title": "Kết bạn qua email",
     "friend_request_notfound": "Chúng tôi không tìm thấy người dùng sử dụng email này. Vui lòng thử bằng email khác!",
+    "friend_request_say_hello": "Xin chào, rất vui được làm quen với bạn",
 
     "user_info_title": "Thông tin người dùng",
     "user_info_diary": "Nhật ký",
-    "user_info_album": "Ảnh"
+    "user_info_album": "Ảnh",
+    "user_info_make_friend_title": "Trở thành bạn bè để có những kỷ niệm đáng nhớ cùng nhau",
+    "user_info_make_friend_add": "Kết bạn",
+    "user_info_make_friend_chat": "Nhắn tin"
 }

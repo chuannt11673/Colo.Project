@@ -1,3 +1,4 @@
+import { DividerComponent } from './../_core/components/divider/divider.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,9 @@ import { UserInfoPage } from './user-info.page';
     IonicModule,
     UserInfoPageRoutingModule
   ],
-  declarations: [UserInfoPage]
+  declarations: [
+    UserInfoPage,
+    DividerComponent
+  ]
 })
 export class UserInfoPageModule {}

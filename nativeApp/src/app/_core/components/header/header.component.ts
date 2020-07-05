@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {}
 
   addFriend() {
-    this.navController.navigateForward('friend-request');
+    this.navController.navigateForward('add-friends');
   }
 
 }

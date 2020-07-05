@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'user-info',
     loadChildren: () => import('./user-info/user-info.module').then( m => m.UserInfoPageModule)
   },
+  {
+    path: 'add-friends',
+    loadChildren: () => import('./add-friends/add-friends.module').then( m => m.AddFriendsPageModule)
+  },
 ];
 
 @NgModule({

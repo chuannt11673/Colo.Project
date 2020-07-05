@@ -7,15 +7,14 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div class="container">
-        <ion-toolbar>
-            <h5>{{translateConfigService.text.friend_request_title}}</h5>
-        </ion-toolbar>
-        <ion-toolbar>
-            <ion-searchbar slot="start" type="email" inputmode="email" [(ngModel)]="email"></ion-searchbar>
-            <ion-buttons slot="secondary">
-                <ion-button color="primary" shape="round" (click)="search()">{{translateConfigService.text.search}}</ion-button>
-            </ion-buttons>
-        </ion-toolbar>
-    </div>
+    <ion-item lines="none">
+        <ion-avatar slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+            <h3>Phan Trung</h3>
+            <p>{{translateConfigService.text.friend_request_say_hello}}</p>
+        </ion-label>
+        <ion-button expand="full" shape="round" color="primary">{{translateConfigService.text.accept}}</ion-button>
+    </ion-item>
 </ion-content>
