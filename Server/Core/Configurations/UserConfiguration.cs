@@ -10,14 +10,7 @@ namespace Core.Configurations
         {
             builder.HasKey(x => x.Id);            
             builder.HasIndex(x => x.Email).IsUnique();
-
-            builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.Phone).IsRequired();
-            builder.Property(x => x.FirstName).IsRequired();
-            builder.Property(x => x.LastName).IsRequired();
-            builder.Property(x => x.Gender).IsRequired();
-            builder.Property(x => x.Birthday).IsRequired();
-            builder.Property(x => x.Address).IsRequired();
+            builder.Property(x => x.Email).IsRequired();            
         }
     }
 }

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using Application.Validations;
 using Elect.DI;
+using Elect.Mapper.AutoMapper;
+using FluentValidation.AspNetCore;
 using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,7 +41,6 @@ namespace WebApi
             services.AddDbContext<CoreDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddElectDI();
 
             IdentityModelEventSource.ShowPII = true;
             services.AddCors(opts =>
@@ -51,8 +53,23 @@ namespace WebApi
                     .AllowAnyMethod();
                 });
             });
-            services.AddElectDI();
-            services.AddControllers();
+
+            services.AddHttpContextAccessor();
+            services.AddElectDI(_ => {
+                _.ListAssemblyName = new List<string> {
+                    "Application",
+                    "Infrastructure"
+                };
+            });
+            services.AddElectAutoMapper(_ => {
+                _.ListAssemblyName = new List<string> {
+                    "Application"
+                };
+            });
+
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UserValidator>());
+
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
             .AddIdentityServerAuthentication(options =>
             {

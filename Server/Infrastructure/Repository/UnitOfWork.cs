@@ -15,6 +15,11 @@ namespace Infrastructure.Repository
     {
         public CoreDbContext Context { get; }
 
+        public UnitOfWork(CoreDbContext context)
+        {
+            Context = context;
+        }
+
         public void Commit()
         {
             Context.SaveChanges();

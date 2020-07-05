@@ -10,7 +10,7 @@ namespace Core.Entities
         public DateTimeOffset UpdatedDateTime { get; set; }
         public string UpdatedBy { get; set; }
 
-        public DateTimeOffset DeletedDateTime { get; set; }
+        public DateTimeOffset? DeletedDateTime { get; set; }
         public string DeletedBy { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Core.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 namespace Application.Models
@@ -9,6 +11,7 @@ namespace Application.Models
         public string Phone { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public Gender Gender { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }

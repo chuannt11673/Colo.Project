@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Core.Entities
@@ -18,7 +17,7 @@ namespace Core.Entities
         public ICollection<FriendShipEntity> SentFriendShips { get; set; }
         public ICollection<FriendShipEntity> ReceivedFriendShips { get; set; }
     }
-
+    
     public enum Gender
     {
         Male = 1,
