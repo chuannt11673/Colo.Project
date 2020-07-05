@@ -13,7 +13,8 @@ namespace Auth.WebApp.IdentityServer4
         public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResources.Email()            
         };
 
         public static IEnumerable<Client> Clients => new List<Client>
@@ -33,6 +34,7 @@ namespace Auth.WebApp.IdentityServer4
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Email,
                     "colo.netcore.api"
                 },
                 RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback", "http://localhost:8100/auth-callback" },
@@ -54,6 +56,7 @@ namespace Auth.WebApp.IdentityServer4
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Email,
                     "colo.netcore.api"
                 },
                 RedirectUris = new List<string> { "http://localhost:8100/auth-callback" },
