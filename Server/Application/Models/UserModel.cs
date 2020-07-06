@@ -24,5 +24,7 @@ namespace Application.Models
 
     public class UserModel : UserUpdateModel
     {
+        // It will be true if user is yourself
+        public bool IsFriend { get; set; }
     }
 }

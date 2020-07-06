@@ -3,7 +3,6 @@ using Elect.DI.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -11,8 +10,8 @@ namespace Infrastructure.Repository
 {
     public interface IGenericRepo<T> where T : BaseEntity
     {
-        IEnumerable<T> Get();
-        IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
+        IQueryable<T> Get();
+        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);
@@ -54,12 +53,12 @@ namespace Infrastructure.Repository
             }
         }
 
-        public IEnumerable<T> Get()
+        public IQueryable<T> Get()
         {
-            return _dbSet.AsEnumerable();
+            return _dbSet;
         }
 
-        public IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.Where(predicate);
         }

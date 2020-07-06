@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Application.Models;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -35,6 +37,27 @@ namespace WebApi.Controllers
         {
             await _userService.AddFriend(userId);
             return NoContent();
+        }
+
+        [HttpGet("IsAnyUserEmail/{email}")]
+        public async Task<IActionResult> IsAnyUserEmail(string email)
+        {
+            var result = await _userService.IsAnyUserEmail(email);
+            return Ok(result);
+        }
+
+        [HttpGet("GetFriendRequests")]
+        public async Task<IActionResult> GetFriendRequests()
+        {
+            var result = await _userService.GetFriendRequests();
+            return Ok(result);
+        }
+
+        [HttpGet("GetFriends")]
+        public async Task<IActionResult> GetFriends()
+        {
+            var result = await _userService.GetFriends();
+            return Ok(result);
         }
     }
 }
