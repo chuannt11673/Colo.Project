@@ -1,3 +1,5 @@
+import { UserService } from './../_services/user.service';
+import { FriendRequestResolver } from './friend-request.resolver';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +16,10 @@ import { FriendRequestPage } from './friend-request.page';
     FormsModule,
     IonicModule,
     FriendRequestPageRoutingModule
+  ],
+  providers: [
+    UserService,
+    FriendRequestResolver
   ],
   declarations: [FriendRequestPage]
 })

@@ -26,9 +26,9 @@ export class AddFriendsPage implements OnInit {
       return;
 
     this.isLoading = true;
-    this.userService.searchEmail(this.email).subscribe(user => {
+    this.userService.isAnyUserEmail(this.email).subscribe(isAny => {
       this.isLoading = false;
-      if (user) {
+      if (isAny) {
         this.navController.navigateForward(`user-info/${this.email}`);
       }
       else

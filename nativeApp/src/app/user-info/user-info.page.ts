@@ -31,4 +31,9 @@ export class UserInfoPage implements OnInit {
     });
   }
 
+  addFriend() {
+    this.userService.addFriend(this.user.id).subscribe(_ => {
+
+    });
+  }
 }

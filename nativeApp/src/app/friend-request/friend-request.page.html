@@ -7,12 +7,12 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-item lines="none">
+    <ion-item lines="none" *ngFor="let request of requests">
         <ion-avatar slot="start">
             <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-avatar>
         <ion-label>
-            <h3>Phan Trung</h3>
+            <h3>{{request.email}}</h3>
             <p>{{translateConfigService.text.friend_request_say_hello}}</p>
         </ion-label>
         <ion-button expand="full" shape="round" color="primary">{{translateConfigService.text.accept}}</ion-button>
