@@ -74,7 +74,7 @@ namespace WebApi
             .AddIdentityServerAuthentication(options =>
             {
                 // base-address of your identityserver
-                options.Authority = "https://localhost:5001";
+                options.Authority = "https://192.168.0.102:5001";
                 options.RequireHttpsMetadata = true;
                 // name of the API resource
                 options.ApiName = "colo.netcore.api";
