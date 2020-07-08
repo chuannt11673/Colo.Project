@@ -6,13 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class UserInfoResolver implements Resolve<any> {
 
-    constructor(private userService: UserService, private route: ActivatedRoute) {}
+    constructor(private userService: UserService) {}
 
     resolve(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
-        let email = this.route.snapshot.params['email'];
-        return this.userService.searchEmail(email);
+        return this.userService.searchEmail(route.paramMap.get('email'));
     }
 }

@@ -23,4 +23,4 @@ export const clientSetting: UserManagerSettings = {
   popupNavigator: new CordovaPopupNavigator()
 };
 
-export const httpEndpoint: string = 'https://localhost:5006/';
+export const httpEndpoint: string = 'https://192.168.0.102:5006/';

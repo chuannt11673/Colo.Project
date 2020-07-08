@@ -1,0 +1,27 @@
+div.action-area {
+    position: absolute;
+    transition: top 0.5s;
+    transition-timing-function: ease;
+    top: -56px;
+    ion-toolbar {
+        height: 56px;
+        div.editable {
+            padding: 10px 12px;
+            background-color: #fff;
+            line-height: 26px;
+            overflow: hidden;
+            outline: none;
+            height: 46px;
+        }
+        div.editable:focus {
+            border-color: aqua;
+        }
+        [contenteditable=true]:empty:before {
+            color: #ccc;
+            content: attr(placeholder);
+            display: block;
+            /* For Firefox */
+            white-space: pre-wrap;
+        }
+    }
+}

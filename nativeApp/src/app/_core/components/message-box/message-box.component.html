@@ -1,0 +1,21 @@
+<div class="action-area">
+    <ion-toolbar>
+        <ion-button color="light" size="small" slot="start" (click)="onChangeEmoji()">
+            <ion-icon name="reorder-three-outline"></ion-icon>
+        </ion-button>
+        <div *ngIf="!disableTextBox" id="textBox" class="editable" contenteditable="true" placeholder='Input...' ng-readonly="true"></div>
+        <ion-button *ngIf="!disableImageSelection" color="light" size="small" slot="end" (click)="selectImage()">
+            <ion-icon name="image-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="!disableVideoSelection" color="light" size="small" slot="end">
+            <ion-icon name="videocam-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="isInput && !disableSendBtn" color="light" size="small" slot="end" (click)="post()">
+            <ion-icon name="send-outline"></ion-icon>
+        </ion-button>
+    </ion-toolbar>
+    <div style="line-height: 0;">
+        <emoji-mart [backgroundImageFn]="backgroundImageFn" [style]="{width:'100vw','border-radius':'0'}" [showPreview]="false" [enableSearch]="true" [showSingleCategory]="true" (emojiClick)="addEmoji($event)">
+        </emoji-mart>
+    </div>
+</div>

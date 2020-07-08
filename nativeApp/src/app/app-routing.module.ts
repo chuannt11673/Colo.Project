@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'add-friends',
     loadChildren: () => import('./add-friends/add-friends.module').then( m => m.AddFriendsPageModule)
   },
+  {
+    path: 'chat/:email',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
 ];
 
 @NgModule({

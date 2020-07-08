@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { AuthService } from './../_core/services/auth.service';
 import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,10 +19,11 @@ export class UserInfoPage implements OnInit {
   }
   mode: number = this.modeTypes.diary;
   user: any;
-  loggedInUser: User;
+  loggedInUser: any;
   constructor(public translateConfigService: TranslateConfigService, private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private navController: NavController) { }
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUserProfile();
@@ -33,7 +35,11 @@ export class UserInfoPage implements OnInit {
 
   addFriend() {
     this.userService.addFriend(this.user.id).subscribe(_ => {
-
+      this.user.isFriend = true;
     });
+  }
+
+  chat() {
+    this.navController.navigateForward(`chat/${this.user.email}`);
   }
 }

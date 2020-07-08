@@ -11,6 +11,7 @@ export class UserService {
   private isAnyUserEmailEndpoint = this.endpoint + 'isAnyUserEmail';
   private getFriendRequestsEndpoint = this.endpoint + 'getFriendRequests';
   private getFriendsEndpoint = this.endpoint + 'getFriends';
+  private acceptFriendEndpoint = this.endpoint + 'acceptFriend';
   constructor(private httpService: HttpService) { }
 
   register() {
@@ -32,7 +33,12 @@ export class UserService {
   getFriendRequest() {
     return this.httpService.get(this.getFriendRequestsEndpoint);
   }
+
   getFriends() {
     return this.httpService.get(this.getFriendsEndpoint);
+  }
+
+  acceptFriend(userId: string) {
+    return this.httpService.get(`${this.acceptFriendEndpoint}/${userId}`);
   }
 }

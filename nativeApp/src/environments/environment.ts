@@ -13,7 +13,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'https://localhost:5001/',
+  authority: 'https://192.168.0.102:5001/',
   client_id: 'ionic-angular',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
@@ -25,7 +25,7 @@ export const clientSetting: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage })
 };
 
-export const httpEndpoint: string = 'https://localhost:5006/';
+export const httpEndpoint: string = 'https://192.168.0.102:5006/';
 
 /*
  * For easier debugging in development mode, you can import the following file

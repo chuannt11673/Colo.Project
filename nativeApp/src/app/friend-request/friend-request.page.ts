@@ -2,7 +2,6 @@ import { UserService } from './../_services/user.service';
 import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-friend-request',
@@ -19,5 +18,11 @@ export class FriendRequestPage implements OnInit {
     this.userService.getFriendRequest().subscribe(requests => {
       this.requests = requests;
     })
+  }
+
+  accept(userId: string, index: number) {
+    this.userService.acceptFriend(userId).subscribe(_ => {
+      this.requests.splice(index, 1);
+    });
   }
 }
