@@ -18,6 +18,7 @@ namespace Application.Services
         Task<UserModel> Register(UserCreateModel model);
         Task<UserModel> SearchEmail(string email);
         Task AddFriend(Guid userId);
+        Task AcceptFriend(Guid userId);
         Task<bool> IsAnyUserEmail(string email);
         Task<List<UserModel>> GetFriends();
         Task<List<UserModel>> GetFriendRequests();
@@ -39,6 +40,19 @@ namespace Application.Services
             _userRepo = userRepo;
             _friendShipRepo = friendShipRepo;
             _unitOfWork = unitOfWork;
+        }
+
+        public Task AcceptFriend(Guid userId)
+        {
+            var request = _friendShipRepo.Get(x => x.SenderId == userId).FirstOrDefault();
+            if (request != null)
+            {
+                request.State = FriendShipState.Accepted;
+                _friendShipRepo.Update(request, x => x.State);
+                _unitOfWork.Commit();
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task AddFriend(Guid userId)
@@ -71,8 +85,8 @@ namespace Application.Services
         public Task<List<UserModel>> GetFriends()
         {
             var userId = _httpContext.UserId();
-            var users = _friendShipRepo.Get(x => x.SenderId == userId && x.State == FriendShipState.Accepted).Select(x => x.Receiver.MapTo<UserModel>())
-                .Union(_friendShipRepo.Get(x => x.ReceiverId == userId && x.State == FriendShipState.Accepted).Select(x => x.Sender.MapTo<UserModel>()));
+            var users = _friendShipRepo.Get(x => x.SenderId == userId && x.State == FriendShipState.Accepted).Select(x => x.Receiver).QueryTo<UserModel>()
+                .Union(_friendShipRepo.Get(x => x.ReceiverId == userId && x.State == FriendShipState.Accepted).Select(x => x.Sender).QueryTo<UserModel>());
 
             return Task.FromResult(users.ToList());
         }

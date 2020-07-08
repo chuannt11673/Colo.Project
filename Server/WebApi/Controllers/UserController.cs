@@ -59,5 +59,12 @@ namespace WebApi.Controllers
             var result = await _userService.GetFriends();
             return Ok(result);
         }
+
+        [HttpGet("AcceptFriend/{userId}")]
+        public async Task<IActionResult> AcceptFriend(Guid userId)
+        {
+            await _userService.AcceptFriend(userId);
+            return NoContent();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Infrastructure.Repository
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         void Add(T entity);
         void Delete(T entity);
-        void Update(T entity);
+        void Update(T entity, params Expression<Func<T, object>>[] properties);
     }
 
     [ScopedDependency(ServiceType = typeof(IGenericRepo<>))]
@@ -55,18 +55,31 @@ namespace Infrastructure.Repository
 
         public IQueryable<T> Get()
         {
-            return _dbSet;
+            return _dbSet.AsNoTracking();
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.Where(predicate);
+            return _dbSet.AsNoTracking().Where(predicate);
         }
 
-        public void Update(T entity)
+        public void Update(T entity, params Expression<Func<T, object>>[] properties)
         {
-            _unitOfWork.Context.Entry(entity).State = EntityState.Modified;
-            _dbSet.Attach(entity);
+            // check if entity is tracked
+            if (!Exists(entity))
+            {
+                _dbSet.Attach(entity);
+                foreach (var property in properties)
+                {
+                    _unitOfWork.Context.Entry(entity).Property(property).IsModified = true;                    
+                }
+                Console.WriteLine(_unitOfWork.Context.ChangeTracker.Entries());
+            }
+        }
+
+        private bool Exists(T entity)
+        {
+            return _dbSet.Local.Any(e => e == entity);
         }
     }
 }
