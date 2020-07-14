@@ -73,7 +73,6 @@ namespace Infrastructure.Repository
                 {
                     _unitOfWork.Context.Entry(entity).Property(property).IsModified = true;                    
                 }
-                Console.WriteLine(_unitOfWork.Context.ChangeTracker.Entries());
             }
         }
 
