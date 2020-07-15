@@ -32,7 +32,8 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CoreDbContext>(options => {
+            services.AddDbContext<CoreDbContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
@@ -49,13 +50,15 @@ namespace WebApi
             });
 
             services.AddHttpContextAccessor();
-            services.AddElectDI(_ => {
+            services.AddElectDI(_ =>
+            {
                 _.ListAssemblyName = new List<string> {
                     "Application",
                     "Infrastructure"
                 };
             });
-            services.AddElectAutoMapper(_ => {
+            services.AddElectAutoMapper(_ =>
+            {
                 _.ListAssemblyName = new List<string> {
                     "Application"
                 };
@@ -65,31 +68,30 @@ namespace WebApi
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UserValidator>());
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            .AddIdentityServerAuthentication(options =>
-            {
-                // base-address of your identityserver
-                options.Authority = "https://localhost:5001";
-                options.RequireHttpsMetadata = true;
-                // name of the API resource
-                options.ApiName = "colo.netcore.api";
-                options.JwtBackChannelHandler = GetHandler();
-                options.Events = new JwtBearerEvents
+                .AddJwtBearer(options =>
                 {
-                    OnMessageReceived = context =>
+                    // base-address of your identityserver
+                    options.Authority = "https://localhost:5001";
+                    // name of the API resource
+                    options.Audience = "colo.netcore.api";
+                    options.BackchannelHttpHandler = GetHandler();
+                    options.Events = new JwtBearerEvents
                     {
-                        var accessToken = context.Request.Query["access_token"];
-
-                        // If the request is for our hub...
-                        var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) &&
-                            (path.StartsWithSegments("/chatHub")))
+                        OnMessageReceived = context =>
                         {
-                            context.Token = accessToken;
+                            var accessToken = context.Request.Query["access_token"];
+
+                            // If the request is for our hub...
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                (path.StartsWithSegments("/chatHub")))
+                            {
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
                         }
-                        return Task.CompletedTask;
-                    }
-                };
-            });
+                    };
+                });
             services.AddSignalR();
         }
 
