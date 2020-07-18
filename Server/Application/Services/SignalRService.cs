@@ -32,6 +32,7 @@ namespace Application.Services
         public async Task SendMessage(SignalRModel model, string userId)
         {
             await _chatHub.Clients.User(userId).SendAsync("SendMessage", JsonConvert.SerializeObject(new {
+                UserId = _httpContext.UserId(),
                 UserEmail = _httpContext.UserEmail(),
                 model.Message
             }));

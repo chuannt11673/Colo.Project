@@ -14,6 +14,10 @@
     <Compile Remove="Migrations\20200705092533_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200705093456_Initial.cs" />
     <Compile Remove="Migrations\20200705093456_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200718153815_Add_Chat.cs" />
+    <Compile Remove="Migrations\20200718153815_Add_Chat.Designer.cs" />
+    <Compile Remove="Migrations\20200718153939_Add_Chat.cs" />
+    <Compile Remove="Migrations\20200718153939_Add_Chat.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
