@@ -14,7 +14,7 @@ export class FriendsPage implements OnInit {
   constructor(public translateConfigService: TranslateConfigService, private navController: NavController,
     private userService: UserService) { }
 
-  ngOnInit() {
+  ngOnInit() {    
   }
 
   ionViewWillEnter() {

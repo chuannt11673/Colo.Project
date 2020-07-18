@@ -1,3 +1,4 @@
+import { SignalRService } from './../_services/signal-r.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -16,6 +17,9 @@ import { HomePageRoutingModule } from './home-routing.module';
   ],
   declarations: [
     HomePage
+  ],
+  providers: [
+    SignalRService
   ]
 })
 export class HomePageModule {}

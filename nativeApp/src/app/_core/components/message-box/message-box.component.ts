@@ -79,11 +79,11 @@ export class MessageBoxComponent implements OnInit {
   resetTopStyle() {
     if (this.isShowEmoji) {
       this.actionArea.style.top = `${this.actionHeight}px`;
-      this.actionArea.parentElement.style.marginTop = `${Math.abs(this.actionHeight)}px`;
+      this.ele.nativeElement.parentElement.style.marginTop = `${Math.abs(this.actionHeight)}px`;
     }
     else {
       this.actionArea.style.top = '-56px';
-      this.actionArea.parentElement.style.marginTop = '56px';
+      this.ele.nativeElement.parentElement.style.marginTop = '56px';
     }
   }
 
@@ -156,7 +156,7 @@ export class MessageBoxComponent implements OnInit {
     };
     this.onSend.next(returnVal);
     this.oDoc.innerHTML = null;
-    this.onChangeEmoji();
+    this.resetTopStyle();
   }
 
   //#region image picker

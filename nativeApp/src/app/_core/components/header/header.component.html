@@ -11,6 +11,10 @@
             <ion-button *ngIf="enablePersonAdd" (click)="addFriend()">
                 <ion-icon slot="icon-only" color="light" name="person-add-outline"></ion-icon>
             </ion-button>
+            <ion-button (click)="notify()">
+                <ion-icon slot="icon-only" color="light" name="notifications-outline"></ion-icon>
+                <span class="notification" *ngIf="notifications.length > 0">{{notifications.length}}</span>
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>

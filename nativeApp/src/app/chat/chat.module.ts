@@ -1,3 +1,6 @@
+import { PipesModule } from './../_core/pipes/pipes.module';
+import { SignalRService } from './../_services/signal-r.service';
+import { UserService } from './../_services/user.service';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { MessageBoxComponent } from './../_core/components/message-box/message-box.component';
@@ -20,12 +23,15 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     IonicModule,
     ChatPageRoutingModule,
     EmojiModule,
-    PickerModule
+    PickerModule,
+    PipesModule
   ],
   providers: [
     Keyboard,
     Camera,
-    EmojiService
+    EmojiService,
+    SignalRService,
+    UserService
   ],
   declarations: [
     ChatPage,

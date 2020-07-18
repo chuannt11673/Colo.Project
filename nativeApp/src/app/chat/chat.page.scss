@@ -6,7 +6,9 @@ $gray: #92959E;
     float: left;
     background: #F2F5F8;
     color: #434651;
-    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    overflow: unset;
     ul {
         padding: 0;
         list-style: none;

@@ -45,6 +45,10 @@ export class AuthService {
     };
   }
 
+  getAccessToken() {
+    return this.user.access_token;
+  }
+
   getAuthorizationHeaderValue(): string {
     return `${this.user.token_type} ${this.user.access_token}`;
   }
