@@ -1,3 +1,4 @@
+import { ChatService } from './../_services/chat.service';
 import { PipesModule } from './../_core/pipes/pipes.module';
 import { SignalRService } from './../_services/signal-r.service';
 import { UserService } from './../_services/user.service';
@@ -31,7 +32,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     Camera,
     EmojiService,
     SignalRService,
-    UserService
+    UserService,
+    ChatService
   ],
   declarations: [
     ChatPage,

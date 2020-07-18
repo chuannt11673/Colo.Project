@@ -1,3 +1,4 @@
+import { ChatService } from './../_services/chat.service';
 import { UserService } from './../_services/user.service';
 import { SignalRService } from './../_services/signal-r.service';
 import { AuthService } from './../_core/services/auth.service';
@@ -17,8 +18,11 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
   private ionContent: any;
   currentUser: any;
   user: any;
-  messages: any[] = [];
-  constructor(private el: ElementRef, private route: ActivatedRoute, private authService: AuthService, private signalRService: SignalRService, private userService: UserService) { }
+  chatHistory: any = {
+    items: []
+  };
+  constructor(private el: ElementRef, private route: ActivatedRoute, private authService: AuthService,
+    private signalRService: SignalRService, private userService: UserService, private chatService: ChatService) { }
   
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
@@ -34,7 +38,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
         };
       }))
       .subscribe(res => {
-        this.messages.push(res);
+        this.chatHistory.items.push(res);
         this.scrollToBottom();
       });
   }
@@ -43,13 +47,32 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     this.ionContent = this.el.nativeElement.querySelector('ion-content');
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  private getChatHistory(userId: string) {
+    this.chatService.gets({ userId: userId, pageIndex: 1, pageSize: 50 }).subscribe(res => {
+      this.chatHistory = {
+        ...res,
+        items: this.chatHistory.items.concat(this.chatHistory.items, res.items.map(item => this.convertItem(item)))
+      };
+    });
   }
 
+  private convertItem(item: any) {
+    return {
+      userEmail: item.fromUserId == this.currentUser.id ? item.fromUserEmail : item.toUserEmail,
+      isMyself: item.fromUserId == this.currentUser.id,
+      message: item.message,
+      time: new Date()
+    };
+  }
+ 
   private getUser() {
     let email = this.route.snapshot.paramMap.get('email');
-    this.userService.searchEmail(email).subscribe(user => {
+    this.userService.searchEmail(email)
+    .pipe(map(res => {
+      this.getChatHistory(res.id);
+      return res;
+    }))
+    .subscribe(user => {
       this.user = user;
     });
   }
@@ -58,7 +81,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     if (!event.message) return;
 
     this.signalRService.sendUser(this.user.id, event.message).subscribe(_ => {
-      this.messages.push({
+      this.chatHistory.items.push({
         userEmail: this.currentUser.email,
         isMyself: true,
         message: event.message,
@@ -72,5 +95,9 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.ionContent.scrollToBottom();
     }, 1);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
