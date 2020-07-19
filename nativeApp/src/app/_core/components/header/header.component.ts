@@ -35,7 +35,6 @@ export class HeaderComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy header');
     this.subscription.unsubscribe();
   }
 }

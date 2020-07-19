@@ -28,7 +28,6 @@ export class FriendsPage implements OnInit {
   }
 
   userInfo(friend: any) {
-    console.log('friend', friend);
     this.navController.navigateForward(`user-info/${friend.email}`);
   }
 }

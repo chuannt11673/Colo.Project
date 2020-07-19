@@ -8,12 +8,14 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <div class="chat">
         <div class="chat-history">
             <ul>
                 <li class="clearfix" *ngFor="let message of chatHistory.items">
                     <div class="message-data" [ngClass]="{'align-right': message.isMyself}">
-                        <span class="message-data-time">{{message.time | date}} &nbsp; &nbsp;</span>
                         <span class="message-data-name">{{message.userEmail}}</span>
                     </div>
                     <div class="message" [ngClass]="{'other-message float-right': message.isMyself, 'my-message': !message.isMyself}" [innerHtml]="message.message | safeHtml"></div>
@@ -24,5 +26,5 @@
     </div>
 </ion-content>
 <ion-footer>
-    <app-message-box (onSend)="send($event)"></app-message-box>
+    <app-message-box [disableVideoSelection]="true" (onSend)="send($event)"></app-message-box>
 </ion-footer>

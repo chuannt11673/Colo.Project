@@ -2,6 +2,7 @@ $green: #86BB71;
 $blue: #94C2ED;
 $orange: #E38968;
 $gray: #92959E;
+$white: white;
 .chat {
     float: left;
     background: #F2F5F8;
@@ -18,12 +19,7 @@ $gray: #92959E;
         .message-data {
             margin-bottom: 15px;
         }
-        .message-data-time {
-            color: lighten($gray, 8%);
-            padding-left: 6px;
-        }
         .message {
-            color: white;
             padding: 18px 20px;
             line-height: 26px;
             font-size: 16px;

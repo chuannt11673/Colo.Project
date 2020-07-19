@@ -6,7 +6,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { MessageBoxComponent } from './../_core/components/message-box/message-box.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -33,7 +33,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     EmojiService,
     SignalRService,
     UserService,
-    ChatService
+    ChatService,
+    DatePipe
   ],
   declarations: [
     ChatPage,
