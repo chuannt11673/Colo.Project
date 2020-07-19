@@ -18,6 +18,7 @@ namespace Application.Models
     {
         public string FromUserEmail { get; set; }
         public string ToUserEmail { get; set; }
+        public DateTimeOffset CreatedDateTime { get; set; }
     }
 
     public class ChatGetPagingationModel : PagingationRequestModel

@@ -5,6 +5,7 @@ using Elect.DI.Attributes;
 using Elect.Mapper.AutoMapper.IQueryableUtils;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -48,6 +49,7 @@ namespace Application.Services
             var currentUserId = _httpContext.UserId();
 
             var queryable = _chatRepo.Get(x => x.FromUserId == currentUserId && x.ToUserId == model.UserId || x.FromUserId == model.UserId && x.ToUserId == currentUserId)
+                .OrderByDescending(x => x.CreatedDateTime)
                 .QueryTo<ChatModel>();
 
             var result = PagingationModel<ChatModel>.Create(queryable, model.PageIndex, model.PageSize);
