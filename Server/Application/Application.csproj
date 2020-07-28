@@ -8,7 +8,9 @@
     <PackageReference Include="Elect.DI" Version="3.1.1" />
     <PackageReference Include="Elect.Mapper.AutoMapper" Version="3.1.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-rc0003" />
   </ItemGroup>
 
   <ItemGroup>

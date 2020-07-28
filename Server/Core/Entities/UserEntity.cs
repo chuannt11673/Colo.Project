@@ -14,8 +14,8 @@ namespace Core.Entities
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
 
-        public ICollection<FriendShipEntity> SentFriendShips { get; set; }
-        public ICollection<FriendShipEntity> ReceivedFriendShips { get; set; }
+        public virtual ICollection<FriendShipEntity> SentFriendShips { get; set; }
+        public virtual ICollection<FriendShipEntity> ReceivedFriendShips { get; set; }
     }
     
     public enum Gender

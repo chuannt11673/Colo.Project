@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using Application.Helpers;
 using Application.Hubs;
 using Application.Validations;
 using Elect.DI;
@@ -103,6 +104,7 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -69,6 +69,7 @@ namespace Infrastructure.Repository
             if (!Exists(entity))
             {
                 _dbSet.Attach(entity);
+                entity.UpdatedDateTime = DateTimeOffset.UtcNow;
                 foreach (var property in properties)
                 {
                     _unitOfWork.Context.Entry(entity).Property(property).IsModified = true;                    
