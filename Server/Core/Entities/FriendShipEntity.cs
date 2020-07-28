@@ -5,9 +5,9 @@ namespace Core.Entities
     public class FriendShipEntity : BaseEntity
     {
         public Guid SenderId { get; set; }
-        public UserEntity Sender { get; set; }
+        public virtual UserEntity Sender { get; set; }
         public Guid ReceiverId { get; set; }
-        public UserEntity Receiver { get; set; }
+        public virtual UserEntity Receiver { get; set; }
 
         public FriendShipState State { get; set; }
     }

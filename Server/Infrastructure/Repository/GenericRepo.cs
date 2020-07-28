@@ -55,12 +55,12 @@ namespace Infrastructure.Repository
 
         public IQueryable<T> Get()
         {
-            return _dbSet.AsNoTracking();
+            return _dbSet;
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.AsNoTracking().Where(predicate);
+            return _dbSet.Where(predicate);
         }
 
         public void Update(T entity, params Expression<Func<T, object>>[] properties)

@@ -35,6 +35,7 @@ namespace WebApi
         {
             services.AddDbContext<CoreDbContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
