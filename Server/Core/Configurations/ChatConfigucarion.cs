@@ -11,6 +11,7 @@ namespace Core.Configurations
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.ToUser).WithMany().HasForeignKey(x => x.ToUserId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.FromUser).WithMany().HasForeignKey(x => x.FromUserId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasIndex(x => new { x.FromUserId, x.ToUserId }).IsClustered(false);
         }
     }
 }

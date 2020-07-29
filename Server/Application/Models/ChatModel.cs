@@ -7,6 +7,7 @@ namespace Application.Models
         public Guid FromUserId { get; set; }
         public Guid ToUserId { get; set; }
         public string Message { get; set; }
+        public Guid[] FileIds { get; set; }
     }
 
     public class ChatUpdateModel : ChatCreateModel
@@ -18,6 +19,7 @@ namespace Application.Models
     {
         public string FromUserEmail { get; set; }
         public string ToUserEmail { get; set; }
+        public FileModel[] FileModels { get; set; }
         public DateTimeOffset CreatedDateTime { get; set; }
     }
 

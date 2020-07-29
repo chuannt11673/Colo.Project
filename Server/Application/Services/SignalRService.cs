@@ -34,7 +34,8 @@ namespace Application.Services
             await _chatHub.Clients.User(userId).SendAsync("SendMessage", JsonConvert.SerializeObject(new {
                 UserId = _httpContext.UserId(),
                 UserEmail = _httpContext.UserEmail(),
-                model.Message
+                model.Message,
+                model.FileModels
             }));
         }
     }

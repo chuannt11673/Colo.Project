@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.Services;
@@ -29,7 +30,7 @@ namespace WebApi.Controllers
         [HttpPost("SendUser/{userId}")]
         public async Task<IActionResult> SendUser([FromBody] SignalRModel model, string userId)
         {
-            await _chatService.Create(new ChatCreateModel { ToUserId = new Guid(userId), Message = model.Message });
+            await _chatService.Create(new ChatCreateModel { ToUserId = new Guid(userId), Message = model.Message, FileIds = model.FileModels.Select(x => x.Id).ToArray() });
             await _signalRService.SendMessage(model, userId);
             return NoContent();
         }
