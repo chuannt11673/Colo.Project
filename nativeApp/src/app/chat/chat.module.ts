@@ -1,3 +1,4 @@
+import { FileService } from './../_services/file.service';
 import { ChatService } from './../_services/chat.service';
 import { PipesModule } from './../_core/pipes/pipes.module';
 import { SignalRService } from './../_services/signal-r.service';
@@ -34,6 +35,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     SignalRService,
     UserService,
     ChatService,
+    FileService,
     DatePipe
   ],
   declarations: [

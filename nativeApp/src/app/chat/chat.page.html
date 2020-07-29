@@ -26,5 +26,5 @@
     </div>
 </ion-content>
 <ion-footer>
-    <app-message-box [disableVideoSelection]="true" (onSend)="send($event)"></app-message-box>
+    <app-message-box [disableVideoSelection]="true" (onSend)="send($event)" (onSelectImage)="onSelectImage($event)"></app-message-box>
 </ion-footer>

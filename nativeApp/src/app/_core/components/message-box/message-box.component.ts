@@ -7,7 +7,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
 @Component({
   selector: 'app-message-box',
   templateUrl: './message-box.component.html',
-  styleUrls: ['./message-box.component.scss'],
+  styleUrls: ['./message-box.component.scss']
 })
 export class MessageBoxComponent implements OnInit {
   sourceType: number;
@@ -79,7 +79,9 @@ export class MessageBoxComponent implements OnInit {
   resetTopStyle() {
     if (this.isShowEmoji) {
       this.actionArea.style.top = `${this.actionHeight}px`;
-      this.ele.nativeElement.parentElement.style.marginTop = `${Math.abs(this.actionHeight)}px`;
+      setTimeout(() => {
+        this.ele.nativeElement.parentElement.style.marginTop = `${Math.abs(this.actionHeight)}px`;
+      }, 600);
     }
     else {
       this.actionArea.style.top = '-56px';
@@ -171,7 +173,7 @@ export class MessageBoxComponent implements OnInit {
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      let base64Image = imageData;
       this.imageBase64Items.push(base64Image);
       this.onSelectImage.emit(base64Image);
     }, (err) => {

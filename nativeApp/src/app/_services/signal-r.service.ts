@@ -45,7 +45,7 @@ export class SignalRService {
     });
   }
 
-  public sendUser(userId: string, message: string) {
-    return this.httpService.post(`${this.sendUserEndpoint}/${userId}`, { message: message });
+  public sendUser(userId: string, message: string, files: any[]) {
+    return this.httpService.post(`${this.sendUserEndpoint}/${userId}`, { message: message, fileModels: files });
   }
 }

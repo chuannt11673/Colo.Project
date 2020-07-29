@@ -1,3 +1,6 @@
+import { httpEndpoint } from 'src/environments/environment';
+import { AlertController, IonicSafeString } from '@ionic/angular';
+import { FileService } from './../_services/file.service';
 import { ChatService } from './../_services/chat.service';
 import { UserService } from './../_services/user.service';
 import { SignalRService } from './../_services/signal-r.service';
@@ -26,7 +29,10 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     items: []
   };
   constructor(private el: ElementRef, private route: ActivatedRoute, private authService: AuthService,
-    private signalRService: SignalRService, private userService: UserService, private chatService: ChatService, private datePipe: DatePipe) { }
+    private signalRService: SignalRService, private userService: UserService, private chatService: ChatService,
+    private fileService: FileService,
+    private datePipe: DatePipe,
+    private alert: AlertController) { }
   
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
@@ -34,6 +40,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     this.subscription = this.signalRService.messageObservable
       .pipe(map(res => {
         let obj = JSON.parse(res);
+        console.log('obj', obj);
         return {
           userEmail: obj.UserEmail,
           isMyself: obj.UserEmail == this.currentUser.email,
@@ -55,8 +62,9 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     this.chatService.gets({ userId: userId, pageIndex: this.chatHistory.pageIndex, pageSize: 10 }).subscribe(res => {
       this.chatHistory = {
         ...res,
-        items: this.chatHistory.items.concat((<any[]>res.items.map(item => this.convertItem(item))).reverse(), this.chatHistory.items)
+        items: res.items.map(item => this.convertItem(item)).reverse().concat(this.chatHistory.items)
       };
+
       if (callback)
         callback();
     });
@@ -66,8 +74,21 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     return {
       userEmail: item.fromUserEmail,
       isMyself: item.fromUserId == this.currentUser.id,
-      message: item.message + `<div style="font-size: 13px;color:rgba(0, 0, 0, 0.5)">${this.datePipe.transform(item.createdDateTime, 'short')}</div>`
+      message: this.getMessage(item)
     };
+  }
+
+  private getMessage(item: any) {
+    return this.getImages(item.fileModels) + item.message + `<div style="font-size: 13px;color:rgba(0, 0, 0, 0.5)">${this.datePipe.transform(item.createdDateTime, 'short')}</div>`;
+  }
+
+  private getImages(fileModels: any[]) {
+    var res = '';
+    fileModels.forEach(file => {
+      res += `<img src="${httpEndpoint}${file.url}">`;
+    });
+
+    return res;
   }
  
   private getUser() {
@@ -82,14 +103,18 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  send(event: any) {
+  send(event: any, files: any[] = []) {
     if (!event.message) return;
 
-    this.signalRService.sendUser(this.user.id, event.message).subscribe(_ => {
+    this.signalRService.sendUser(this.user.id, event.message, files).subscribe(_ => {
       this.chatHistory.items.push({
         userEmail: this.currentUser.email,
         isMyself: true,
-        message: event.message,
+        message: this.getMessage({
+          message: event.message,
+          fileModels: files,
+          createdDateTime: new Date()
+        }),
         time: new Date()
       });
       this.scrollToBottom();
@@ -113,6 +138,30 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
         event.target.complete();
       });
     }, 500);
+  }
+
+  async onSelectImage(base64: string) {
+    const alert = await this.alert.create({
+      header: 'Use this picture?',
+      message: this.createAlertImageContent(base64),
+      buttons: [
+        { text: 'Cancel' },
+        { text: 'Send', handler: () => { this.uploadPicture(base64); } }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private uploadPicture(base64: string) {
+    this.fileService.uploadMultiple([{ base64: base64 }]).subscribe(res => {
+      this.send({ message: ' ' }, res);
+    });
+  }
+
+  private createAlertImageContent(base64: string) {
+    let res = `<img src="data:image/jpeg;base64,${base64}">`;
+    return new IonicSafeString(res);
   }
 
   ngOnDestroy(): void {
