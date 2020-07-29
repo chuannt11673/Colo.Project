@@ -2,6 +2,7 @@
 using Application.Models;
 using Core.Entities;
 using Elect.DI.Attributes;
+using Elect.Mapper.AutoMapper.ObjUtils;
 using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,19 @@ namespace Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<FileModel> Upload(FileCreateModel model)
+        public async Task<FileModel> Upload(FileCreateModel model)
         {
-            throw new NotImplementedException();
+            var savedFileModel = await _fileHelper.Resize(model.Base64);
+            var entity = new FileEntity
+            {
+                FileName = savedFileModel.FileName,
+                Url = savedFileModel.Url
+            };
+
+            _fileRepo.Add(entity);
+            _unitOfWork.Commit();
+
+            return entity.MapTo<FileModel>();
         }
     }
 }

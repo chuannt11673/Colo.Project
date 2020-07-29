@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Elect.DI" Version="3.1.1" />
     <PackageReference Include="Elect.Mapper.AutoMapper" Version="3.1.1" />
+    <PackageReference Include="Elect.Web.Swagger" Version="3.1.5" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
@@ -31,5 +32,18 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- Generate XML file -->
+    <DocumentationFile>WebApi.xml</DocumentationFile>
+    <!-- Disable warning for Controller/Action/Method not have block comment -->
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Copy to Ouput -->
+    <Content Include="WebApi.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>

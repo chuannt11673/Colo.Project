@@ -24,6 +24,10 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Default get weather list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

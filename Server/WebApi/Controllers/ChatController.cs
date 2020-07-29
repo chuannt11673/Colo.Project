@@ -15,7 +15,12 @@ namespace WebApi.Controllers
             _chatService = chatService;
         }
 
-        [Route("Gets")]
+        /// <summary>
+        /// Get chat history
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpGet("Gets")]
         public async Task<IActionResult> Gets([FromBody] ChatGetPagingationModel model)
         {
             return Ok(await _chatService.Gets(model));

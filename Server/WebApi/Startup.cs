@@ -7,6 +7,7 @@ using Application.Hubs;
 using Application.Validations;
 using Elect.DI;
 using Elect.Mapper.AutoMapper;
+using Elect.Web.Swagger;
 using FluentValidation.AspNetCore;
 using IdentityServer4.AccessTokenValidation;
 using Infrastructure.Data;
@@ -95,6 +96,7 @@ namespace WebApi
                     };
                 });
             services.AddSignalR();
+            services.AddElectSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +109,7 @@ namespace WebApi
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseElectSwagger();
 
             app.UseRouting();
             app.UseCors("MyPolicy");

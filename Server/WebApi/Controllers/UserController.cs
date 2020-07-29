@@ -18,6 +18,11 @@ namespace WebApi.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Register user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] UserCreateModel model)
         {
@@ -25,6 +30,11 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Search user using email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpGet("SearchEmail/{email}")]
         public async Task<IActionResult> SearchEmail(string email)
         {
@@ -32,6 +42,11 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Add friend for a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpPost("AddFriend/{userId}")]
         public async Task<IActionResult> AddFriend(Guid userId)
         {
@@ -39,6 +54,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Check if user is existed or not
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpGet("IsAnyUserEmail/{email}")]
         public async Task<IActionResult> IsAnyUserEmail(string email)
         {
@@ -46,6 +66,10 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get friend requests for user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetFriendRequests")]
         public async Task<IActionResult> GetFriendRequests()
         {
@@ -53,6 +77,10 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get friends of user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetFriends")]
         public async Task<IActionResult> GetFriends()
         {
@@ -60,6 +88,11 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Accept friend request
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("AcceptFriend/{userId}")]
         public async Task<IActionResult> AcceptFriend(Guid userId)
         {

@@ -20,6 +20,12 @@ namespace WebApi.Controllers
             _chatService = chatService;
         }
 
+        /// <summary>
+        /// Send message to user usign signalR
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpPost("SendUser/{userId}")]
         public async Task<IActionResult> SendUser([FromBody] SignalRModel model, string userId)
         {
