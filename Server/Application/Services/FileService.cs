@@ -2,6 +2,7 @@
 using Application.Models;
 using Core.Entities;
 using Elect.DI.Attributes;
+using Elect.Mapper.AutoMapper.IQueryableUtils;
 using Elect.Mapper.AutoMapper.ObjUtils;
 using Infrastructure.Repository;
 using System;
@@ -15,6 +16,7 @@ namespace Application.Services
     public interface IFileService
     {
         Task<FileModel> Upload(FileCreateModel model);
+        Task<FileModel[]> Upload(FileCreateModel[] models);
     }
 
     [ScopedDependency(ServiceType = typeof(IFileService))]
@@ -43,6 +45,27 @@ namespace Application.Services
             _unitOfWork.Commit();
 
             return entity.MapTo<FileModel>();
+        }
+
+        public async Task<FileModel[]> Upload(FileCreateModel[] models)
+        {
+            var files = new List<FileHelperModel>();
+
+            foreach (var model in models)
+            {
+                files.Add(await _fileHelper.Resize(model.Base64));
+            }
+
+            var entities = files.Select(x => new FileEntity
+            {
+                FileName = x.FileName,
+                Url = x.Url
+            }).ToArray();
+
+            _fileRepo.Add(entities);
+            _unitOfWork.Commit();
+
+            return entities.AsQueryable().QueryTo<FileModel>().ToArray();
         }
     }
 }

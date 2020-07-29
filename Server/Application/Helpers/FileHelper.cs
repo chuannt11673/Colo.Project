@@ -30,7 +30,7 @@ namespace Application.Helpers
         public Task<FileHelperModel> Resize(string base64)
         {
             var returnModel = new FileHelperModel() {
-                FileName = Path.GetRandomFileName()
+                FileName = $"{Path.GetRandomFileName().Split(".")[0]}-{DateTimeOffset.UtcNow.Ticks}"
             };
             var userEmail = _httpContext.UserEmail();
 

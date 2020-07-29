@@ -27,5 +27,11 @@ namespace WebApi.Controllers
         {
             return Ok(await _fileService.Upload(model));
         }
+
+        [HttpPost("UploadMultiple")]
+        public async Task<IActionResult> UploadMultiple([FromBody] FileCreateModel[] models)
+        {
+            return Ok(await _fileService.Upload(models));
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet("Gets")]
+        [HttpPost("Gets")]
         public async Task<IActionResult> Gets([FromBody] ChatGetPagingationModel model)
         {
             return Ok(await _chatService.Gets(model));

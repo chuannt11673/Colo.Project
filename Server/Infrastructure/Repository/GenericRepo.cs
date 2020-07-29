@@ -13,6 +13,7 @@ namespace Infrastructure.Repository
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        void Add(T[] entities);
         void Delete(T entity);
         void Update(T entity, params Expression<Func<T, object>>[] properties);
     }
@@ -42,6 +43,23 @@ namespace Infrastructure.Repository
                 entity.UpdatedBy = user.Identity.Name;
             }
             _dbSet.Add(entity);
+        }
+
+        public void Add(T[] entities)
+        {
+            var user = _httpContextAccessor.HttpContext.User;
+            foreach (var entity in entities)
+            {
+                entity.CreatedDateTime = DateTimeOffset.UtcNow;
+                entity.UpdatedDateTime = DateTimeOffset.UtcNow;
+                if (user.Identity.IsAuthenticated)
+                {
+                    entity.CreatedBy = user.Identity.Name;
+                    entity.UpdatedBy = user.Identity.Name;
+                }
+            }
+
+            _dbSet.AddRange(entities);
         }
 
         public void Delete(T entity)
