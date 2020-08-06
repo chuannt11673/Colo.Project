@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication.Controllers
 {
+    [SecurityHeaders]
+    [AllowAnonymous]
     public class ExternalController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -82,14 +84,19 @@ namespace WebApplication.Controllers
                 throw new Exception("External login failed!");
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var user = new ApplicationUser
-            {
-                UserName = email,
-                Email = email
-            };
+            var user = await _userManager.FindByEmailAsync(email);
 
-            await _userManager.CreateAsync(user);
-            await _userManager.AddLoginAsync(user, info);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email
+                };
+
+                await _userManager.CreateAsync(user);
+                await _userManager.AddLoginAsync(user, info);
+            }
 
             return new Tuple<ApplicationUser, string, string>(user, info.LoginProvider, info.ProviderKey);
         }
