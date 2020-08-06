@@ -63,7 +63,7 @@ namespace Auth.WebApp
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddAuthorization();
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
             services.AddRazorPages();
         }
 

@@ -13,7 +13,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'https://localhost:5001/',
+  authority: 'https://localhost:44376/',
   client_id: 'ionic-angular',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
