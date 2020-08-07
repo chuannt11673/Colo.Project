@@ -64,6 +64,16 @@ namespace WebApplication
                 };
             });
 
+            services.AddScoped<Application.Utilities.ServiceResolver>(serviceProvider => key =>
+            {
+                if (key == "A")
+                    return serviceProvider.GetService<Application.Utilities.ServiceA>();
+                else if (key == "B")
+                    return serviceProvider.GetService<Application.Utilities.ServiceB>();
+                else
+                    throw new KeyNotFoundException();
+            });
+
             services.AddControllersWithViews();
         }
 

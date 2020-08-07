@@ -23,17 +23,20 @@ namespace WebApplication.Controllers
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
+        private readonly IService _service;
 
         public ExternalController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
-            IEventService events)
+            IEventService events,
+            ServiceResolver serviceResolver)
         {
             _interaction = interaction;
             _clientStore = clientStore;
             _events = events;
             _signInManager = signInManager;
             _userManager = userManager;
+            _service = serviceResolver("A");
         }
 
         [HttpPost]
@@ -84,7 +87,7 @@ namespace WebApplication.Controllers
                 throw new Exception("External login failed!");
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
             if (user == null)
             {
