@@ -188,12 +188,45 @@ namespace WebApplication.Controllers
                 return View(model);
             }
 
-            if (Url.IsLocalUrl(model.ReturnUrl))
+            return await SignInAsync(user, model.Password, false, model.ReturnUrl);
+        }
+
+        private async Task<IActionResult> SignInAsync(ApplicationUser user, string password, bool rememberLogin, string returnUrl)
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, password, rememberLogin, lockoutOnFailure: false);
+            if (result.Succeeded)
             {
-                return RedirectToAction("Login", new { returnUrl = model.ReturnUrl });
+                await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
+
+                if (context != null)
+                {
+                    if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                    {
+                        // if the client is PKCE then we assume it's native, so this change in how to
+                        // return the response is for better UX for the end user.
+                        return View("Redirect", new RedirectViewModel { RedirectUrl = returnUrl });
+                    }
+
+                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                    return Redirect(returnUrl);
+                }
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect("~/");
+                }
+
+                // user might have clicked on a malicious link - should be logged
+                throw new Exception("invalid return URL");
             }
 
-            return Redirect(model.ReturnUrl);
+            throw new Exception("cannot signin");
         }
 
         private Task<InputModel> BuildInputModelAsync(string returnUrl)

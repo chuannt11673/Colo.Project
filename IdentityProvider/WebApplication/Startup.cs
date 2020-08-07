@@ -5,7 +5,6 @@ using Core;
 using Core.Entities;
 using Elect.DI;
 using FluentValidation.AspNetCore;
-using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +31,7 @@ namespace WebApplication
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
+                .AddCustomAuthorizeRequestValidator<CustomAuthorizeRequestValidator>()
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryClients(Config.Clients)
