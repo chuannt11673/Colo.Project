@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -155,6 +156,49 @@ namespace WebApplication.Controllers
             }
 
             return View("LoggedOut", vm);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            var vm = await BuildInputModelAsync(returnUrl);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(InputModel model)
+        {
+           if (!ModelState.IsValid)
+                return View(model);
+
+            var user = new ApplicationUser
+            {
+                Name = model.Name,
+                DOB = model.DOB.Value,
+                Email = model.Email,
+                UserName = model.Email,
+                PhoneNumber = model.Phone
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                ViewBag.Errors = result.Errors.Select(x => x.Description).ToList();
+                return View(model);
+            }
+
+            if (Url.IsLocalUrl(model.ReturnUrl))
+            {
+                return RedirectToAction("Login", new { returnUrl = model.ReturnUrl });
+            }
+
+            return Redirect(model.ReturnUrl);
+        }
+
+        private Task<InputModel> BuildInputModelAsync(string returnUrl)
+        {
+            return Task.FromResult(new InputModel() { ReturnUrl = returnUrl ?? Url.Action("Index", "Home") });
         }
 
         private async Task<LoggedOutViewModel> BuildLoggedOutViewModelAsync(string logoutId)

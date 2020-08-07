@@ -1,0 +1,114 @@
+﻿@model Application.Models.InputModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<string> errors = (List<string>)ViewBag.Errors ?? new List<string>();
+}
+
+@section Styles {
+    <link href="@Url.Content("~/images/icons/favicon.ico")" />
+    <link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/fonts/font-awesome-4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/fonts/iconic/css/material-design-iconic-font.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/animate/animate.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/css-hamburgers/hamburgers.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/animsition/css/animsition.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/util.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+            <form class="login100-form validate-form" asp-action="Register">
+                <span class="login100-form-title p-b-49">
+                    Register
+                </span>
+
+                @Html.HiddenFor(x => x.ReturnUrl)
+                <div class="wrap-input100 validate-input m-b-23">
+                    <span class="label-input100-nopdl">Name</span>
+                    <input class="input100-nopdl" placeholder="Type your name" asp-for="Name">
+                    <span asp-validation-for="Name" class="text-danger">ABC</span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-23" >
+                    <span class="label-input100-nopdl">Day Of Birth</span>
+                    <input class="input100-nopdl" type="date" placeholder="Select your birthday" asp-for="DOB">
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-23" >
+                    <span class="label-input100-nopdl">Email</span>
+                    <input class="input100-nopdl" placeholder="Type your email" asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-23" >
+                    <span class="label-input100-nopdl">Phone</span>
+                    <input class="input100-nopdl" placeholder="Type your phone" asp-for="Phone">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-23" >
+                    <span class="label-input100-nopdl">Password</span>
+                    <input class="input100-nopdl" type="password" placeholder="Type your password" asp-for="Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-23" >
+                    <span class="label-input100-nopdl">Confirm Password</span>
+                    <input class="input100-nopdl" type="password" placeholder="Confirm your password" asp-for="ConfirmPassword">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="text-right p-t-8 p-b-31">
+                    <a href="#">
+                    </a>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button type="submit" class="login100-form-btn">
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+
+                <div class="txt1 text-center p-t-54 p-b-20">
+                    <span>
+                        Already have account ?
+                    </span>
+
+                    <a class="txt2" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+                        Sign In
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    @foreach (var error in errors)
+    {
+        <div class="text-danger">@error</div>
+    }
+</div>
+
+@section Scripts
+                                {
+    <script type="text/javascript" src="@Url.Content("~/vendor/jquery/jquery-3.2.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/animsition/js/animsition.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/bootstrap/js/popper.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/bootstrap/js/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/select2/select2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/daterangepicker/moment.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/daterangepicker/daterangepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/countdowntime/countdowntime.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/main.js")"></script>
+}
+

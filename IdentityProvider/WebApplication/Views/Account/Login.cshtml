@@ -1,89 +1,117 @@
 @using Application.Models
 @model LoginViewModel
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
+@section Styles {
+    <link href="@Url.Content("~/images/icons/favicon.ico")" />
+    <link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/fonts/font-awesome-4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/fonts/iconic/css/material-design-iconic-font.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/animate/animate.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/css-hamburgers/hamburgers.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/animsition/css/animsition.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/vendor/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/util.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
+}
 
-    <partial name="_ValidationSummary" />
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+            @if (Model.EnableLocalLogin)
+            {
+            <form class="login100-form validate-form" asp-route="Login">
+                <input type="hidden" asp-for="ReturnUrl" />
+                <span class="login100-form-title p-b-49">
+                    Login
+                </span>
 
-    <div class="row">
+                <partial name="_ValidationSummary" />
 
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
-                    </div>
-                    <div class="panel-body">
+                <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+                    <span class="label-input100-nopdl">Email</span>
+                    <input class="input100" placeholder="Type your email" type="text" name="email" asp-for="Username" autofocus>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
 
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <span class="label-input100-nopdl">Password</span>
+                    <input class="input100" placeholder="Type your password" type="password" name="pass" asp-for="Password" autocomplete="off">
+                    <span class="focus-input100" data-symbol="&#xf190;"></span>
+                </div>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                                </div>
-                                @if (Model.AllowRememberLogin)
-                                {
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
-                                }
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary" name="button" value="login">Login</button>
-                                    <button type="submit" class="btn btn-default" name="button" value="cancel">Cancel</button>
-                                </div>
-                            </fieldset>
-                        </form>
+                <div class="text-center p-t-8 p-b-31">
+                    <a href="#">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
                     </div>
                 </div>
-            </div>
-        }
 
-        @if (Model.VisibleExternalProviders.Any())
-        {
-            <div class="col-md-6 col-sm-6 external-providers">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">External Login</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.VisibleExternalProviders)
+                <div class="txt1 text-center p-t-54 p-b-20">
+                    <span>
+                        Or Sign In Using
+                    </span>
+                </div>
+
+                <div class="flex-c-m">
+                    @foreach (var provider in Model.VisibleExternalProviders)
+                    {
+                        <a class="login100-social-item bg1"
+                           asp-controller="External"
+                           asp-action="Challenge"
+                           asp-route-provider="@provider.AuthenticationScheme"
+                           asp-route-returnUrl="@Model.ReturnUrl">
+                            @switch (provider.DisplayName)
                             {
-                                <li>
-                                    <a class="btn btn-default"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
-                                       asp-route-provider="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
+                                case "Google":
+                                    <i class="fa fa-google"></i>
+                                    break;
+                                case "Facebook":
+                                    <i class="fa fa-facebook"></i>
+                                    break;
+                                case "Twitter":
+                                    <i class="fa fa-twitter"></i>
+                                    break;
+                                default:
+                                    @provider.DisplayName
+                                    break;
                             }
-                        </ul>
-                    </div>
+                        </a>
+                    }
                 </div>
-            </div>
-        }
 
-        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
-            </div>
-        }
+                <div class="flex-col-c p-t-155">
+                    <span class="txt1 p-b-17">
+                        Or Sign Up Using
+                    </span>
+
+                    <a class="txt2" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl">
+                        Sign Up
+                    </a>
+                </div>
+            </form>
+            }
+        </div>
     </div>
 </div>
+
+@section Scripts
+                                {
+    <script type="text/javascript" src="@Url.Content("~/vendor/jquery/jquery-3.2.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/animsition/js/animsition.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/bootstrap/js/popper.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/bootstrap/js/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/select2/select2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/daterangepicker/moment.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/daterangepicker/daterangepicker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/vendor/countdowntime/countdowntime.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/main.js")"></script>
+}

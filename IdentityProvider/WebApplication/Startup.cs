@@ -4,6 +4,7 @@ using Application.Services;
 using Core;
 using Core.Entities;
 using Elect.DI;
+using FluentValidation.AspNetCore;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -74,7 +75,8 @@ namespace WebApplication
                     throw new KeyNotFoundException();
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.Validations.InputModelValidator>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
