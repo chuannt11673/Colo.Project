@@ -20,9 +20,9 @@ namespace Application.Services
             if (HttpContext.Request.Path.StartsWithSegments("/Account/Login"))
             {
                 if (promt == Prompts.Create)
-                    HttpContext.Response.Redirect("/Account/Register" + HttpContext.Request.QueryString);
+                    HttpContext.Response.Redirect(HttpContext.Request.PathBase + "/Account/Register" + HttpContext.Request.QueryString);
                 else if (promt == Prompts.Google)
-                    HttpContext.Response.Redirect("/External/Challenge" + HttpContext.Request.QueryString + "&provider=Google");
+                    HttpContext.Response.Redirect(HttpContext.Request.PathBase + "/External/Challenge" + HttpContext.Request.QueryString + "&provider=Google");
             }
 
             return Task.CompletedTask;
