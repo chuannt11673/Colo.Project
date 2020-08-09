@@ -9,7 +9,7 @@ namespace Core.Configurations
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(x => x.Id);            
-            builder.HasIndex(x => x.Email).IsUnique();
+            builder.HasIndex(x => x.Email).IsClustered(false).IsUnique();
             builder.Property(x => x.Email).IsRequired();            
         }
     }

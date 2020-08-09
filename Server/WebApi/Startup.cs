@@ -97,7 +97,9 @@ namespace WebApi
                     };
                 });
             services.AddSignalR();
-            services.AddElectSwagger();
+            services.AddElectSwagger(opt => {
+                opt.Url = "/";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
