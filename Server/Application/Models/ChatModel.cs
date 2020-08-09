@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Application.Models
 {
@@ -26,5 +27,13 @@ namespace Application.Models
     public class ChatGetPagingationModel : PagingationRequestModel
     {
         public Guid UserId { get; set; }
+    }
+
+    public class ChatItemModel
+    {
+        public Guid UserId { get; set; }
+        public string UserEmail { get; set; }
+        public string Message { get; set; }
+        public FileModel[] FileModels { get; set; }
     }
 }

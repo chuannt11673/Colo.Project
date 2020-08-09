@@ -25,5 +25,15 @@ namespace WebApi.Controllers
         {
             return Ok(await _chatService.Gets(model));
         }
+
+        /// <summary>
+        /// Get Chat List
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetChatList")]
+        public async Task<IActionResult> GetChatList()
+        {
+            return Ok(await _chatService.GetChatList());
+        }
     }
 }

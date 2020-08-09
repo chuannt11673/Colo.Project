@@ -74,10 +74,11 @@ namespace WebApi
                 .AddJwtBearer(options =>
                 {
                     // base-address of your identityserver
-                    options.Authority = "https://192.168.0.102:5001";
+                    options.Authority = Configuration.GetSection("JwtSettings")["Authority"];
                     // name of the API resource
-                    options.Audience = "colo.netcore.api";
+                    options.Audience = Configuration.GetSection("JwtSettings")["Audience"];
                     options.BackchannelHttpHandler = GetHandler();
+                    options.RequireHttpsMetadata = false;
                     options.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>

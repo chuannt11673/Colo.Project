@@ -22,7 +22,7 @@ namespace WebApi
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls(applicationUrl);
+                    webBuilder.UseStartup<Startup>();
                 });
         }
     }

@@ -12,6 +12,7 @@ namespace Infrastructure.Repository
     {
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
+        IQueryable<T> GetFromSql(string sql, params object[] parameters);
         void Add(T entity);
         void Add(T[] entities);
         void Delete(T entity);
@@ -79,6 +80,11 @@ namespace Infrastructure.Repository
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.Where(predicate);
+        }
+
+        public IQueryable<T> GetFromSql(string sql, params object[] parameters)
+        {
+            return _dbSet.FromSqlRaw(sql, parameters);
         }
 
         public void Update(T entity, params Expression<Func<T, object>>[] properties)
