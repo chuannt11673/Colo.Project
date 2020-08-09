@@ -19,7 +19,7 @@ ion-slides {
         margin-top: 2.8rem;
     }
     .swiper-slide img {
-        max-height: 50%;
+        max-height: 30vh;
         max-width: 80%;
         margin: 0;
         pointer-events: none;
@@ -39,5 +39,12 @@ div.language {
     span {
         padding: 10px;
         text-align: center;
+    }
+}
+
+.external-login {
+    font-size: 31px;
+    img {
+        margin-left: 10px;
     }
 }

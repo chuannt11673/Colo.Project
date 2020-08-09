@@ -79,12 +79,13 @@ export class AuthService {
 
   signOut() {
     this.manager.signoutPopup().then(() => {
-      this.navController.navigateForward('');
-    })
+      this.navController.navigateRoot('');
+    });
   }
 
   completeSignOut() {
-    this.manager.signoutPopupCallback().then(() => { }).catch(() => { });
+    this.manager.signoutPopupCallback().then(() => {
+    }).catch(() => { });
   }
 
   private createUser(callback: Function) {
