@@ -19,6 +19,14 @@ export class LoginPage implements OnInit {
   }
 
   logIn() {
-    this.authService.startAuthentication();
+    this.authService.startAuthentication('login');
+  }
+
+  register() {
+    this.authService.startAuthentication('create');
+  }
+
+  googleLogin() {
+    this.authService.startAuthentication('google');
   }
 }

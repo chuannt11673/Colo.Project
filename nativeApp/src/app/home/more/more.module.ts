@@ -1,3 +1,4 @@
+import { HeaderComponent } from './../../_core/components/header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,9 @@ import { MorePage } from './more.page';
     IonicModule,
     MorePageRoutingModule
   ],
-  declarations: [MorePage]
+  declarations: [
+    MorePage,
+    HeaderComponent
+  ]
 })
 export class MorePageModule {}

@@ -1,12 +1,8 @@
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
-import { UserManager, UserManagerSettings, User } from 'oidc-client';
+import { UserManager, User } from 'oidc-client';
 import { NavController } from '@ionic/angular';
 import { clientSetting } from 'src/environments/environment';
-
-export function getClientSettings(): UserManagerSettings {
-  return clientSetting;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +16,26 @@ export class AuthService {
   private manager: UserManager;
   private user: User;
 
+  clientSetting = clientSetting;
+
   constructor(private navController: NavController, private httpService: HttpService) {
-    this.manager = new UserManager(getClientSettings());
+    this.manager = new UserManager(this.clientSetting);
   }
 
   initUser() {
     return this.manager.getUser().then(user => {
       this.user = user;
     });
+  }
+
+  createUserManager(prompt: string) {
+    if (prompt) {
+      let setting = {
+        ...this.clientSetting,
+        prompt
+      };
+      this.manager = new UserManager(setting);
+    }
   }
 
   isLoggedIn(): boolean {
@@ -53,7 +61,10 @@ export class AuthService {
     return `${this.user.token_type} ${this.user.access_token}`;
   }
 
-  startAuthentication(): Promise<any> {
+  startAuthentication(prompt: string = null): Promise<any> {
+    if (prompt)
+      this.createUserManager(prompt);
+      
     return this.manager.signinPopup().then(user => {
       this.user = user;
       this.createUser((_: any) => {
@@ -68,7 +79,7 @@ export class AuthService {
 
   signOut() {
     this.manager.signoutPopup().then(() => {
-      this.navController.navigateForward('')
+      this.navController.navigateForward('');
     })
   }
 

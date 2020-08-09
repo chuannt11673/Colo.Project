@@ -1,9 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>message</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header [enableMore]="true"></app-header>
 <ion-content>
-
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-item *ngFor="let message of messages" (click)="chat(message.userEmail)">
+        <ion-avatar slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+            <h3>{{message.userEmail}}</h3>
+            <p [innerHtml]="message.message | safeHtml"></p>
+        </ion-label>
+    </ion-item>
 </ion-content>

@@ -15,8 +15,9 @@ export class HeaderComponent implements OnDestroy {
   notifications: any[] = [];
 
   @Input() enableChatbubble: boolean = false;
-  @Input() enableAdd: boolean = false;
-  @Input() enablePersonAdd: boolean = false;  
+  @Input() enableMore: boolean = false;
+  @Input() enablePersonAdd: boolean = false;
+  @Input() enableNotification: boolean = false;
 
   constructor(public translateConfigService: TranslateConfigService, private navController: NavController, private signalRService: SignalRService) { }
   

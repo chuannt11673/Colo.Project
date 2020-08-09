@@ -1,3 +1,5 @@
+import { ActionSheetController, NavController } from '@ionic/angular';
+import { AuthService } from './../../_core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MorePage implements OnInit {
 
-  constructor() { }
+  currentUser: any;
+  constructor(private authService: AuthService, private actionSheetController: ActionSheetController, private navController: NavController) { }
 
   ngOnInit() {
+    this.currentUser = this.authService.getUserProfile();
   }
 
+  userInfo() {
+    this.navController.navigateForward(`user-info/${this.currentUser.email}`)
+  }
+
+  logout() {
+    this.presentAlertConfirm();
+  }
+
+  async presentAlertConfirm() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Log out this account?",
+      buttons: [{
+        text: 'Log out',
+        cssClass: 'danger',
+        handler: () => {
+          this.authService.signOut();
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
 }

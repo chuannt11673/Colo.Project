@@ -1,5 +1,8 @@
-<app-header [enablePersonAdd]="true"></app-header>
+<app-header [enablePersonAdd]="true" [enableNotification]="true"></app-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-item-group>
         <ion-item lines="none" (click)="navigateToFriendRequests()">
             <ion-icon slot="start" color="warning" name="person-circle-outline"></ion-icon>

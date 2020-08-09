@@ -24,8 +24,14 @@
         </ion-slide>
     </ion-slides>
     <ion-toolbar>
-        <ion-button color="primary" expand="full" shape="round" (click)="logIn()">LOGIN</ion-button>
+        <ion-button color="primary" expand="full" shape="round" (click)="logIn()">{{translateConfigService.text.login}}</ion-button>
+        <ion-button color="primary" expand="full" shape="round" (click)="register()">{{translateConfigService.text.register}}</ion-button>
     </ion-toolbar>
+    <div style="display: flex; justify-content: center;">
+        <ion-button fill="outline" (click)="googleLogin()">
+            <ion-icon name="logo-google"></ion-icon>
+        </ion-button>
+    </div>
 </ion-content>
 <ion-footer class="ion-no-border">
     <ion-toolbar>

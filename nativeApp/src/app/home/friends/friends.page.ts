@@ -18,9 +18,7 @@ export class FriendsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.userService.getFriends().subscribe(friends => {
-      this.friends = friends;
-    });
+    this.getFriends();
   }
 
   navigateToFriendRequests() {
@@ -29,5 +27,21 @@ export class FriendsPage implements OnInit {
 
   userInfo(friend: any) {
     this.navController.navigateForward(`user-info/${friend.email}`);
+  }
+
+  doRefresh(event: any) {
+    setTimeout(() => {
+      this.getFriends(() => {
+        event.target.complete();
+      });
+    }, 500);
+  }
+
+  private getFriends(callback: Function = null)   {
+    this.userService.getFriends().subscribe(friends => {
+      this.friends = friends;
+      if (callback)
+        callback();
+    });
   }
 }

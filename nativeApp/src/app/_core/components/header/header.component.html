@@ -5,13 +5,13 @@
             <ion-button *ngIf="enableChatbubble">
                 <ion-icon slot="icon-only" color="light" name="chatbubble-ellipses-outline"></ion-icon>
             </ion-button>
-            <ion-button *ngIf="enableAdd">
+            <ion-button *ngIf="enableMore">
                 <ion-icon slot="icon-only" color="light" name="add-outline"></ion-icon>
             </ion-button>
             <ion-button *ngIf="enablePersonAdd" (click)="addFriend()">
                 <ion-icon slot="icon-only" color="light" name="person-add-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="notify()">
+            <ion-button *ngIf="enableNotification" (click)="notify()">
                 <ion-icon slot="icon-only" color="light" name="notifications-outline"></ion-icon>
                 <span class="notification" *ngIf="notifications.length > 0">{{notifications.length}}</span>
             </ion-button>

@@ -1,6 +1,8 @@
 {
     "search": "Search",
     "accept": "Accept",
+    "login": "Login",
+    "register": "Register",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Welcome you to visit our <b>Colo App</b>",

@@ -1,6 +1,8 @@
 {
     "search": "Tìm kiếm",
     "accept": "Đồng ý",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Chào mừng bạn đã sử dụng ứng dụng <b>Colo App</b> của chúng tôi",

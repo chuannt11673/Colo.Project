@@ -12,10 +12,9 @@
             <ion-label>{{translateConfigService.text.friend_request_title}}</ion-label>
         </ion-item>
         <ion-toolbar>
-            <ion-searchbar slot="start" type="email" inputmode="email" [(ngModel)]="email"></ion-searchbar>
+            <ion-searchbar style="padding-bottom: 0;" slot="start" type="email" inputmode="email" mode="ios" [(ngModel)]="email"></ion-searchbar>
             <ion-buttons slot="secondary">
-                <ion-button color="primary" shape="round" (click)="search()">{{translateConfigService.text.search}}</ion-button>
-                <ion-spinner *ngIf="isLoading"></ion-spinner>
+                <ion-button (click)="search()">{{translateConfigService.text.search}}</ion-button>
             </ion-buttons>
         </ion-toolbar>
     </div>
