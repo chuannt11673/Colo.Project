@@ -242,9 +242,9 @@ namespace WebApplication.Controllers
             var vm = new LoggedOutViewModel
             {
                 AutomaticRedirectAfterSignOut = AccountOptions.AutomaticRedirectAfterSignOut,
-                PostLogoutRedirectUri = logout?.PostLogoutRedirectUri ?? Url.Action("Index", "Home"),
-                ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId ?? "" : logout?.ClientName ?? "",
-                SignOutIframeUrl = logout?.SignOutIFrameUrl ?? "",
+                PostLogoutRedirectUri = logout?.PostLogoutRedirectUri,
+                ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
+                SignOutIframeUrl = logout?.SignOutIFrameUrl,
                 LogoutId = logoutId
             };
 
