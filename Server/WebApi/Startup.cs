@@ -45,7 +45,7 @@ namespace WebApi
             {
                 opts.AddPolicy("MyPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:8100")
+                    builder.WithOrigins("http://localhost:8100", "http://localhost")
                     .AllowCredentials()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
