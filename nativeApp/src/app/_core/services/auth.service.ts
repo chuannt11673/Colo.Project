@@ -1,4 +1,5 @@
-import { Observable, of, Subject, from } from 'rxjs';
+import { map, concatMap, catchError } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { UserManager, User } from 'oidc-client';
@@ -62,22 +63,21 @@ export class AuthService {
     return `${this.user.token_type} ${this.user.access_token}`;
   }
 
-  startAuthentication(prompt: string = null): Promise<any> {
+  startAuthentication(prompt: string = null): Observable<any> {
     if (prompt)
       this.createUserManager(prompt);
 
-    return this.manager.signinPopup().then(user => {
-      console.log('callback here');
-      this.user = user;
-      this.createUser((_: any) => {
-        this.navController.navigateForward('/home');
-      });
-    }).catch(() => { });
+    let signIn = this.manager.signinPopup();
+    return from(signIn).pipe(
+      concatMap(user => {
+        this.user = user;
+        return this.createUser();
+      })
+    );
   }
 
   completeAuthentication(): Promise<void> {
     return this.manager.signinPopupCallback().then(() => {
-      console.log('ok');
     }).catch(() => { });
   }
 
@@ -87,6 +87,7 @@ export class AuthService {
     });
   }
 
+  //  must handle the callback in order to the popup can be closed, this callback will be called before the response for signoutPopup above
   completeSignOut() {
     this.manager.signoutPopupCallback().then(() => {
     }).catch(() => { });
@@ -96,10 +97,10 @@ export class AuthService {
     return from(this.manager.signinSilent().then(user => {
       this.user = user;
       return true;
-    }));
+    }).catch(() => false));
   }
 
-  private createUser(callback: Function) {
+  private createUser() : Observable<any> {
     let model = {
       email: null,
       firstName: null,
@@ -108,10 +109,10 @@ export class AuthService {
       birthDay: new Date(),
       address: null
     };
-    this.httpService.post('api/user/register', model).subscribe(res => {
-      this.user.profile.birthdate = res.birthday;
-      this.user.profile.gender = res.gender
-      callback();
-    });
+
+    return this.httpService.post('api/user/register', model).pipe(map(user => {
+      this.user.profile.birthdate = user.birthday;
+      this.user.profile.gender = user.gender;
+    }));
   }
 }

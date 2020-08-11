@@ -1,5 +1,5 @@
 import { httpEndpoint } from 'src/environments/environment';
-import { AlertController, IonicSafeString } from '@ionic/angular';
+import { AlertController, IonicSafeString, NavController } from '@ionic/angular';
 import { FileService } from './../_services/file.service';
 import { ChatService } from './../_services/chat.service';
 import { UserService } from './../_services/user.service';
@@ -32,7 +32,8 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     private signalRService: SignalRService, private userService: UserService, private chatService: ChatService,
     private fileService: FileService,
     private datePipe: DatePipe,
-    private alert: AlertController) { }
+    private alert: AlertController,
+    private navController: NavController) { }
   
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
@@ -40,7 +41,6 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     this.subscription = this.signalRService.messageObservable
       .pipe(map(res => {
         let obj = JSON.parse(res);
-        console.log('obj', obj);
         return {
           userEmail: obj.UserEmail,
           isMyself: obj.UserEmail == this.currentUser.email,
@@ -64,7 +64,6 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
         ...res,
         items: res.items.map(item => this.convertItem(item)).reverse().concat(this.chatHistory.items)
       };
-
       if (callback)
         callback();
     });
@@ -74,12 +73,13 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     return {
       userEmail: item.fromUserEmail,
       isMyself: item.fromUserId == this.currentUser.id,
+      hasImage: item.fileModels.length > 0,
       message: this.getMessage(item)
     };
   }
 
   private getMessage(item: any) {
-    return this.getImages(item.fileModels) + item.message + `<div style="font-size: 13px;color:rgba(0, 0, 0, 0.5)">${this.datePipe.transform(item.createdDateTime, 'short')}</div>`;
+    return this.getImages(item.fileModels) + item.message + `<br /><div style="font-size: 13px;color:rgba(0, 0, 0, 0.5)">${this.datePipe.transform(item.createdDateTime, 'short')}</div>`;
   }
 
   private getImages(fileModels: any[]) {
@@ -100,6 +100,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     }))
     .subscribe(user => {
       this.user = user;
+      console.log('user', user);
     });
   }
 
@@ -121,10 +122,8 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private scrollToBottom() {
-    setTimeout(() => {
-      this.ionContent.scrollToBottom();
-    }, 1);
+  userInfo() {
+    this.navController.navigateForward(`user-info/${this.user.email}`);
   }
 
   doRefresh(event: any) {
@@ -151,6 +150,12 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     });
 
     await alert.present();
+  }
+  
+  private scrollToBottom() {
+    setTimeout(() => {
+      this.ionContent.scrollToBottom();
+    }, 1);
   }
 
   private uploadPicture(base64: string) {

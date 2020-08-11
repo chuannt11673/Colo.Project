@@ -13,7 +13,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'http://localhost/RC/',
+  authority: 'http://192.168.0.100/RC/',
   client_id: 'webapp',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
@@ -25,7 +25,7 @@ export const clientSetting: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage })
 };
 
-export const httpEndpoint: string = 'http://localhost/Api/';
+export const httpEndpoint: string = 'http://192.168.0.100/Api/';
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -4,7 +4,12 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Chat</ion-title>
+        <ion-chip *ngIf="user" style="background: none;" (click)="userInfo()">
+            <ion-avatar>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+            <ion-label>{{user.email}}</ion-label>
+        </ion-chip>
     </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -18,7 +23,7 @@
                     <div class="message-data" [ngClass]="{'align-right': message.isMyself}">
                         <span class="message-data-name">{{message.userEmail}}</span>
                     </div>
-                    <div class="message" [ngClass]="{'other-message float-right': message.isMyself, 'my-message': !message.isMyself}" [innerHtml]="message.message | safeHtml"></div>
+                    <div class="message" [ngClass]="{'other-message float-right': message.isMyself, 'my-message': !message.isMyself, 'bg-transparent': message.hasImage}" [innerHtml]="message.message | safeHtml"></div>
                 </li>
             </ul>
         </div>

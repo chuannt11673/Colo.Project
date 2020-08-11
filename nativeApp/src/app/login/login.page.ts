@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { TranslateConfigService } from '../_core/services/translate-config.service';
 import { AuthService } from '../_core/services/auth.service';
@@ -9,10 +10,13 @@ import { AuthService } from '../_core/services/auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(public translateConfigService: TranslateConfigService, private authService: AuthService) { }
+  loading = false;
+  constructor(public translateConfigService: TranslateConfigService,
+    private authService: AuthService,
+    private navController: NavController) { }
 
   ngOnInit() {
-    //this.authService.completeSignOut();
+    this.authService.completeSignOut();
   }
 
   changeLanguage(code: string) {
@@ -20,14 +24,35 @@ export class LoginPage implements OnInit {
   }
 
   logIn() {
-    this.authService.startAuthentication('login');
+    this.loading = true;
+    this.authService.startAuthentication('login').subscribe(() => {
+      this.navigateToHome();
+    }, err => {
+      this.loading = false;
+    });;
   }
 
   register() {
-    this.authService.startAuthentication('create');
+    this.loading = true;
+    this.authService.startAuthentication('create').subscribe(() => {
+      this.navigateToHome();
+    }, err => {
+      this.loading = false;
+    });
   }
 
   googleLogin() {
-    this.authService.startAuthentication('google');
+    this.loading = true;
+    this.authService.startAuthentication('google').subscribe(() => {
+      this.navigateToHome();
+    }, err => {
+      this.loading = false;
+    });
+  }
+
+  private navigateToHome() {
+    setTimeout(() => {
+      this.navController.navigateRoot('/home').then(() => this.loading = false);
+    }, 1000);
   }
 }

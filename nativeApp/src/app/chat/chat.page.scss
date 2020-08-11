@@ -20,67 +20,28 @@ $white: white;
             margin-bottom: 15px;
         }
         .message {
-            padding: 18px 20px;
+            padding: 12px;
             line-height: 26px;
             font-size: 16px;
             border-radius: 7px;
             margin-bottom: 30px;
-            width: 90%;
-            position: relative;
-            &:after {
-                bottom: 100%;
-                left: 7%;
-                border: solid transparent;
-                content: " ";
-                height: 0;
-                width: 0;
-                position: absolute;
-                pointer-events: none;
-                border-bottom-color: $green;
-                border-width: 10px;
-                margin-left: -10px;
-            }
+            display: inline-block;
+            max-width: 60vw;
         }
         .my-message {
             background: $green;
         }
         .other-message {
             background: $blue;
-            &:after {
-                border-bottom-color: $blue;
-                left: 93%;
-            }
         }
-    }
-    .chat-message {
-        padding: 30px;
-        textarea {
-            width: 100%;
-            border: none;
-            padding: 10px 20px;
-            font: 14px/22px "Lato", Arial, sans-serif;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            resize: none;
+        .bg-transparent {
+            background: transparent;
         }
-        .fa-file-o,
-        .fa-file-image-o {
-            font-size: 16px;
-            color: gray;
-            cursor: pointer;
+        .my-message.bg-transparent {
+            padding-left: 0;
         }
-        button {
-            float: right;
-            color: $blue;
-            font-size: 16px;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            background: #F2F5F8;
-            &:hover {
-                color: darken($blue, 7%);
-            }
+        .other-message.bg-transparent {
+            padding-right: 0;
         }
     }
 }
