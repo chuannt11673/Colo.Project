@@ -12,7 +12,7 @@ export class LoginPage implements OnInit {
   constructor(public translateConfigService: TranslateConfigService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.completeSignOut();
+    //this.authService.completeSignOut();
   }
 
   changeLanguage(code: string) {

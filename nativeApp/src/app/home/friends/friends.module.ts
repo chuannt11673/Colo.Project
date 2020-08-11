@@ -1,6 +1,6 @@
+import { ComponentsModule } from './../../_core/components/components.module';
 import { UserService } from './../../_services/user.service';
 import { WeatherForecastService } from './../../_services/weather-forecast.service';
-import { HeaderComponent } from './../../_core/components/header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,11 +17,11 @@ import { FriendsResolver } from './friends.resolver';
     CommonModule,
     FormsModule,
     IonicModule,
-    FriendsPageRoutingModule
+    FriendsPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [
-    FriendsPage,
-    HeaderComponent
+    FriendsPage
   ],
   providers: [
     WeatherForecastService,

@@ -1,7 +1,6 @@
+import { ComponentsModule } from './../../_core/components/components.module';
 import { PipesModule } from './../../_core/pipes/pipes.module';
-import { SafeHtmlPipe } from './../../_core/pipes/safe-html.pipe';
 import { ChatService } from './../../_services/chat.service';
-import { HeaderComponent } from './../../_core/components/header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,11 +17,11 @@ import { MessagePage } from './message.page';
     FormsModule,
     IonicModule,
     MessagePageRoutingModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [
-    MessagePage,
-    HeaderComponent
+    MessagePage
   ],
   providers: [
     ChatService

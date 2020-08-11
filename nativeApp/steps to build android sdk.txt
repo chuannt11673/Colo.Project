@@ -1,0 +1,6 @@
+step to build sdk
+- install android sdk
+- install jdk 8
+- install gradle
+- accept all licenses in android sdk with command line: C:\Users\chuan\AppData\Local\Android\Sdk\tools\bin\sdkmanager.bat --licenses
+- build

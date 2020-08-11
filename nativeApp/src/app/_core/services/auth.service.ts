@@ -1,3 +1,4 @@
+import { Observable, of, Subject, from } from 'rxjs';
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { UserManager, User } from 'oidc-client';
@@ -64,17 +65,20 @@ export class AuthService {
   startAuthentication(prompt: string = null): Promise<any> {
     if (prompt)
       this.createUserManager(prompt);
-      
+
     return this.manager.signinPopup().then(user => {
+      console.log('callback here');
       this.user = user;
       this.createUser((_: any) => {
         this.navController.navigateForward('/home');
-      })
+      });
     }).catch(() => { });
   }
 
   completeAuthentication(): Promise<void> {
-    return this.manager.signinPopupCallback().then(() => { }).catch(() => { });
+    return this.manager.signinPopupCallback().then(() => {
+      console.log('ok');
+    }).catch(() => { });
   }
 
   signOut() {
@@ -86,6 +90,13 @@ export class AuthService {
   completeSignOut() {
     this.manager.signoutPopupCallback().then(() => {
     }).catch(() => { });
+  }
+
+  refreshToken() {
+    return from(this.manager.signinSilent().then(user => {
+      this.user = user;
+      return true;
+    }));
   }
 
   private createUser(callback: Function) {

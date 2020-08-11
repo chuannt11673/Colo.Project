@@ -1,4 +1,4 @@
-import { PipesModule } from './_core/pipes/pipes.module';
+import { RefreshTokenInterceptor } from './_core/interceptors/refresh-token.interceptor';
 import { AuthService } from './_core/services/auth.service';
 import { HttpRequetsInterceptor } from './_core/interceptors/http-requets.interceptor';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -53,6 +53,12 @@ export function initApp(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequetsInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true,
+      deps: [AuthService]
     }
   ],
   bootstrap: [AppComponent]
