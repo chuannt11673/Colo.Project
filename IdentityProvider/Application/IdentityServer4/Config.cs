@@ -21,7 +21,7 @@ namespace Application.IdentityServer4
         {
             new Client
             {
-                ClientId = "ionic-native",
+                ClientId = "mobile",
                 ClientSecrets =
                 {
                     new Secret("secret".Sha256())
@@ -30,11 +30,14 @@ namespace Application.IdentityServer4
                 RequireConsent = false,
                 RequirePkce = true,
                 AllowOfflineAccess = true,
+                RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                RefreshTokenExpiration = TokenExpiration.Sliding,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "colo.netcore.api"
                 },
                 RedirectUris = new List<string> { "https://ionic-hats.com/auth-callback", "http://localhost:8100/auth-callback" },
@@ -44,19 +47,25 @@ namespace Application.IdentityServer4
             },
             new Client
             {
-                ClientId = "ionic-angular",
+                ClientId = "webapp",
                 ClientSecrets =
                 {
                     new Secret("secret".Sha256())
                 },
-                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowedGrantTypes = GrantTypes.Code,
                 RequireConsent = false,
+
+                //  config refresh token
                 AllowOfflineAccess = true,
+                RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                RefreshTokenExpiration = TokenExpiration.Sliding,   
+                
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     "colo.netcore.api"
                 },
                 RedirectUris = new List<string> { "http://localhost:8100/auth-callback" },
