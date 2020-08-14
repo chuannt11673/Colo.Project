@@ -32,6 +32,7 @@ namespace Application.IdentityServer4
                 AllowOfflineAccess = true,
                 RefreshTokenUsage = TokenUsage.OneTimeOnly,
                 RefreshTokenExpiration = TokenExpiration.Sliding,
+                AccessTokenLifetime = 600,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
@@ -58,8 +59,8 @@ namespace Application.IdentityServer4
                 //  config refresh token
                 AllowOfflineAccess = true,
                 RefreshTokenUsage = TokenUsage.OneTimeOnly,
-                RefreshTokenExpiration = TokenExpiration.Sliding,   
-                
+                RefreshTokenExpiration = TokenExpiration.Sliding,
+                AccessTokenLifetime = 600,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,

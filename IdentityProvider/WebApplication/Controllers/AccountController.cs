@@ -174,17 +174,19 @@ namespace WebApplication.Controllers
 
             var user = new ApplicationUser
             {
-                Name = model.Name,
-                DOB = model.DOB.Value,
                 Email = model.Email,
-                UserName = model.Email,
-                PhoneNumber = model.Phone
+                UserName = model.Email
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                ViewBag.Errors = result.Errors.Select(x => x.Description).ToList();
+                result.Errors.Select(x => x.Description).ToList();
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+
                 return View(model);
             }
 

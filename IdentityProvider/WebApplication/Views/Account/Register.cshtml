@@ -28,40 +28,24 @@
                 </span>
 
                 @Html.HiddenFor(x => x.ReturnUrl)
-                <div class="wrap-input100 validate-input m-b-23">
-                    <span class="label-input100-nopdl">Name</span>
-                    <input class="input100-nopdl" placeholder="Type your name" asp-for="Name">
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                <partial name="_ValidationSummary" />
 
-                <div class="wrap-input100 validate-input m-b-23" >
-                    <span class="label-input100-nopdl">Day Of Birth</span>
-                    <input class="input100-nopdl" type="date" placeholder="Select your birthday" asp-for="DOB">
-                    <span asp-validation-for="DOB" class="text-danger"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input m-b-23" >
+                <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                     <span class="label-input100-nopdl">Email</span>
-                    <input class="input100-nopdl" placeholder="Type your email" asp-for="Email">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input class="input100" placeholder="Type your email" type="text" asp-for="Email" autofocus>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-23" >
-                    <span class="label-input100-nopdl">Phone</span>
-                    <input class="input100-nopdl" placeholder="Type your phone" asp-for="Phone">
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                </div>
-
-                <div class="wrap-input100 validate-input m-b-23" >
+                <div class="wrap-input100 validate-input m-b-23" data-validate="Password is required">
                     <span class="label-input100-nopdl">Password</span>
-                    <input class="input100-nopdl" type="password" placeholder="Type your password" asp-for="Password">
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input class="input100" placeholder="Type your password" type="password" asp-for="Password" autocomplete="off">
+                    <span class="focus-input100" data-symbol="&#xf190;"></span>
                 </div>
 
-                <div class="wrap-input100 validate-input m-b-23" >
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
                     <span class="label-input100-nopdl">Confirm Password</span>
-                    <input class="input100-nopdl" type="password" placeholder="Confirm your password" asp-for="ConfirmPassword">
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <input class="input100" placeholder="Type your password" type="password" asp-for="ConfirmPassword" autocomplete="off">
+                    <span class="focus-input100" data-symbol="&#xf190;"></span>
                 </div>
 
                 <div class="text-right p-t-8 p-b-31">
