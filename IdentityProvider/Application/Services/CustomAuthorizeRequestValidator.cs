@@ -6,25 +6,8 @@ namespace Application.Services
 {
     public class CustomAuthorizeRequestValidator : ICustomAuthorizeRequestValidator
     {
-        private readonly HttpContext HttpContext;
-        public CustomAuthorizeRequestValidator(IHttpContextAccessor httpContextAccessor)
-        {
-            HttpContext = httpContextAccessor.HttpContext;
-        }
-
         public Task ValidateAsync(CustomAuthorizeRequestValidationContext context)
         {
-            var request = context.Result.ValidatedRequest;
-            var promt = request.Raw["prompt"];
-            
-            if (HttpContext.Request.Path.StartsWithSegments("/Account/Login"))
-            {
-                if (promt == Prompts.Create)
-                    HttpContext.Response.Redirect(HttpContext.Request.PathBase + "/Account/Register" + HttpContext.Request.QueryString);
-                else if (promt == Prompts.Google)
-                    HttpContext.Response.Redirect(HttpContext.Request.PathBase + "/External/Challenge" + HttpContext.Request.QueryString + "&provider=Google");
-            }
-
             return Task.CompletedTask;
         }
     }

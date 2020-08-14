@@ -94,7 +94,8 @@ namespace WebApplication.Controllers
                 user = new ApplicationUser
                 {
                     UserName = email,
-                    Email = email
+                    Email = email,
+                    EmailConfirmed = true
                 };
 
                 await _userManager.CreateAsync(user);

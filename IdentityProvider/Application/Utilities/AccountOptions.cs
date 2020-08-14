@@ -17,5 +17,6 @@ namespace Application.Utilities
         public static bool IncludeWindowsGroups = false;
 
         public static string InvalidCredentialsErrorMessage = "Invalid username or password";
+        public static string EmailNotVerifiedErrorMessage = "Please verify your email before logging in";
     }
 }

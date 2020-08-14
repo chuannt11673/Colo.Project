@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Services;
 using Application.Utilities;
 using Core.Entities;
 using IdentityModel;
@@ -27,13 +28,15 @@ namespace WebApplication.Controllers
         private readonly IEventService _events;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IIdentityServerInteractionService _interactionService;
 
         public AccountController(IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IIdentityServerInteractionService interactionService)
         {
             _interaction = interaction;
             _clientStore = clientStore;
@@ -41,19 +44,25 @@ namespace WebApplication.Controllers
             _events = events;
             _userManager = userManager;
             _signInManager = signInManager;
+            _interactionService = interactionService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl, bool needFilter = true)
         {
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
+            AuthorizationRequest authorizationContext = await _interactionService.GetAuthorizationContextAsync(returnUrl);
+            
+            if (authorizationContext != null && needFilter) {
+                var prompt = authorizationContext.Parameters["prompt"];
 
-            if (vm.EnableLocalLogin == false && vm.ExternalProviders.Count() == 1)
-            {
-                // only one option for logging in
-                return RedirectToAction("Challenge", "External", new { provider = vm.ExternalLoginScheme, returnUrl });
+                if (prompt == Prompts.Create)
+                    return RedirectToAction(nameof(Register), new { returnUrl });
+
+                if (prompt == Prompts.Google)
+                    return RedirectToAction("Challenge", "External", new { provider = "Google", returnUrl });
             }
 
             return View(vm);
@@ -72,6 +81,12 @@ namespace WebApplication.Controllers
                 var user = await _userManager.FindByNameAsync(model.Username);
                 if (user != null)
                 {
+                    if (!user.EmailConfirmed)
+                    {
+                        ModelState.AddModelError(string.Empty, AccountOptions.EmailNotVerifiedErrorMessage);
+                        return View(await BuildLoginViewModelAsync(model));
+                    }
+
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberLogin, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
@@ -190,45 +205,7 @@ namespace WebApplication.Controllers
                 return View(model);
             }
 
-            return await SignInAsync(user, model.Password, false, model.ReturnUrl);
-        }
-
-        private async Task<IActionResult> SignInAsync(ApplicationUser user, string password, bool rememberLogin, string returnUrl)
-        {
-            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, password, rememberLogin, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
-
-                if (context != null)
-                {
-                    if (await _clientStore.IsPkceClientAsync(context.ClientId))
-                    {
-                        // if the client is PKCE then we assume it's native, so this change in how to
-                        // return the response is for better UX for the end user.
-                        return View("Redirect", new RedirectViewModel { RedirectUrl = returnUrl });
-                    }
-
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    return Redirect(returnUrl);
-                }
-
-                if (Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-
-                if (string.IsNullOrEmpty(returnUrl))
-                {
-                    return Redirect("~/");
-                }
-
-                // user might have clicked on a malicious link - should be logged
-                throw new Exception("invalid return URL");
-            }
-
-            throw new Exception("cannot signin");
+            return RedirectToAction(nameof(Login), new { returnUrl = model.ReturnUrl, needFilter = false });
         }
 
         private Task<InputModel> BuildInputModelAsync(string returnUrl)
