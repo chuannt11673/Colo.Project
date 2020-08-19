@@ -1,0 +1,9 @@
+<div id="myModal" class="modal">
+    <ion-icon class="close" name="close-outline" (click)="close()"></ion-icon>
+    <ion-icon class="send" name="send" (click)="send()"></ion-icon>
+
+    <img class="modal-content" id="img01" [src]="base64">
+    <div id="caption">
+        <ion-input placeholder="Write something..." [(ngModel)]="message" ngDefaultControl></ion-input>
+    </div>
+</div>

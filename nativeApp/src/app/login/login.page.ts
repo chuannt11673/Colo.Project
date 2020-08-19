@@ -2,6 +2,7 @@ import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { TranslateConfigService } from '../_core/services/translate-config.service';
 import { AuthService } from '../_core/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
     private navController: NavController) { }
 
   ngOnInit() {
-    this.authService.completeSignOut();
+    if (!environment.production)
+      this.authService.completeSignOut();
   }
 
   changeLanguage(code: string) {
@@ -25,7 +27,7 @@ export class LoginPage implements OnInit {
 
   logIn() {
     this.loading = true;
-    this.authService.startAuthentication('login').subscribe(() => {
+    this.authService.startAuthentication().subscribe(() => {
       this.navigateToHome();
     }, err => {
       this.loading = false;

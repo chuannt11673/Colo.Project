@@ -1,5 +1,5 @@
 import { httpEndpoint } from 'src/environments/environment';
-import { AlertController, IonicSafeString, NavController } from '@ionic/angular';
+import { AlertController, IonicSafeString, NavController, ModalController } from '@ionic/angular';
 import { FileService } from './../_services/file.service';
 import { ChatService } from './../_services/chat.service';
 import { UserService } from './../_services/user.service';
@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { ImageReviewComponent } from '../_core/modals/image-review/image-review.component';
 
 @Component({
   selector: 'app-chat',
@@ -33,6 +34,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     private fileService: FileService,
     private datePipe: DatePipe,
     private alert: AlertController,
+    private modalController: ModalController,
     private navController: NavController) { }
   
   ngOnInit() {
@@ -93,14 +95,17 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
  
   private getUser() {
     let email = this.route.snapshot.paramMap.get('email');
+    let kidahaIndex = this.getRandomArbitrary(2, 12);
     this.userService.searchEmail(email)
     .pipe(map(res => {
       this.getChatHistory(res.id, () => this.scrollToBottom());
       return res;
     }))
     .subscribe(user => {
-      this.user = user;
-      console.log('user', user);
+      this.user = {
+        ...user,
+        avatar: `/assets/SVG/kidaha-${kidahaIndex}.svg`
+      };
     });
   }
 
@@ -140,16 +145,28 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async onSelectImage(base64: string) {
-    const alert = await this.alert.create({
-      header: 'Use this picture?',
-      message: this.createAlertImageContent(base64),
-      buttons: [
-        { text: 'Cancel' },
-        { text: 'Send', handler: () => { this.uploadPicture(base64); } }
-      ]
+
+    const modal = await this.modalController.create({
+      component: ImageReviewComponent,
+      componentProps: {
+        'base64': base64
+      }
     });
 
-    await alert.present();
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.uploadPicture(data.message, base64);
+    }
+  }
+
+  private getRandomArbitrary(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    let res = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    return res.toString().length > 1 ? res : `0${res}`;
   }
   
   private scrollToBottom() {
@@ -158,15 +175,10 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     }, 1);
   }
 
-  private uploadPicture(base64: string) {
+  private uploadPicture(message:string, base64: string) {
     this.fileService.uploadMultiple([{ base64: base64 }]).subscribe(res => {
-      this.send({ message: ' ' }, res);
+      this.send({ message: message }, res);
     });
-  }
-
-  private createAlertImageContent(base64: string) {
-    let res = `<img src="data:image/jpeg;base64,${base64}">`;
-    return new IonicSafeString(res);
   }
 
   ngOnDestroy(): void {

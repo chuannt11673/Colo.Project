@@ -1,3 +1,4 @@
+import { ImageReviewModule } from './../_core/modals/image-review/image-review.module';
 import { ComponentsModule } from './../_core/components/components.module';
 import { FileService } from './../_services/file.service';
 import { ChatService } from './../_services/chat.service';
@@ -23,7 +24,8 @@ import { ChatPage } from './chat.page';
     IonicModule,
     ChatPageRoutingModule,
     PipesModule,
-    ComponentsModule
+    ComponentsModule,
+    ImageReviewModule
   ],
   providers: [
     Keyboard,

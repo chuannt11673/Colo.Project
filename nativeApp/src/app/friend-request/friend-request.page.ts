@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../_services/user.service';
 import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,13 +12,13 @@ import { AlertController, NavController } from '@ionic/angular';
 export class FriendRequestPage implements OnInit {
 
   requests: any[];
-  constructor(public translateConfigService: TranslateConfigService, public alertController: AlertController, private navController: NavController,
+  constructor(public route: ActivatedRoute, public translateConfigService: TranslateConfigService, public alertController: AlertController, private navController: NavController,
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getFriendRequest().subscribe(requests => {
-      this.requests = requests;
-    })
+    this.route.data.subscribe(data => {
+      this.requests = data.requests;
+    });
   }
 
   accept(userId: string, index: number) {

@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../_services/user.service';
 import { NavController } from '@ionic/angular';
 import { TranslateConfigService } from './../../_core/services/translate-config.service';
@@ -11,14 +12,13 @@ import { Component, OnInit } from '@angular/core';
 export class FriendsPage implements OnInit {
 
   friends: any[] = [];
-  constructor(public translateConfigService: TranslateConfigService, private navController: NavController,
+  constructor(public route: ActivatedRoute, public translateConfigService: TranslateConfigService, private navController: NavController,
     private userService: UserService) { }
 
-  ngOnInit() {    
-  }
-
-  ionViewWillEnter() {
-    this.getFriends();
+  ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.friends = data.friends;
+    });
   }
 
   navigateToFriendRequests() {

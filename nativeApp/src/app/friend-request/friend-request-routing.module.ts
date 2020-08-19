@@ -7,7 +7,9 @@ import { FriendRequestPage } from './friend-request.page';
 const routes: Routes = [
   {
     path: '',
-    resolve: [FriendRequestResolver],
+    resolve: {
+      requests: FriendRequestResolver
+    },
     component: FriendRequestPage
   }
 ];

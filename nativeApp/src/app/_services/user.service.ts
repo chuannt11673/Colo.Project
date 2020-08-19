@@ -12,6 +12,8 @@ export class UserService {
   private getFriendRequestsEndpoint = this.endpoint + 'getFriendRequests';
   private getFriendsEndpoint = this.endpoint + 'getFriends';
   private acceptFriendEndpoint = this.endpoint + 'acceptFriend';
+  private updateUserProfileImageEndpoint = this.endpoint + 'updateUserProfileImage';
+  private updateUserCoverEndpoint = this.endpoint + 'updateUserCover';
   constructor(private httpService: HttpService) { }
 
   register() {
@@ -40,5 +42,13 @@ export class UserService {
 
   acceptFriend(userId: string) {
     return this.httpService.get(`${this.acceptFriendEndpoint}/${userId}`);
+  }
+
+  updateUserProfileImage(model: any) {
+    return this.httpService.post(this.updateUserProfileImageEndpoint, model);
+  }
+
+  updateUserCover(model: any) {
+    return this.httpService.post(this.updateUserCoverEndpoint, model);
   }
 }

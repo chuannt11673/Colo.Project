@@ -31,13 +31,11 @@ export class AuthService {
   }
 
   createUserManager(prompt: string) {
-    if (prompt) {
-      let setting = {
-        ...this.clientSetting,
-        prompt
-      };
-      this.manager = new UserManager(setting);
-    }
+    let setting = {
+      ...this.clientSetting,
+      prompt
+    };
+    this.manager = new UserManager(setting);
   }
 
   isLoggedIn(): boolean {
@@ -64,8 +62,7 @@ export class AuthService {
   }
 
   startAuthentication(prompt: string = null): Observable<any> {
-    if (prompt)
-      this.createUserManager(prompt);
+    this.createUserManager(prompt);
 
     let signIn = this.manager.signinPopup();
     return from(signIn).pipe(

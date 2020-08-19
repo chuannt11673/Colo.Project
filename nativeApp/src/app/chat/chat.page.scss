@@ -17,7 +17,7 @@ $white: white;
     .chat-history {
         padding: 0 15px;
         .message-data {
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
         .message {
             padding: 12px;
@@ -35,6 +35,7 @@ $white: white;
             background: $blue;
         }
         .bg-transparent {
+            padding-top: 0;
             background: transparent;
         }
         .my-message.bg-transparent {
@@ -70,7 +71,8 @@ $white: white;
 }
 
 .align-right {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .float-right {

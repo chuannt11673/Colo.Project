@@ -7,7 +7,10 @@ import { FriendsResolver } from './friends.resolver';
 const routes: Routes = [
   {
     path: '',
-    component: FriendsPage
+    component: FriendsPage,
+    resolve: {
+      friends: FriendsResolver
+    }
   }
 ];
 

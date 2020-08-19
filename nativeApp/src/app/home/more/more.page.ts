@@ -1,6 +1,8 @@
-import { ActionSheetController, NavController } from '@ionic/angular';
+import { LogoutActionSheet, UploadProfileActionSheet, UploadCoverActionSheet } from '../../_interface/action-sheet.template';
+import { NavController } from '@ionic/angular';
 import { AuthService } from './../../_core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetTemplate } from 'src/app/_interface/action-sheet.template';
 
 @Component({
   selector: 'app-more',
@@ -10,7 +12,11 @@ import { Component, OnInit } from '@angular/core';
 export class MorePage implements OnInit {
 
   currentUser: any;
-  constructor(private authService: AuthService, private actionSheetController: ActionSheetController, private navController: NavController) { }
+  constructor(private authService: AuthService,
+    private navController: NavController,
+    private logoutActionSheet: LogoutActionSheet,
+    private uploadProfileActionSheet: UploadProfileActionSheet,
+    private uploadCoverActionSheet: UploadCoverActionSheet) { }
 
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
@@ -21,25 +27,18 @@ export class MorePage implements OnInit {
   }
 
   logout() {
-    this.presentAlertConfirm();
+    this.presentAlertConfirm(this.logoutActionSheet);
   }
 
-  async presentAlertConfirm() {
-    const actionSheet = await this.actionSheetController.create({
-      header: "Log out this account?",
-      buttons: [{
-        text: 'Log out',
-        cssClass: 'danger',
-        handler: () => {
-          this.authService.signOut();
-        }
-      },
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      }
-      ]
-    });
-    await actionSheet.present();
+  updateProfilePicture() {
+    this.presentAlertConfirm(this.uploadProfileActionSheet);
+  }
+
+  updateCover() {
+    this.presentAlertConfirm(this.uploadCoverActionSheet);
+  }
+
+  async presentAlertConfirm(actionSheetTemplate: ActionSheetTemplate) {
+    await actionSheetTemplate.presentAsync();
   }
 }
