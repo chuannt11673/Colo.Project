@@ -99,5 +99,21 @@ namespace WebApi.Controllers
             await _userService.AcceptFriend(userId);
             return NoContent();
         }
+
+        [HttpPost("UpdateUserProfileImage")]
+        public async Task<IActionResult> UpdateUserProfileImage([FromBody] UserUpdateProfileModel model)
+        {
+            var result = await _userService.UpdateUserFile(model);
+            return Ok(result);
+        }
+
+        [HttpPost("UpdateUserCover")]
+        public async Task<IActionResult> UpdateUserCover([FromBody] UserUpdateCoverModel model)
+        {
+            var result = await _userService.UpdateUserFile(model);
+            return Ok(result);
+        }
+
+
     }
 }

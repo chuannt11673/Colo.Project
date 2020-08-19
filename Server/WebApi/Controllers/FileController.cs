@@ -28,6 +28,11 @@ namespace WebApi.Controllers
             return Ok(await _fileService.Upload(model));
         }
 
+        /// <summary>
+        /// Upload multiple files
+        /// </summary>
+        /// <param name="models"></param>
+        /// <returns></returns>
         [HttpPost("UploadMultiple")]
         public async Task<IActionResult> UploadMultiple([FromBody] FileCreateModel[] models)
         {
