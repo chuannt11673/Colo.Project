@@ -20,5 +20,7 @@ namespace Infrastructure.Data
         public DbSet<FriendShipEntity> FriendShips { get; set; }
         public DbSet<ChatEntity> Chats { get; set; }
         public DbSet<FileEntity> Files { get; set; }
+        public DbSet<ChatFileEntity> ChatFileEntity { get; set; }
+        public DbSet<UserFileEntity> UserFileEntity { get; set; }
     }
 }

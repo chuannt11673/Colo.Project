@@ -22,6 +22,7 @@ namespace Application.Services
         Task<bool> IsAnyUserEmail(string email);
         Task<List<UserModel>> GetFriends();
         Task<List<UserModel>> GetFriendRequests();
+        Task<FileModel> UpdateUserFile(IUserFileUpdateModel model);
     }
 
     [ScopedDependency(ServiceType = typeof(IUserService))]
@@ -30,15 +31,18 @@ namespace Application.Services
         private readonly HttpContext _httpContext;
         private readonly IGenericRepo<UserEntity> _userRepo;
         private readonly IGenericRepo<FriendShipEntity> _friendShipRepo;
+        private readonly IGenericRepo<UserFileEntity> _userFileRepo;
         private readonly IUnitOfWork _unitOfWork;
         public UserService(IHttpContextAccessor httpContextAccessor,
             IGenericRepo<UserEntity> userRepo,
             IGenericRepo<FriendShipEntity> friendShipRepo,
+            IGenericRepo<UserFileEntity> userFileRepo,
             IUnitOfWork unitOfWork)
         {
             _httpContext = httpContextAccessor.HttpContext;
             _userRepo = userRepo;
             _friendShipRepo = friendShipRepo;
+            _userFileRepo = userFileRepo;
             _unitOfWork = unitOfWork;
         }
 
@@ -103,16 +107,25 @@ namespace Application.Services
             var userEmail = _httpContext.UserEmail();
 
             var entity = _userRepo.Get(x => x.Email == userEmail).FirstOrDefault();
+            
             if (entity == null)
             {
                 entity = model.MapTo<UserEntity>();
                 entity.Id = userId;
                 entity.Email = userEmail;
+
                 _userRepo.Add(entity);
                 _unitOfWork.Commit();
             }
 
-            return Task.FromResult(entity.MapTo<UserModel>());
+            var userProfile = _userFileRepo.Get(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
+            var userCover = _userFileRepo.Get(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
+
+            var result = entity.MapTo<UserModel>();
+            result.UserProfile = userProfile;
+            result.UserCover = userCover;
+
+            return Task.FromResult(result);
         }
 
         public Task<UserModel> SearchEmail(string email)
@@ -129,6 +142,23 @@ namespace Application.Services
             userModel.IsFriend = isFriend || entity.Id == loggedInUserId;
 
             return Task.FromResult(userModel);
+        }
+
+        public Task<FileModel> UpdateUserFile(IUserFileUpdateModel model)
+        {
+            var userId = _httpContext.UserId();
+            var entity = new UserFileEntity
+            {
+                UserId = userId,
+                FileId = model.FileId,
+                Type = model.Type
+            };
+
+            _userFileRepo.Add(entity);
+            _unitOfWork.Commit();
+
+            _unitOfWork.Context.Entry(entity).Reference(x => x.File).Load();
+            return Task.FromResult(entity.File.MapTo<FileModel>());
         }
     }
 }
