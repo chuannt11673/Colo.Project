@@ -27,9 +27,8 @@ export class UserInfoPage implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUserProfile();
-    let email = this.route.snapshot.params['email'];
-    this.userService.searchEmail(email).subscribe(user => {
-      this.user = user;
+    this.route.data.subscribe(data => {
+      this.user = data.userInfo;
     });
   }
 

@@ -7,8 +7,10 @@ import { UserInfoResolver } from './user-info.resolver';
 const routes: Routes = [
   {
     path: '',
-    resolve: [UserInfoResolver],
-    component: UserInfoPage
+    component: UserInfoPage,
+    resolve: {
+      userInfo: UserInfoResolver
+    }
   }
 ];
 

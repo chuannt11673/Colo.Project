@@ -121,11 +121,7 @@ namespace Application.Services
             var userProfile = _userFileRepo.Get(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
             var userCover = _userFileRepo.Get(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
 
-            var result = entity.MapTo<UserModel>();
-            result.UserProfile = userProfile;
-            result.UserCover = userCover;
-
-            return Task.FromResult(result);
+            return Task.FromResult(entity.MapTo<UserModel>());
         }
 
         public Task<UserModel> SearchEmail(string email)

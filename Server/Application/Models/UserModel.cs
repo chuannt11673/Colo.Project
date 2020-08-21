@@ -29,9 +29,6 @@ namespace Application.Models
     {
         // It will be true if user is yourself
         public bool IsFriend { get; set; }
-
-        public FileModel UserProfile { get; set; }
-        public FileModel UserCover { get; set; }
     }
 
     public class UserUpdateProfileModel : IUserFileUpdateModel

@@ -1,12 +1,18 @@
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ImageFormater } from './image-formater.pipe';
 
 
 
 @NgModule({
-  declarations: [SafeHtmlPipe],
-  exports: [SafeHtmlPipe]
+  declarations: [
+    SafeHtmlPipe,
+    ImageFormater
+  ],
+  exports: [
+    SafeHtmlPipe,
+    ImageFormater
+  ]
 })
 export class PipesModule {
 }

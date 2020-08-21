@@ -1,8 +1,9 @@
-import { map, concatMap, catchError } from 'rxjs/operators';
+import { LocalstorageService } from './localstorage.service';
+import { map, concatMap } from 'rxjs/operators';
 import { Observable, from, of } from 'rxjs';
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
-import { UserManager, User } from 'oidc-client';
+import { UserManager, User, Profile } from 'oidc-client';
 import { NavController } from '@ionic/angular';
 import { clientSetting } from 'src/environments/environment';
 
@@ -17,16 +18,18 @@ export class AuthService {
   }
   private manager: UserManager;
   private user: User;
+  private userProfile: Profile;
 
   clientSetting = clientSetting;
 
-  constructor(private navController: NavController, private httpService: HttpService) {
+  constructor(private navController: NavController, private httpService: HttpService, private localStorage: LocalstorageService) {
     this.manager = new UserManager(this.clientSetting);
   }
 
   initUser() {
     return this.manager.getUser().then(user => {
       this.user = user;
+      this.userProfile = JSON.parse(localStorage.getItem('userProfile'));
     });
   }
 
@@ -47,10 +50,7 @@ export class AuthService {
   }
 
   getUserProfile(): any {
-    return {
-      email: this.user.profile[this.claimTypes.email],
-      id: this.user.profile[this.claimTypes.id]
-    };
+    return this.userProfile;
   }
 
   getAccessToken() {
@@ -108,8 +108,17 @@ export class AuthService {
     };
 
     return this.httpService.post('api/user/register', model).pipe(map(user => {
-      this.user.profile.birthdate = user.birthday;
-      this.user.profile.gender = user.gender;
+      this.userProfile = {
+        ...this.user.profile,
+        id: this.user.profile[this.claimTypes.id],
+        email: this.user.profile[this.claimTypes.email],
+        birthdate: user.birthday,
+        gender: user.gender,
+        profile_img: user.userProfile.url,
+        cover_img: user.userCover.url
+      };
+      
+      this.localStorage.set('userProfile', JSON.stringify(this.userProfile));
     }));
   }
 }

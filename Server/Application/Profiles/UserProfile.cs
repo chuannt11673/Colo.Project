@@ -11,7 +11,7 @@ namespace Application.Profiles
         {
             CreateMap<UserCreateModel, UserEntity>().IgnoreAllNonExisting();
             CreateMap<UserUpdateModel, UserEntity>().IgnoreAllNonExisting();
-            CreateMap<UserEntity, UserModel>().IgnoreAllNonExisting().ReverseMap();
+            CreateMap<UserEntity, UserModel>().IgnoreAllNonExisting();
         }
     }
 }

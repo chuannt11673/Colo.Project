@@ -1,3 +1,4 @@
+import { PipesModule } from './../../_core/pipes/pipes.module';
 import { ComponentsModule } from './../../_core/components/components.module';
 import { UserService } from './../../_services/user.service';
 import { WeatherForecastService } from './../../_services/weather-forecast.service';
@@ -18,7 +19,8 @@ import { FriendsResolver } from './friends.resolver';
     FormsModule,
     IonicModule,
     FriendsPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [
     FriendsPage

@@ -3,7 +3,7 @@
     <ion-item-divider style="padding-left: 0;">
         <ion-item lines="none" (click)="userInfo()">
             <ion-avatar slot="start">
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                <img src="{{ currentUser.profile_img | imageUrl }}">
             </ion-avatar>
             <ion-label>
                 <h3 style="color: black;">{{currentUser.email}}</h3>

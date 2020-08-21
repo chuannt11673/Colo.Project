@@ -1,3 +1,4 @@
+import { PipesModule } from './../../_core/pipes/pipes.module';
 import { UserService } from './../../_services/user.service';
 import { FileService } from './../../_services/file.service';
 import { ImageReviewModule } from './../../_core/modals/image-review/image-review.module';
@@ -22,7 +23,8 @@ import { MorePage } from './more.page';
     IonicModule,
     MorePageRoutingModule,
     ComponentsModule,
-    ImageReviewModule
+    ImageReviewModule,
+    PipesModule
   ],
   providers: [
     Camera,

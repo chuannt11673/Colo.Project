@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Entities
 {
@@ -13,6 +14,22 @@ namespace Core.Entities
         public Gender Gender { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
+
+        public virtual IEnumerable<UserFileEntity> UserFiles { get; set; }
+        public virtual UserFileEntity UserProfile
+        {
+            get
+            {
+                return UserFiles.Where(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+            }
+        }
+        public virtual UserFileEntity UserCover
+        {
+            get
+            {
+                return UserFiles.Where(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+            }
+        }
     }
     
     public enum Gender

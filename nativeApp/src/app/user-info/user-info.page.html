@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
     <div class="card">
-        <img src="https://images.unsplash.com/photo-1593697821028-7cc59cfd7399?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="John" style="width:100%;height:25vh;object-fit:cover;">
+        <img src="{{user?.userCover.url | imageUrl}}" alt="John" style="width:100%;height:25vh;object-fit:cover;">
         <h3>{{user?.email}}</h3>
         <p>Something about you here...</p>
         <section>

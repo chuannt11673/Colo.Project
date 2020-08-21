@@ -1,3 +1,4 @@
+import { PipesModule } from './../_core/pipes/pipes.module';
 import { UserInfoResolver } from './user-info.resolver';
 import { UserService } from './../_services/user.service';
 import { UserInfoService } from './../_services/user-info.service';
@@ -17,7 +18,8 @@ import { UserInfoPage } from './user-info.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    UserInfoPageRoutingModule
+    UserInfoPageRoutingModule,
+    PipesModule
   ],
   providers: [
     UserService,
