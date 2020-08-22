@@ -25,7 +25,11 @@ const routes: Routes = [
   {
     path: 'chat/:email',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },  {
+    path: 'change-language',
+    loadChildren: () => import('./change-language/change-language.module').then( m => m.ChangeLanguagePageModule)
   },
+
 ];
 
 @NgModule({

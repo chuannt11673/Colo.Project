@@ -1,3 +1,4 @@
+import { TranslateConfigService } from './../../_core/services/translate-config.service';
 import { LogoutActionSheet, UploadProfileActionSheet, UploadCoverActionSheet } from '../../_interface/action-sheet.template';
 import { NavController } from '@ionic/angular';
 import { AuthService } from './../../_core/services/auth.service';
@@ -16,7 +17,8 @@ export class MorePage implements OnInit {
     private navController: NavController,
     private logoutActionSheet: LogoutActionSheet,
     private uploadProfileActionSheet: UploadProfileActionSheet,
-    private uploadCoverActionSheet: UploadCoverActionSheet) { }
+    private uploadCoverActionSheet: UploadCoverActionSheet,
+    public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
@@ -24,6 +26,10 @@ export class MorePage implements OnInit {
 
   userInfo() {
     this.navController.navigateForward(`user-info/${this.currentUser.email}`)
+  }
+
+  changeLanguage() {
+    this.navController.navigateForward('change-language');
   }
 
   logout() {

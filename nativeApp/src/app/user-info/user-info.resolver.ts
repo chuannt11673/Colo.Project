@@ -13,7 +13,6 @@ export class UserInfoResolver implements Resolve<any> {
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
         let email = route.paramMap.get('email');
-        console.log('email', email)
         return this.userService.searchEmail(email);
     }
 }

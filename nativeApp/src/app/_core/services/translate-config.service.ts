@@ -23,6 +23,11 @@ export class TranslateConfigService {
     this.setLanguage(languageCode || defaultLanguage);
   }
 
+  getCurrentLanguageCode() {
+    let languageCode = this.localstorageService.get(this.key);
+    return languageCode;
+  }
+
   setLanguage(languageCode: string) {
     this.translateService.use(languageCode);
     this.localstorageService.set(this.key, languageCode);

@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -36,7 +37,8 @@ export function initApp(authService: AuthService) {
         useFactory: (LanguageLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,

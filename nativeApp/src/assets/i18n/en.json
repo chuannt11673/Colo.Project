@@ -3,6 +3,14 @@
     "accept": "Accept",
     "login": "Login",
     "register": "Register",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "my_info": "My info",
+    "languages": "Languages",
+    "update_info": "Update Info",
+    "update_avatar": "Update Avatar",
+    "update_cover": "Update Cover",
+    "logout": "Log out",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Welcome you to visit our <b>Colo App</b>",
@@ -32,5 +40,7 @@
     "user_info_album": "Album",
     "user_info_make_friend_title": "Make friend to have a great conversion together",
     "user_info_make_friend_add": "Add friend",
-    "user_info_make_friend_chat": "Chat"
+    "user_info_make_friend_chat": "Chat",
+
+    "change_language_title": "Change Language"
 }

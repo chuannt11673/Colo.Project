@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{translateConfigService.text.change_language_title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-radio-group allow-empty-selection [(ngModel)]="language">
+            <ion-item (click)="changeLanguage('en')">
+                <ion-label>{{translateConfigService.text.english}}</ion-label>
+                <ion-radio slot="end" color="primary" value="en"></ion-radio>
+            </ion-item>
+            <ion-item (click)="changeLanguage('vi-VN')">
+                <ion-label>{{translateConfigService.text.vietnamese}}</ion-label>
+                <ion-radio slot="end" color="primary" value="vi-VN"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+</ion-content>

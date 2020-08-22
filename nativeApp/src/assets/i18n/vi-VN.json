@@ -3,6 +3,14 @@
     "accept": "Đồng ý",
     "login": "Đăng nhập",
     "register": "Đăng ký",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "my_info": "Thông tin cá nhân",
+    "languages": "Ngôn ngữ",
+    "update_info": "Cập nhật thông tin",
+    "update_avatar": "Cập nhật ảnh đại diện",
+    "update_cover": "Cập nhật ảnh nền",
+    "logout": "Đăng xuất",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Chào mừng bạn đã sử dụng ứng dụng <b>Colo App</b> của chúng tôi",
@@ -32,5 +40,7 @@
     "user_info_album": "Ảnh",
     "user_info_make_friend_title": "Trở thành bạn bè để có những kỷ niệm đáng nhớ cùng nhau",
     "user_info_make_friend_add": "Kết bạn",
-    "user_info_make_friend_chat": "Nhắn tin"
+    "user_info_make_friend_chat": "Nhắn tin",
+
+    "change_language_title": "Thay đổi ngôn ngữ"
 }
