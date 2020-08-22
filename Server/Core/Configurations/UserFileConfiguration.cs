@@ -9,7 +9,7 @@ namespace Core.Configurations
         public void Configure(EntityTypeBuilder<UserFileEntity> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId);
+            builder.HasOne(x => x.User).WithMany(x => x.UserFiles).HasForeignKey(x => x.UserId);
             builder.HasOne(x => x.File).WithMany().HasForeignKey(x => x.FileId);
         }
     }

@@ -18,6 +18,8 @@
     <Compile Remove="Migrations\20200718153815_Add_Chat.Designer.cs" />
     <Compile Remove="Migrations\20200718153939_Add_Chat.cs" />
     <Compile Remove="Migrations\20200718153939_Add_Chat.Designer.cs" />
+    <Compile Remove="Migrations\20200821164535_Update_UserEntity_LazyLoading_Avatar_Cover.cs" />
+    <Compile Remove="Migrations\20200821164535_Update_UserEntity_LazyLoading_Avatar_Cover.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

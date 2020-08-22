@@ -40,7 +40,8 @@ namespace Application.Services
 
         public Task Create(ChatCreateModel model)
         {
-            var fromUserId = _httpContext.UserId();
+            var fromUserId = _httpContext.User.Id();
+
             var entity = new ChatEntity
             {
                 FromUserId = fromUserId,
@@ -66,7 +67,7 @@ namespace Application.Services
 
         public Task<ChatItemModel[]> GetChatList()
         {
-            var userId = _httpContext.UserId();
+            var userId = _httpContext.User.Id();
 
             var cte = "select ROW_NUMBER() over( partition by FromUserId, ToUserId order by CreatedDatetime desc) as row_index, * from dbo.Chats";
             var entities = _chatRepo.GetFromSql($"with cte as ({cte}) select * from cte where row_index = 1 and FromUserId = '{userId}' or ToUserId = '{userId}' order by CreatedDatetime desc").ToList();
@@ -75,6 +76,7 @@ namespace Application.Services
             {
                 UserId = x.FromUserId == userId ? x.ToUserId : x.FromUserId,
                 UserEmail = x.FromUserId == userId ? x.ToUser.Email : x.FromUser.Email,
+                Avatar = x.FromUserId == userId ? x.ToUser.Avatar.File.Url : x.FromUser.Avatar.File.Url,
                 Message = x.Message,
                 FileModels = x.ChatFiles.Select(file => file.MapTo<FileModel>()).ToArray()
             }).DistinctBy(x => x.UserId).ToArray();
@@ -84,7 +86,7 @@ namespace Application.Services
 
         public Task<PagingationModel<ChatModel>> Gets(ChatGetPagingationModel model)
         {
-            var currentUserId = _httpContext.UserId();
+            var currentUserId = _httpContext.User.Id();
 
             var queryable = _chatRepo.Get(x => x.FromUserId == currentUserId && x.ToUserId == model.UserId || x.FromUserId == model.UserId && x.ToUserId == currentUserId)
                 .OrderByDescending(x => x.CreatedDateTime)

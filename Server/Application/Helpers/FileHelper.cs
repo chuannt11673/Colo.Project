@@ -32,7 +32,8 @@ namespace Application.Helpers
             var returnModel = new FileHelperModel() {
                 FileName = $"{Path.GetRandomFileName().Split(".")[0]}-{DateTimeOffset.UtcNow.Ticks}"
             };
-            var userEmail = _httpContext.UserEmail();
+
+            var userEmail = _httpContext.User.Email();
 
             using (var input = new MemoryStream(Convert.FromBase64String(base64)))
             {

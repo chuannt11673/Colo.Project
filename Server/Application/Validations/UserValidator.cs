@@ -7,7 +7,6 @@ namespace Application.Validations
     {
         public UserValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().WithMessage("Email cannot be null or empty");            
         }
     }
 }

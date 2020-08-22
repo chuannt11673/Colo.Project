@@ -19,14 +19,13 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// Register user
+        /// Get User Info
         /// </summary>
-        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] UserCreateModel model)
+        [HttpGet("GetUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
         {
-            var result = await _userService.Register(model);
+            var result = await _userService.GetUserInfo();
             return Ok(result);
         }
 
@@ -100,6 +99,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Update User Avatar
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("UpdateUserProfileImage")]
         public async Task<IActionResult> UpdateUserProfileImage([FromBody] UserUpdateProfileModel model)
         {
@@ -107,6 +111,11 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Update User Cover
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("UpdateUserCover")]
         public async Task<IActionResult> UpdateUserCover([FromBody] UserUpdateCoverModel model)
         {

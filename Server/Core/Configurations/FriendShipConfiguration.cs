@@ -9,8 +9,8 @@ namespace Core.Configurations
         public void Configure(EntityTypeBuilder<FriendShipEntity> builder)
         {
             builder.HasKey(x => new { x.SenderId, x.ReceiverId });
-            builder.HasOne(sc => sc.Sender).WithMany().HasForeignKey(sc => sc.SenderId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(sc => sc.Receiver).WithMany().HasForeignKey(sc => sc.ReceiverId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(sc => sc.Sender).WithMany(x => x.SendingFriendShips).HasForeignKey(sc => sc.SenderId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(sc => sc.Receiver).WithMany(x => x.ReceivingFriendShips).HasForeignKey(sc => sc.ReceiverId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

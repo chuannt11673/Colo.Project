@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Core.Entities
 {
@@ -16,24 +18,49 @@ namespace Core.Entities
         public string Address { get; set; }
 
         public virtual IEnumerable<UserFileEntity> UserFiles { get; set; }
-        public virtual UserFileEntity UserProfile
+        public virtual UserFileEntity Avatar
         {
             get
             {
-                return UserFiles.Where(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+                var userFile = UserFiles.Where(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+
+                return userFile ?? new UserFileEntity
+                {
+                    File = new FileEntity()
+                };
             }
         }
-        public virtual UserFileEntity UserCover
+        public virtual UserFileEntity Cover
         {
             get
             {
-                return UserFiles.Where(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+                var userFile = UserFiles.Where(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).FirstOrDefault();
+
+                return userFile ?? new UserFileEntity
+                {
+                    File = new FileEntity()
+                };
+            }
+        }
+
+        public virtual IEnumerable<FriendShipEntity> SendingFriendShips { get; set; }
+        public virtual IEnumerable<FriendShipEntity> ReceivingFriendShips { get; set; }
+
+        public virtual IEnumerable<UserEntity> Friends
+        {
+            get
+            {
+                var receivers = SendingFriendShips.Where(x => x.State == FriendShipState.Accepted).Select(x => x.Receiver);
+                var senders = ReceivingFriendShips.Where(x => x.State == FriendShipState.Accepted).Select(x => x.Sender);
+
+                return receivers.Union(senders);
             }
         }
     }
-    
+
     public enum Gender
     {
+        NotSelect = 0,
         Male = 1,
         Female = 2,
         Other = 3

@@ -9,9 +9,9 @@ namespace Application.Profiles
     {
         public UserProfile()
         {
-            CreateMap<UserCreateModel, UserEntity>().IgnoreAllNonExisting();
-            CreateMap<UserUpdateModel, UserEntity>().IgnoreAllNonExisting();
-            CreateMap<UserEntity, UserModel>().IgnoreAllNonExisting();
+            CreateMap<UserEntity, UserModel>().IgnoreAllNonExisting()
+                .ForMember(x => x.Avatar, opt => opt.MapFrom(s => s.Avatar.File.Url))
+                .ForMember(x => x.Cover, opt => opt.MapFrom(s => s.Cover.File.Url));
         }
     }
 }

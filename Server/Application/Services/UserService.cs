@@ -15,7 +15,7 @@ namespace Application.Services
 {
     public interface IUserService
     {
-        Task<UserModel> Register(UserCreateModel model);
+        Task<UserModel> GetUserInfo();
         Task<UserModel> SearchEmail(string email);
         Task AddFriend(Guid userId);
         Task AcceptFriend(Guid userId);
@@ -65,22 +65,24 @@ namespace Application.Services
             if (entity == null)
                 throw new Exception("User doesn't exist");
 
-            if (entity.Email == _httpContext.UserEmail())
+            if (entity.Email == _httpContext.User.Email())
                 return Task.CompletedTask;
 
             _friendShipRepo.Add(new FriendShipEntity
             {
-                SenderId = _httpContext.UserId(),
+                SenderId = _httpContext.User.Id(),
                 ReceiverId = entity.Id,
                 State = FriendShipState.Requested
             });
+
             _unitOfWork.Commit();
+
             return Task.CompletedTask;
         }
 
         public Task<List<UserModel>> GetFriendRequests()
         {
-            var userId = _httpContext.UserId();
+            var userId = _httpContext.User.Id();
             var users = _friendShipRepo.Get(x => x.ReceiverId == userId && x.State == FriendShipState.Requested).Select(x => x.Sender).QueryTo<UserModel>();
 
             return Task.FromResult(users.ToList());
@@ -88,11 +90,18 @@ namespace Application.Services
 
         public Task<List<UserModel>> GetFriends()
         {
-            var userId = _httpContext.UserId();
-            var users = _friendShipRepo.Get(x => x.SenderId == userId && x.State == FriendShipState.Accepted).Select(x => x.Receiver).QueryTo<UserModel>()
-                .Union(_friendShipRepo.Get(x => x.ReceiverId == userId && x.State == FriendShipState.Accepted).Select(x => x.Sender).QueryTo<UserModel>());
+            var userId = _httpContext.User.Id();
 
-            return Task.FromResult(users.ToList());
+            var user = _userRepo.Get(x => x.Id == userId).FirstOrDefault();
+
+            if (user != null)
+            {
+                var friends = user.Friends.Select(x => x.MapTo<UserModel>()).ToList();
+
+                return Task.FromResult(friends);
+            }
+
+            return Task.FromResult(new List<UserModel>());
         }
 
         public Task<bool> IsAnyUserEmail(string email)
@@ -101,26 +110,24 @@ namespace Application.Services
             return Task.FromResult(isAny);
         }
 
-        public Task<UserModel> Register(UserCreateModel model)
+        public Task<UserModel> GetUserInfo()
         {
-            var userId = _httpContext.UserId();
-            var userEmail = _httpContext.UserEmail();
-
-            var entity = _userRepo.Get(x => x.Email == userEmail).FirstOrDefault();
+            var userId = _httpContext.User.Id();
+            var entity = _userRepo.Get(x => x.Id == userId).FirstOrDefault();
             
             if (entity == null)
             {
-                entity = model.MapTo<UserEntity>();
-                entity.Id = userId;
-                entity.Email = userEmail;
+                entity = new UserEntity
+                {
+                    Id = userId,
+                    Email = _httpContext.User.Email(),
+                    Birthday = DateTimeOffset.UtcNow.Date
+                };
 
                 _userRepo.Add(entity);
                 _unitOfWork.Commit();
             }
-
-            var userProfile = _userFileRepo.Get(x => x.Type == UserFileType.Profile).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
-            var userCover = _userFileRepo.Get(x => x.Type == UserFileType.Cover).OrderByDescending(x => x.CreatedDateTime).Select(x => x.File.MapTo<FileModel>()).FirstOrDefault();
-
+           
             return Task.FromResult(entity.MapTo<UserModel>());
         }
 
@@ -130,7 +137,8 @@ namespace Application.Services
             if (entity == null)
                 return Task.FromResult((UserModel)null);
 
-            var loggedInUserId = _httpContext.UserId();
+            var loggedInUserId = _httpContext.User.Id();
+
             var isFriend = _friendShipRepo.Get(x => (x.SenderId == loggedInUserId && x.ReceiverId == entity.Id) ||
                 (x.SenderId == entity.Id && x.ReceiverId == loggedInUserId)).Any();
 
@@ -142,7 +150,8 @@ namespace Application.Services
 
         public Task<FileModel> UpdateUserFile(IUserFileUpdateModel model)
         {
-            var userId = _httpContext.UserId();
+            var userId = _httpContext.User.Id();
+
             var entity = new UserFileEntity
             {
                 UserId = userId,
