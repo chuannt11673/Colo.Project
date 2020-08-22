@@ -5,7 +5,7 @@
     </ion-refresher>
     <ion-item *ngFor="let message of messages" (click)="chat(message.userEmail)">
         <ion-avatar slot="start">
-            <img src="{{message.profileImage | imageUrl}}">
+            <img src="{{message.avatar | imageUrl}}">
         </ion-avatar>
         <ion-label>
             <h3>{{message.userEmail}}</h3>

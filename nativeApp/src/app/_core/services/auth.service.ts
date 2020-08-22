@@ -98,24 +98,17 @@ export class AuthService {
   }
 
   private createUser() : Observable<any> {
-    let model = {
-      email: null,
-      firstName: null,
-      lastName: null,
-      gender: 1,
-      birthDay: new Date(),
-      address: null
-    };
 
-    return this.httpService.post('api/user/register', model).pipe(map(user => {
+    return this.httpService.get('api/user/getUserInfo').pipe(map(user => {
+      
       this.userProfile = {
         ...this.user.profile,
         id: this.user.profile[this.claimTypes.id],
         email: this.user.profile[this.claimTypes.email],
         birthdate: user.birthday,
         gender: user.gender,
-        profile_img: user.userProfile.url,
-        cover_img: user.userCover.url
+        avatar: user.avatar,
+        cover: user.cover
       };
       
       this.localStorage.set('userProfile', JSON.stringify(this.userProfile));

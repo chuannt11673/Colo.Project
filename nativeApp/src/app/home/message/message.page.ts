@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { ChatService } from './../../_services/chat.service';
@@ -11,10 +12,12 @@ import { Component, OnInit } from '@angular/core';
 export class MessagePage implements OnInit {
 
   messages: any[] = [];
-  constructor(private chatService: ChatService, private navController: NavController) { }
+  constructor(private route: ActivatedRoute, private chatService: ChatService, private navController: NavController) { }
 
   ngOnInit() {
-    this.getMessages();
+    this.route.data.subscribe(data => {
+      this.messages = data.data;
+    });
   }
 
   chat(email: string) {
@@ -30,15 +33,9 @@ export class MessagePage implements OnInit {
   }
 
   private getMessages(callback: Function = null) {
-    this.chatService.getChatList()
-    .pipe(map((res: any[]) => {
-      res.forEach((element: any) => {
-        element.message = element.message ?? '';
-      });
-      return res;
-    }))
-    .subscribe((result: any[]) => {
+    this.chatService.getChatList().subscribe((result: any[]) => {
       this.messages = result;
+
       if (callback)
         callback();
     });
