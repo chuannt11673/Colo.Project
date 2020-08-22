@@ -12,6 +12,9 @@ namespace Application.Profiles
             CreateMap<UserEntity, UserModel>().IgnoreAllNonExisting()
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(s => s.Avatar.File.Url))
                 .ForMember(x => x.Cover, opt => opt.MapFrom(s => s.Cover.File.Url));
+
+            CreateMap<UserUpdateModel, UserEntity>().IgnoreAllNonExisting()
+                .ForMember(x => x.Birthday, opt => opt.MapFrom(s => s.Birthday.Date));
         }
     }
 }

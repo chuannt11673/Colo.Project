@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -23,6 +24,7 @@ namespace Application.Services
         Task<List<UserModel>> GetFriends();
         Task<List<UserModel>> GetFriendRequests();
         Task<FileModel> UpdateUserFile(IUserFileUpdateModel model);
+        Task UpdateUserInfo(UserUpdateModel model);
     }
 
     [ScopedDependency(ServiceType = typeof(IUserService))]
@@ -164,6 +166,20 @@ namespace Application.Services
 
             _unitOfWork.Context.Entry(entity).Reference(x => x.File).Load();
             return Task.FromResult(entity.File.MapTo<FileModel>());
+        }
+
+        public Task UpdateUserInfo(UserUpdateModel model)
+        {
+            var userEntity = model.MapTo<UserEntity>();
+
+            var userId = _httpContext.User.Id();
+            userEntity.Id = userId;
+
+            _userRepo.Update(userEntity, a => a.Name, a => a.Phone, a => a.Birthday, a => a.Gender);
+
+            _unitOfWork.Commit();
+
+            return Task.CompletedTask;
         }
     }
 }

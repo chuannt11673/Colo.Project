@@ -123,6 +123,16 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>
+        /// Update User Info
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("UpdateUserInfo")]
+        public async Task<IActionResult> UpdateUserInfo([FromBody] UserUpdateModel model)
+        {
+            await _userService.UpdateUserInfo(model);
+            return NoContent();
+        }
     }
 }

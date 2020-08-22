@@ -1,6 +1,6 @@
 import { LocalstorageService } from './localstorage.service';
 import { map, concatMap } from 'rxjs/operators';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { UserManager, User, Profile } from 'oidc-client';
@@ -18,7 +18,8 @@ export class AuthService {
   }
   private manager: UserManager;
   private user: User;
-  private userProfile: Profile;
+  
+  userProfile: Profile;
 
   clientSetting = clientSetting;
 
@@ -97,21 +98,32 @@ export class AuthService {
     }).catch(() => false));
   }
 
-  private createUser() : Observable<any> {
+  updateUserProfile(value: any) {
+    this.userProfile = {
+      ...this.userProfile,
+      ...value,
+      gender: value.gender.toString()
+    };
 
+    this.localStorage.set('userProfile', JSON.stringify(this.userProfile));
+  }
+
+  private createUser(): Observable<any> {
     return this.httpService.get('api/user/getUserInfo').pipe(map(user => {
-      
-      this.userProfile = {
+
+      let value = {
         ...this.user.profile,
         id: this.user.profile[this.claimTypes.id],
         email: this.user.profile[this.claimTypes.email],
-        birthdate: user.birthday,
-        gender: user.gender,
         avatar: user.avatar,
-        cover: user.cover
+        cover: user.cover,
+        name: user.name,
+        phone: user.phone,
+        birthday: user.birthday,
+        gender: user.gender
       };
-      
-      this.localStorage.set('userProfile', JSON.stringify(this.userProfile));
+
+      this.updateUserProfile(value);
     }));
   }
 }

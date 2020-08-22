@@ -12,8 +12,7 @@ import { ActionSheetTemplate } from 'src/app/_interface/action-sheet.template';
 })
 export class MorePage implements OnInit {
 
-  currentUser: any;
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
     private navController: NavController,
     private logoutActionSheet: LogoutActionSheet,
     private uploadProfileActionSheet: UploadProfileActionSheet,
@@ -21,15 +20,18 @@ export class MorePage implements OnInit {
     public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
-    this.currentUser = this.authService.getUserProfile();
   }
 
   userInfo() {
-    this.navController.navigateForward(`user-info/${this.currentUser.email}`)
+    this.navController.navigateForward(`user-info/${this.authService.userProfile.email}`)
   }
 
   changeLanguage() {
     this.navController.navigateForward('change-language');
+  }
+
+  updateInfo() {
+    this.navController.navigateForward('update-info');
   }
 
   logout() {

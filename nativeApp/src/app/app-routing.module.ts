@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'change-language',
     loadChildren: () => import('./change-language/change-language.module').then( m => m.ChangeLanguagePageModule)
   },
+  {
+    path: 'update-info',
+    loadChildren: () => import('./update-info/update-info.module').then( m => m.UpdateInfoPageModule)
+  },
 
 ];
 

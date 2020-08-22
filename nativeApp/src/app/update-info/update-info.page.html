@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{translateConfigService.text.update_info_title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form [formGroup]="form" autocomplete="off">
+        <ion-grid>
+            <ion-row color="primary" justify-content-center>
+                <ion-col align-self-center>
+                    <ion-item>
+                        <ion-label>Name:</ion-label>
+                        <ion-input formControlName="name"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Phone:</ion-label>
+                        <ion-input formControlName="phone"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Birthday:</ion-label>
+                        <ion-datetime formControlName="birthday"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Gender:</ion-label>
+                        <ion-radio-group formControlName="gender">
+                            <ion-item lines="none">
+                                <ion-label>Male</ion-label>
+                                <ion-radio slot="start" color="success" value="1"></ion-radio>
+                            </ion-item>
+                            <ion-item lines="none">
+                                <ion-label>Female</ion-label>
+                                <ion-radio slot="start" color="success" value="2"></ion-radio>
+                            </ion-item>
+                            <ion-item lines="none">
+                                <ion-label>Other</ion-label>
+                                <ion-radio slot="start" color="success" value="3"></ion-radio>
+                            </ion-item>
+                        </ion-radio-group>
+                    </ion-item>
+
+                    <ion-button expand="block" (click)="update()">Update</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-content>
