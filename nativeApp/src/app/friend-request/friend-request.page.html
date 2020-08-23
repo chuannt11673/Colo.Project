@@ -17,4 +17,8 @@
         </ion-label>
         <ion-button expand="full" shape="round" color="primary" (click)="accept(request.id, i)">{{translateConfigService.text.accept}}</ion-button>
     </ion-item>
+    <ion-text class="text-center" color="dark" *ngIf="!requests || requests.length == 0">
+        <p>{{translateConfigService.text.friend_request_no_request}}</p>
+        <p>{{translateConfigService.text.Friend_request_suggestion}} <a (click)='addFriend()'>{{translateConfigService.text.here}}</a></p>
+    </ion-text>
 </ion-content>

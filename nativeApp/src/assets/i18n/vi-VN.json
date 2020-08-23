@@ -11,6 +11,7 @@
     "update_avatar": "Cập nhật ảnh đại diện",
     "update_cover": "Cập nhật ảnh nền",
     "logout": "Đăng xuất",
+    "here": "đây",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Chào mừng bạn đã sử dụng ứng dụng <b>Colo App</b> của chúng tôi",
@@ -26,6 +27,7 @@
     "home_friends_tab": "Bạn bè",
     "home_dating_tab": "Hẹn hò",
     "home_more_tab": "Thêm",
+    "update": "Cập nhật",
 
     "header_searchbar_placeholder": "Tìm kiếm email",
 
@@ -34,6 +36,8 @@
     "friend_request_title": "Kết bạn qua email",
     "friend_request_notfound": "Chúng tôi không tìm thấy người dùng sử dụng email này. Vui lòng thử bằng email khác!",
     "friend_request_say_hello": "Xin chào, rất vui được làm quen với bạn",
+    "friend_request_no_request": "Chưa có lời mời kết bạn nào",
+    "Friend_request_suggestion": "Thêm nhiều bạn mới? bấm vào",
 
     "user_info_title": "Thông tin người dùng",
     "user_info_diary": "Nhật ký",
@@ -43,5 +47,14 @@
     "user_info_make_friend_chat": "Nhắn tin",
 
     "change_language_title": "Thay đổi ngôn ngữ",
-    "update_info_title": "Cập nhật thông tin"
+    "update_info_title": "Cập nhật thông tin",
+    "update_info_name": "Tên",
+    "update_info_phone": "Sdt",
+    "update_info_birthday": "Ngày sinh",
+    "update_info_gender": "Giới tính",
+    "update_info_male": "Nam",
+    "update_info_female": "Nữ",
+    "update_info_other": "Khác",
+
+    "diary_title": "Nhật ký"
 }

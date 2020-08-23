@@ -1,3 +1,4 @@
+import { UnAuthorizedHandlerInterceptor } from './_core/interceptors/unauthorized-handler.interceptor';
 import { AuthService } from './_core/services/auth.service';
 import { HttpRequetsInterceptor } from './_core/interceptors/http-requets.interceptor';
 import { NgModule, APP_INITIALIZER, ModuleWithProviders } from '@angular/core';
@@ -53,6 +54,11 @@ export function initApp(authService: AuthService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequetsInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnAuthorizedHandlerInterceptor,
       multi: true
     }
   ],

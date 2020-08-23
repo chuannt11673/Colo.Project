@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ChangeLanguagePage implements OnInit {
 
   language: string;
-  constructor(private translateConfigService: TranslateConfigService) { }
+  constructor(public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
     this.language = this.translateConfigService.getCurrentLanguageCode();

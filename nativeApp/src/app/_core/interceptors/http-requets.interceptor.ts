@@ -1,9 +1,8 @@
 import { NavController } from '@ionic/angular';
 import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { catchError, switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+
 
 @Injectable()
 export class HttpRequetsInterceptor implements HttpInterceptor {
@@ -11,17 +10,7 @@ export class HttpRequetsInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService, private navController: NavController) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        return next.handle(this.injectToken(req)).pipe(catchError(err => {
-            if (err instanceof HttpErrorResponse && err.status === 401)
-                return this.authService.refreshToken().pipe(switchMap(res => {
-                    if (res)
-                        return next.handle(this.injectToken(req));
-                    
-                    this.navController.navigateRoot('');
-                }));
-
-            return throwError(err);
-        }));
+        return next.handle(this.injectToken(req));
     }
 
     private injectToken(req: HttpRequest<any>) {

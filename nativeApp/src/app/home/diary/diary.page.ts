@@ -1,3 +1,4 @@
+import { TranslateConfigService } from './../../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { mergeMap, switchMap, map, delay, flatMap, concatMap } from 'rxjs/operators';
@@ -9,7 +10,7 @@ import { mergeMap, switchMap, map, delay, flatMap, concatMap } from 'rxjs/operat
 })
 export class DiaryPage implements OnInit {
 
-  constructor() { }
+  constructor(public translateConfigService: TranslateConfigService) { }
 
   ngOnInit() {
     this.switchMapFunc();

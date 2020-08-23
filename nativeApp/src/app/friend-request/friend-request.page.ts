@@ -26,4 +26,8 @@ export class FriendRequestPage implements OnInit {
       this.requests.splice(index, 1);
     });
   }
+
+  addFriend() {
+    this.navController.navigateForward('add-friends');
+  }
 }

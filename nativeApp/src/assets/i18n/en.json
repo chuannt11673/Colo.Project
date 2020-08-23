@@ -11,6 +11,8 @@
     "update_avatar": "Update Avatar",
     "update_cover": "Update Cover",
     "logout": "Log out",
+    "update": "Update",
+    "here": "here",
 
     "login_welcome_title": "Welcome",
     "login_welcome_description": "Welcome you to visit our <b>Colo App</b>",
@@ -34,6 +36,8 @@
     "friend_request_title": "Add friend using email",
     "friend_request_notfound": "We couldn't find any user using this email. Please try with another email!",
     "friend_request_say_hello": "Hi, nice to meet you",
+    "friend_request_no_request": "There is no requets now",
+    "Friend_request_suggestion": "Make more friends? click",
 
     "user_info_title": "User Info",
     "user_info_diary": "Diary",
@@ -43,5 +47,15 @@
     "user_info_make_friend_chat": "Chat",
 
     "change_language_title": "Change Language",
-    "update_info_title": "Update Info"
+
+    "update_info_title": "Update Info",
+    "update_info_name": "Name",
+    "update_info_phone": "Phone",
+    "update_info_birthday": "Birthday",
+    "update_info_gender": "Gender",
+    "update_info_male": "Male",
+    "update_info_female": "Female",
+    "update_info_other": "Other",
+
+    "diary_title": "Diary"
 }

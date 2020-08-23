@@ -12,36 +12,36 @@
             <ion-row color="primary" justify-content-center>
                 <ion-col align-self-center>
                     <ion-item>
-                        <ion-label>Name:</ion-label>
+                        <ion-label>{{translateConfigService.text.update_info_name}}:</ion-label>
                         <ion-input formControlName="name"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label>Phone:</ion-label>
+                        <ion-label>{{translateConfigService.text.update_info_phone}}:</ion-label>
                         <ion-input formControlName="phone"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label>Birthday:</ion-label>
+                        <ion-label>{{translateConfigService.text.update_info_birthday}}:</ion-label>
                         <ion-datetime formControlName="birthday"></ion-datetime>
                     </ion-item>
                     <ion-item lines="none">
-                        <ion-label>Gender:</ion-label>
+                        <ion-label>{{translateConfigService.text.update_info_gender}}:</ion-label>
                         <ion-radio-group formControlName="gender">
                             <ion-item lines="none">
-                                <ion-label>Male</ion-label>
+                                <ion-label>{{translateConfigService.text.update_info_male}}</ion-label>
                                 <ion-radio slot="start" color="success" value="1"></ion-radio>
                             </ion-item>
                             <ion-item lines="none">
-                                <ion-label>Female</ion-label>
+                                <ion-label>{{translateConfigService.text.update_info_female}}</ion-label>
                                 <ion-radio slot="start" color="success" value="2"></ion-radio>
                             </ion-item>
                             <ion-item lines="none">
-                                <ion-label>Other</ion-label>
+                                <ion-label>{{translateConfigService.text.update_info_other}}</ion-label>
                                 <ion-radio slot="start" color="success" value="3"></ion-radio>
                             </ion-item>
                         </ion-radio-group>
                     </ion-item>
 
-                    <ion-button expand="block" (click)="update()">Update</ion-button>
+                    <ion-button expand="block" (click)="update()">{{translateConfigService.text.update}}</ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>
