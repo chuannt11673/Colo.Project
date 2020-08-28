@@ -6,10 +6,10 @@ using Elect.Mapper.AutoMapper.IQueryableUtils;
 using Elect.Mapper.AutoMapper.ObjUtils;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -25,6 +25,7 @@ namespace Application.Services
         Task<List<UserModel>> GetFriendRequests();
         Task<FileModel> UpdateUserFile(IUserFileUpdateModel model);
         Task UpdateUserInfo(UserUpdateModel model);
+        Task<List<UserModel>> SuggestFriends();
     }
 
     [ScopedDependency(ServiceType = typeof(IUserService))]
@@ -180,6 +181,16 @@ namespace Application.Services
             _unitOfWork.Commit();
 
             return Task.CompletedTask;
+        }
+
+        public Task<List<UserModel>> SuggestFriends()
+        {
+            var userId = _httpContext.User.Id();
+
+            var users = _userRepo.Get(x => x.Id != userId).ToList();
+            var friends = users.Select(x => x.MapTo<UserModel>()).ToList();
+
+            return Task.FromResult(friends);
         }
     }
 }

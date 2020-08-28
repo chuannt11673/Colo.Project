@@ -134,5 +134,16 @@ namespace WebApi.Controllers
             await _userService.UpdateUserInfo(model);
             return NoContent();
         }
+
+        /// <summary>
+        /// Suggest Friends
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("SuggestFriends")]
+        public async Task<IActionResult> SuggestFriends()
+        {
+            var result = await _userService.SuggestFriends();
+            return Ok(result);
+        }
     }
 }

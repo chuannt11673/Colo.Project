@@ -10,6 +10,7 @@ namespace Infrastructure.Repository
 {
     public interface IGenericRepo<T> where T : BaseEntity
     {
+        T FindById(params object[] keys);
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetFromSql(string sql, params object[] parameters);
@@ -70,6 +71,11 @@ namespace Infrastructure.Repository
             {
                 _dbSet.Remove(existing);
             }
+        }
+
+        public T FindById(params object[] keys)
+        {
+            return _dbSet.Find(keys);
         }
 
         public IQueryable<T> Get()
