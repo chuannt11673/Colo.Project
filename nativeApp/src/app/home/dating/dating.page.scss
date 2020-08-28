@@ -1,0 +1,43 @@
+ion-card {
+    margin: 0;
+    margin-top: 6px;
+    img {
+        height: 240px;
+        object-fit: cover;
+    }
+    span {
+        position: absolute;
+        top: 210px;
+        left: 0;
+        padding: 0 5px;
+        color: white;
+        opacity: 0.8;
+    }
+}
+
+ion-card-content {
+    padding: 0;
+}
+
+ion-card-content fa-icon {
+    margin-right: 6px;
+    color: red;
+}
+
+ion-card-content ion-icon {
+    margin-right: 0;
+    font-size: 17px;
+}
+
+ion-card-content {
+    .name,
+    .distance {
+        font-size: 13px;
+        margin: 0;
+    }
+    .name {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}

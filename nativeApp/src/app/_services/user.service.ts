@@ -15,6 +15,7 @@ export class UserService {
   private updateUserProfileImageEndpoint = this.endpoint + 'updateUserProfileImage';
   private updateUserCoverEndpoint = this.endpoint + 'updateUserCover';
   private updateUserInfoEndpoint = this.endpoint + 'updateUserInfo';
+  private suggestFriendsEndpoint = this.endpoint + 'suggestFriends';
   constructor(private httpService: HttpService) { }
 
   register() {
@@ -55,5 +56,9 @@ export class UserService {
 
   updateUserInfo(model: any) {
     return this.httpService.post(this.updateUserInfoEndpoint, model);
+  }
+
+  suggestFriends() {
+    return this.httpService.get(this.suggestFriendsEndpoint);
   }
 }

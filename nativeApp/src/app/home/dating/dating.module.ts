@@ -1,3 +1,7 @@
+import { DatingResolver } from './dating.resolver';
+import { PipesModule } from './../../_core/pipes/pipes.module';
+import { UserService } from './../../_services/user.service';
+import { ComponentsModule } from 'src/app/_core/components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +17,13 @@ import { DatingPage } from './dating.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    DatingPageRoutingModule
+    DatingPageRoutingModule,
+    ComponentsModule,
+    PipesModule
+  ],
+  providers: [
+    UserService,
+    DatingResolver
   ],
   declarations: [DatingPage]
 })

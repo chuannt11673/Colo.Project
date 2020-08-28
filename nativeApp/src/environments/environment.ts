@@ -25,7 +25,7 @@ export const clientSetting: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage })
 };
 
-export const httpEndpoint: string = 'http://192.168.0.101/Api/';
+export const httpEndpoint: string = 'https://localhost:5006/';
 
 /*
  * For easier debugging in development mode, you can import the following file
