@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Application.Models
@@ -8,6 +9,18 @@ namespace Application.Models
     {
         Guid FileId { get; set; }
         UserFileType Type { get; }
+    }
+
+    public class BasicUserModel
+    {
+        public Guid Id { get; set; }
+        public string Email { get; set; }
+        public string Avatar { get; set; }
+        public string Cover { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public DateTime Birthday { get; set; }
+        public Gender Gender { get; set; }
     }
 
     public class UserCreateModel
@@ -26,12 +39,10 @@ namespace Application.Models
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
-
-        // It will be true if user is yourself
-        public bool IsFriend { get; set; }
-        
         public string Avatar { get; set; }
         public string Cover { get; set; }
+
+        public IEnumerable<BasicUserModel> Friends { get; set; }
     }
 
     public class UserUpdateProfileModel : IUserFileUpdateModel

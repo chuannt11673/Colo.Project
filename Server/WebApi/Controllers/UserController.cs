@@ -145,5 +145,40 @@ namespace WebApi.Controllers
             var result = await _userService.SuggestFriends();
             return Ok(result);
         }
+
+        /// <summary>
+        /// Like user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("LikeUser/{userId}")]
+        public async Task<IActionResult> LikeUser(Guid userId)
+        {
+            await _userService.LikeUser(userId);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Get user likes
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetUserLikes")]
+        public async Task<IActionResult> GetUserLikes()
+        {
+            var result = await _userService.GetUserLikes();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get friendship state
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("GetFriendShipState/{userId}")]
+        public async Task<IActionResult> GetFriendShipState(Guid userId)
+        {
+            var result = await _userService.GetFriendShipState(userId);
+            return Ok(result);
+        }
     }
 }

@@ -32,7 +32,30 @@ namespace WebApi.Controllers
         {
             await _chatService.Create(new ChatCreateModel { ToUserId = new Guid(userId), Message = model.Message, FileIds = model.FileModels.Select(x => x.Id).ToArray() });
             await _signalRService.SendMessage(model, userId);
-            return NoContent();
+            return Ok();
+        }
+
+        /// <summary>
+        /// Send notification
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("SendNotification")]
+        public async Task<IActionResult> SendNotification([FromBody] NotificationModel model)
+        {
+            await _signalRService.SendNotification(model);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Get notifications
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetNotifications")]
+        public async Task<IActionResult> GetNotifications()
+        {
+            var result = await _signalRService.GetNotifications();
+            return Ok(result);
         }
     }
 }

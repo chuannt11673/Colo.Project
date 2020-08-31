@@ -20,6 +20,20 @@
     <Compile Remove="Migrations\20200718153939_Add_Chat.Designer.cs" />
     <Compile Remove="Migrations\20200821164535_Update_UserEntity_LazyLoading_Avatar_Cover.cs" />
     <Compile Remove="Migrations\20200821164535_Update_UserEntity_LazyLoading_Avatar_Cover.Designer.cs" />
+    <Compile Remove="Migrations\20200829061922_EditCascadeFriendShip.cs" />
+    <Compile Remove="Migrations\20200829061922_EditCascadeFriendShip.Designer.cs" />
+    <Compile Remove="Migrations\20200829062803_EditCascadeFriendShip.cs" />
+    <Compile Remove="Migrations\20200829062803_EditCascadeFriendShip.Designer.cs" />
+    <Compile Remove="Migrations\20200829063235_EditFriendShipKeyWithCascade.cs" />
+    <Compile Remove="Migrations\20200829063235_EditFriendShipKeyWithCascade.Designer.cs" />
+    <Compile Remove="Migrations\20200829063507_EditFriendShipKeyAndCascade.cs" />
+    <Compile Remove="Migrations\20200829063507_EditFriendShipKeyAndCascade.Designer.cs" />
+    <Compile Remove="Migrations\20200829063714_UpdateChatAddCasCade.cs" />
+    <Compile Remove="Migrations\20200829063714_UpdateChatAddCasCade.Designer.cs" />
+    <Compile Remove="Migrations\20200829171857_AddUserLikes.cs" />
+    <Compile Remove="Migrations\20200829171857_AddUserLikes.Designer.cs" />
+    <Compile Remove="Migrations\20200829171959_AddUserLikes.cs" />
+    <Compile Remove="Migrations\20200829171959_AddUserLikes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

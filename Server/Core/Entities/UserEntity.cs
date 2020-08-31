@@ -44,7 +44,6 @@ namespace Core.Entities
 
         public virtual IEnumerable<FriendShipEntity> SendingFriendShips { get; set; }
         public virtual IEnumerable<FriendShipEntity> ReceivingFriendShips { get; set; }
-
         public virtual IEnumerable<UserEntity> Friends
         {
             get
@@ -55,6 +54,9 @@ namespace Core.Entities
                 return receivers.Union(senders);
             }
         }
+
+        public virtual IEnumerable<UserLikeEntity> SendingUserLikes { get; set; }
+        public virtual IEnumerable<UserLikeEntity> ReceivingUserLikes { get; set; }
     }
 
     public enum Gender
