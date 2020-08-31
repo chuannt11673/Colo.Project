@@ -33,6 +33,10 @@ const routes: Routes = [
     path: 'update-info',
     loadChildren: () => import('./update-info/update-info.module').then( m => m.UpdateInfoPageModule)
   },
+  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
 
 ];
 

@@ -16,6 +16,9 @@ export class UserService {
   private updateUserCoverEndpoint = this.endpoint + 'updateUserCover';
   private updateUserInfoEndpoint = this.endpoint + 'updateUserInfo';
   private suggestFriendsEndpoint = this.endpoint + 'suggestFriends';
+  private likeUserEndpoint = this.endpoint + 'likeUser';
+  private getUserLikesEndpoint = this.endpoint + 'getUserLikes';
+  private getFriendShipStateEndpoint = this.endpoint + 'getFriendShipState';
   constructor(private httpService: HttpService) { }
 
   register() {
@@ -60,5 +63,17 @@ export class UserService {
 
   suggestFriends() {
     return this.httpService.get(this.suggestFriendsEndpoint);
+  }
+
+  likeUser(userId: string) {
+    return this.httpService.get(`${this.likeUserEndpoint}/${userId}`);
+  }
+
+  getUserLikes() {
+    return this.httpService.get(`${this.getUserLikesEndpoint}`);
+  }
+
+  getFriendShipState(userId: string) {
+    return this.httpService.get(`${this.getFriendShipStateEndpoint}/${userId}`);
   }
 }

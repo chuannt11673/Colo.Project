@@ -9,7 +9,8 @@
                     <ion-row>
                         <ion-col>
                             <div class="name">
-                                <ion-icon name="heart-outline"></ion-icon>
+                                <ion-icon *ngIf="!user.isLiked" name="heart-outline" (click)="like(user)"></ion-icon>
+                                <ion-icon *ngIf="user.isLiked" name="heart" style="color: crimson;"></ion-icon>
                             </div>
                         </ion-col>
                         <ion-col>

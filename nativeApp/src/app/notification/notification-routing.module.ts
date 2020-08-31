@@ -1,16 +1,16 @@
+import { NotificationResolver } from './notification.resolver';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UserInfoPage } from './user-info.page';
-import { UserInfoResolver } from './user-info.resolver';
+import { NotificationPage } from './notification.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: UserInfoPage,
     resolve: {
-      data: UserInfoResolver
-    }
+      data: NotificationResolver
+    },
+    component: NotificationPage
   }
 ];
 
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UserInfoPageRoutingModule {}
+export class NotificationPageRoutingModule {}

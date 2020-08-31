@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{translateConfigService.text.notification_title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let notification of notifications" (click)="onClick(notification)">
+            <ion-label [innerHtml]="notification.message | safeHtml"></ion-label>
+            <img *ngIf="notification.type == 2" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 15vw;">
+        </ion-item>
+        <ion-item *ngIf="!notifications || notifications.length == 0" class="text-center" lines="none">
+            <ion-label>{{translateConfigService.text.notification_no_records}}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

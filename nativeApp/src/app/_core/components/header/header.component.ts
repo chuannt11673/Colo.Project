@@ -22,6 +22,7 @@ export class HeaderComponent implements OnDestroy {
   constructor(public translateConfigService: TranslateConfigService, private navController: NavController, private signalRService: SignalRService) { }
   
   ngOnInit() {
+    this.signalRService.registerSignalEvents('Notification');
     this.subscription = this.signalRService.messageObservable.subscribe(res => {
       this.notifications.push(res);
     });
@@ -32,7 +33,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   notify() {
-
+    this.navController.navigateForward('notification');
   }
 
   ngOnDestroy(): void {

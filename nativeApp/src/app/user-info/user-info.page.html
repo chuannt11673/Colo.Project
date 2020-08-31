@@ -8,9 +8,9 @@
 </ion-header>
 <ion-content>
     <div class="card">
-        <img src="{{user?.cover | imageUrl}}" alt="John" style="width:100%;height:25vh;object-fit:cover;">
-        <h3>{{user?.email}}</h3>
-        <p>Something about you here...</p>
+        <img src="{{user.cover | imageUrl}}" alt="John" style="width:100%;height:25vh;object-fit:cover;">
+        <h3>{{user?.name}}</h3>
+        <p>{{user?.email}}</p>
         <section>
             <ion-row>
                 <ion-col></ion-col>
@@ -25,8 +25,8 @@
         </section>
         <app-divider></app-divider>
         <ion-card-content>
-            <p *ngIf="user && !user.isFriend">{{translateConfigService.text.user_info_make_friend_title}}</p>
-            <ion-toolbar *ngIf="user && !user.isFriend">
+            <p *ngIf="user.friendShip.state != userState.accepted && !isMe">{{translateConfigService.text.user_info_make_friend_title}}</p>
+            <ion-toolbar *ngIf="user.friendShip.state == userState.none && !isMe">
                 <section>
                     <ion-row>
                         <ion-col></ion-col>
@@ -40,9 +40,31 @@
                     </ion-row>
                 </section>
             </ion-toolbar>
+            <ion-toolbar *ngIf="user.friendShip.state == userState.requested && user.friendShip.senderId == user.id && !isMe">
+                <section>
+                    <ion-row>
+                        <ion-col></ion-col>
+                        <ion-col size="6">
+                            <ion-button size="small" expand="full" shape="round" color="primary" (click)="accept()">Accept</ion-button>
+                        </ion-col>
+                        <ion-col></ion-col>
+                    </ion-row>
+                </section>
+            </ion-toolbar>
+            <ion-toolbar *ngIf="user.friendShip.state == userState.requested && user.friendShip.receiverId == user.id && !isMe">
+                <section>
+                    <ion-row>
+                        <ion-col></ion-col>
+                        <ion-col size="6">
+                            {{translateConfigService.text.user_info_already_sent_request}}
+                        </ion-col>
+                        <ion-col></ion-col>
+                    </ion-row>
+                </section>
+            </ion-toolbar>
         </ion-card-content>
     </div>
-    <div class="chat" *ngIf="user && user.isFriend && loggedInUser.email != user.email">
+    <div class="chat" *ngIf="!isMe">
         <ion-button color="light" size="small" shape="round" (click)="chat()">
             <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
             Chat

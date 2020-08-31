@@ -45,6 +45,7 @@
     "user_info_make_friend_title": "Trở thành bạn bè để có những kỷ niệm đáng nhớ cùng nhau",
     "user_info_make_friend_add": "Kết bạn",
     "user_info_make_friend_chat": "Nhắn tin",
+    "user_info_already_sent_request": "Đã gửi kết bạn, chờ anh ấy/cô ấy đồng ý",
 
     "change_language_title": "Thay đổi ngôn ngữ",
     "update_info_title": "Cập nhật thông tin",
@@ -56,5 +57,7 @@
     "update_info_female": "Nữ",
     "update_info_other": "Khác",
 
-    "diary_title": "Nhật ký"
+    "diary_title": "Nhật ký",
+    "notification_title": "Thông báo",
+    "notification_no_records": "Chưa có thông báo nào"
 }

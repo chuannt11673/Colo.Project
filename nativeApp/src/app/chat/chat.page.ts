@@ -30,16 +30,19 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     items: []
   };
   constructor(private el: ElementRef, private route: ActivatedRoute, private authService: AuthService,
-    private signalRService: SignalRService, private userService: UserService, private chatService: ChatService,
+    private signalRService: SignalRService,
+    private userService: UserService,
+    private chatService: ChatService,
     private fileService: FileService,
     private datePipe: DatePipe,
-    private alert: AlertController,
     private modalController: ModalController,
     private navController: NavController) { }
   
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
     this.getUser();
+
+    this.signalRService.registerSignalEvents('Message');
     this.subscription = this.signalRService.messageObservable
       .pipe(map(res => {
         let obj = JSON.parse(res);
