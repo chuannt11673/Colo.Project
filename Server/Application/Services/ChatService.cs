@@ -58,7 +58,7 @@ namespace Application.Services
                     ChatId = entity.Id,
                     FileId = x
                 }).ToArray();
-                _chatFileRepo.Add(chatFileEntities);
+                _chatFileRepo.AddRange(chatFileEntities);
             }
 
             _unitOfWork.Commit();

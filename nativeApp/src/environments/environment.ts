@@ -13,7 +13,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'http://192.168.0.101/RC/',
+  authority: 'http://192.168.0.102/RC/',
   client_id: 'webapp',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',

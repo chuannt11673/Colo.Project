@@ -28,8 +28,6 @@ import { ChatPage } from './chat.page';
     ImageReviewModule
   ],
   providers: [
-    Keyboard,
-    Camera,
     SignalRService,
     UserService,
     ChatService,

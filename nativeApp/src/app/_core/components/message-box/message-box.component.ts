@@ -52,9 +52,11 @@ export class MessageBoxComponent implements OnInit {
       this.oDoc.addEventListener('blur', () => { if (!this.oDoc.innerHTML) this.isInput = false; });
     }
 
-    this.actionArea = this.ele.nativeElement.querySelector('.action-area') as HTMLElement;
-    this.actionHeight = -this.actionArea.offsetHeight - 56;
-    this.resetTopStyle();
+    setTimeout(() => {
+      this.actionArea = this.ele.nativeElement.querySelector('.action-area') as HTMLElement;
+      this.actionHeight = - this.actionArea.offsetHeight;
+      this.resetTopStyle();
+    }, 100);
   }
 
   ionViewDidEnter() {
@@ -68,6 +70,10 @@ export class MessageBoxComponent implements OnInit {
     window.addEventListener('keyboardWillShow', (event) => {
       this.isShowEmoji = false;
       this.resetTopStyle();
+
+      setTimeout(() => {
+        this.ele.nativeElement.parentElement.style.marginTop = `${Math.abs(this.actionHeight)}px`;
+      }, 600);
     });
   }
 

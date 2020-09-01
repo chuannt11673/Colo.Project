@@ -9,31 +9,23 @@ ion-card {
         color: white;
         opacity: 0.8;
     }
-}
-
-ion-card-content fa-icon {
-    margin-right: 6px;
-    color: red;
+    ion-card-subtitle {
+        ion-avatar {
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
+        }
+    }
+    ion-card-content {
+        padding-top: 0;
+        ion-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
 }
 
 ion-card-content ion-icon {
     margin-right: 0;
     font-size: 21px;
-}
-
-ion-card-content {
-    .name,
-    .distance {
-        font-size: 13px;
-        margin: 0;
-    }
-    .name {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-    ion-buttons {
-        display: flex;
-        justify-content: flex-end;
-    }
 }

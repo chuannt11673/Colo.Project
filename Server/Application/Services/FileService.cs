@@ -62,7 +62,7 @@ namespace Application.Services
                 Url = x.Url
             }).ToArray();
 
-            _fileRepo.Add(entities);
+            _fileRepo.AddRange(entities);
             _unitOfWork.Commit();
 
             return entities.AsQueryable().QueryTo<FileModel>().ToArray();

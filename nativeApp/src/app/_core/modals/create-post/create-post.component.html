@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="send()">
+                <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title></ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="editable" contenteditable="true" [attr.placeholder]='translateConfigService.text.create_post_editable_placeholder' ng-readonly="true" #textBox></div>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="3" *ngFor="let image of images">
+                <img [src]="image.src" alt="">
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <app-message-box [disableVideoSelection]="true" [disableTextBox]="true" [disableSendBtn]="true" [oDoc]="textBox" (onSend)="send($event)" (onSelectImage)="onSelectImage($event)"></app-message-box>
+</ion-footer>

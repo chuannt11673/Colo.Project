@@ -1,3 +1,7 @@
+import { CreatePostModule } from './../../_core/modals/create-post/create-post.module';
+import { PipesModule } from './../../_core/pipes/pipes.module';
+import { DiaryResolver } from './diary.resolver';
+import { PostService } from './../../_services/post.service';
 import { ComponentsModule } from 'src/app/_core/components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,9 +19,13 @@ import { DiaryPage } from './diary.page';
     FormsModule,
     IonicModule,
     DiaryPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule,
+    CreatePostModule
   ],
   providers: [
+    PostService,
+    DiaryResolver
   ],
   declarations: [DiaryPage]
 })

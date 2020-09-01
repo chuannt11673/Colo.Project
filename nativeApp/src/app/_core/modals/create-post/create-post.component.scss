@@ -1,0 +1,17 @@
+ion-content {
+    div.editable {
+        padding: 15px;
+        min-height: 30vh;
+        outline: none;
+    }
+    div.editable:focus {
+        border-color: aqua;
+    }
+    [contenteditable=true]:empty:before {
+        color: #ccc;
+        content: attr(placeholder);
+        display: block;
+        /* For Firefox */
+        white-space: pre-wrap;
+    }
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elect.Mapper.AutoMapper.IQueryableUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,6 +45,16 @@ namespace Application.Models
         {
             var count = source.Count();
             var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return new PagingationModel<TModel>(items, count, pageIndex, pageSize);
+        }
+
+        public static PagingationModel<TModel> CreateLazyLoading<TEntity>(IQueryable<TEntity> source, int pageIndex, int pageSize)
+        {
+            var count = source.Count();
+            var entities = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            var items = entities.AsQueryable().QueryTo<TModel>().ToList();
+
             return new PagingationModel<TModel>(items, count, pageIndex, pageSize);
         }
     }

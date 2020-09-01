@@ -59,5 +59,7 @@
 
     "diary_title": "Nhật ký",
     "notification_title": "Thông báo",
-    "notification_no_records": "Chưa có thông báo nào"
+    "notification_no_records": "Chưa có thông báo nào",
+
+    "create_post_editable_placeholder": "Bạn đang nghĩ gì...?"
 }

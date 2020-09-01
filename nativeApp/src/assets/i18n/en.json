@@ -61,5 +61,7 @@
     "diary_title": "Diary",
 
     "notification_title": "Notification",
-    "notification_no_records": "There is no notification"
+    "notification_no_records": "There is no notification",
+
+    "create_post_editable_placeholder": "What're you thinking...?"
 }

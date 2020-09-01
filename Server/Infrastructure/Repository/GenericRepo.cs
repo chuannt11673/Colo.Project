@@ -15,7 +15,7 @@ namespace Infrastructure.Repository
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetFromSql(string sql, params object[] parameters);
         void Add(T entity);
-        void Add(T[] entities);
+        void AddRange(T[] entities);
         void Delete(T entity);
         void Update(T entity, params Expression<Func<T, object>>[] properties);
     }
@@ -47,7 +47,7 @@ namespace Infrastructure.Repository
             _dbSet.Add(entity);
         }
 
-        public void Add(T[] entities)
+        public void AddRange(T[] entities)
         {
             var user = _httpContextAccessor.HttpContext.User;
             foreach (var entity in entities)
