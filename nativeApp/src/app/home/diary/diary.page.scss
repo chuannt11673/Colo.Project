@@ -1,6 +1,16 @@
+ion-col.card-col {
+    padding: 0;
+    ion-item-divider {
+        padding: 0;
+    }
+}
+
 ion-card {
     margin: 0;
     margin-top: 6px;
+    border: none;
+    border-radius: unset;
+    box-shadow: none;
     span {
         position: absolute;
         top: 210px;

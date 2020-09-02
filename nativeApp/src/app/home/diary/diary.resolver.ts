@@ -1,5 +1,5 @@
 import { PostService } from './../../_services/post.service';
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,11 @@ export class DiaryResolver implements Resolve<any> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
-        return this.postService.gets({ pageIndex: 1, pageSize: 10 });
+        let data = this.postService.data;
+        
+        if (!data)
+            return this.postService.gets({ pageIndex: 1, pageSize: 10 });
+
+        return false;
     }
 }

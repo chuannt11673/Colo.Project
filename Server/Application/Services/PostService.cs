@@ -62,13 +62,10 @@ namespace Application.Services
 
             _unitOfWork.Commit();
 
-            _unitOfWork.Context.Entry(postEntity).Reference(x => x.User)
-                .Query()
-                .Include(x => x.UserFiles)
-                .Load();
+            var loadUser = _unitOfWork.Context.Entry(postEntity).Reference(x => x.User).Query().Include(x => x.UserFiles).LoadAsync();
+            var loadImages = _unitOfWork.Context.Entry(postEntity).Collection(x => x.PostImages).Query().Include(x => x.File).LoadAsync();
 
-            _unitOfWork.Context.Entry(postEntity).Collection(x => x.PostImages).Query()
-                .Include(x => x.File).Load();
+            Task.WhenAll(loadUser, loadImages).Wait();
 
             return Task.FromResult(postEntity.MapTo<PostModel>());
         }

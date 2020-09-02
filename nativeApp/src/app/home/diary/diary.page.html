@@ -1,5 +1,9 @@
 <app-header [enableMore]="true"></app-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <ion-item-divider (click)="createPost()">
         <ion-avatar slot="start">
             <img [src]="authService.userProfile.avatar | imageUrl">
@@ -7,32 +11,39 @@
         <ion-label>How do you feel?</ion-label>
     </ion-item-divider>
     <ion-row>
-        <ion-col size="12" *ngFor="let item of data.items">
-            <ion-card>
-                <ion-card-subtitle>
-                    <ion-item lines="none">
-                        <ion-avatar slot="start">
-                            <img [src]="item.user.avatar | imageUrl">
-                        </ion-avatar>
-                        <ion-label>{{item.user.name}}</ion-label>
-                    </ion-item>
-                </ion-card-subtitle>
+        <ion-col class="card-col" size="12" *ngFor="let item of data.items">
+            <ion-item-divider>
+                <ion-card>
+                    <ion-card-subtitle>
+                        <ion-item lines="none">
+                            <ion-avatar slot="start">
+                                <img [src]="item.user.avatar | imageUrl">
+                            </ion-avatar>
+                            <ion-label>{{item.user.name}}</ion-label>
+                        </ion-item>
+                    </ion-card-subtitle>
 
 
-                <img *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
+                    <img *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
 
-                <ion-card-content>
-                    <p [innerHTML]="item.content | safeHtml"></p>
-                    <ion-buttons>
-                        <ion-button>
-                            <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
-                        </ion-button>
-                        <ion-button>
-                            <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-                </ion-card-content>
-            </ion-card>
+                    <ion-card-content>
+                        <p [innerHTML]="item.content | safeHtml"></p>
+                        <ion-buttons>
+                            <ion-button>
+                                <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button>
+                                <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-card-content>
+                </ion-card>
+            </ion-item-divider>
         </ion-col>
     </ion-row>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" #infiniteScroll>
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
