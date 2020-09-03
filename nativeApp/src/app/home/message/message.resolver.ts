@@ -1,7 +1,7 @@
 import { ChatService } from './../../_services/chat.service';
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class MessageResolver implements Resolve<any> {
@@ -12,6 +12,9 @@ export class MessageResolver implements Resolve<any> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<any> | Promise<any> | any {
+        if (this.chatService.getChatListData)
+            return of(this.chatService.getChatListData);
+
         return this.chatService.getChatList();
     }
 }

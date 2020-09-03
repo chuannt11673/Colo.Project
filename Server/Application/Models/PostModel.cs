@@ -13,6 +13,8 @@ namespace Application.Models
     {
         public Guid Id { get; set; }
         public BasicUserModel User { get; set; }
+        public DateTimeOffset CreatedDateTime { get; set; }
         public IEnumerable<FileModel> FileModels { get; set; }
+        public IEnumerable<BasicUserModel> LikedUsers { get; set; }
     }
 }

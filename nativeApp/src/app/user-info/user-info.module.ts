@@ -1,3 +1,4 @@
+import { PostService } from 'src/app/_services/post.service';
 import { PipesModule } from './../_core/pipes/pipes.module';
 import { UserInfoResolver } from './user-info.resolver';
 import { UserService } from './../_services/user.service';
@@ -12,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserInfoPageRoutingModule } from './user-info-routing.module';
 
 import { UserInfoPage } from './user-info.page';
+import { CommentPostModule } from '../_core/modals/comment-post/comment-post.module';
 
 @NgModule({
   imports: [
@@ -19,12 +21,14 @@ import { UserInfoPage } from './user-info.page';
     FormsModule,
     IonicModule,
     UserInfoPageRoutingModule,
-    PipesModule
+    PipesModule,
+    CommentPostModule
   ],
   providers: [
     UserService,
     UserInfoService,
-    UserInfoResolver
+    UserInfoResolver,
+    PostService
   ],
   declarations: [
     UserInfoPage,

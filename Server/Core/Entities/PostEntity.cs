@@ -12,5 +12,7 @@ namespace Core.Entities
         public virtual UserEntity User { get; set; }
 
         public virtual IEnumerable<PostImageEntity> PostImages { get; set; }
+        public virtual IEnumerable<PostLikeEntity> PostLikes { get; set; }
+        public virtual IEnumerable<PostCommentEntity> PostComments { get; set; }
     }
 }

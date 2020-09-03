@@ -81,7 +81,7 @@ export class AuthService {
 
   signOut() {
     this.manager.signoutPopup().then(() => {
-      this.navController.navigateRoot('');
+      window.location.replace('');
     });
   }
 

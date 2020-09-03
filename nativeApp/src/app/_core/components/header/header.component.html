@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-searchbar slot="start" type="email" placeholder="{{translateConfigService.text.header_searchbar_placeholder}}" inputmode="email" color="primary"></ion-searchbar>
+        <ion-searchbar *ngIf="false" slot="start" type="email" placeholder="{{translateConfigService.text.header_searchbar_placeholder}}" inputmode="email" color="primary"></ion-searchbar>
         <ion-buttons slot="secondary">
             <ion-button *ngIf="enableChatbubble">
                 <ion-icon slot="icon-only" color="light" name="chatbubble-ellipses-outline"></ion-icon>

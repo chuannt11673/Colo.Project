@@ -34,6 +34,8 @@
     <Compile Remove="Migrations\20200829171857_AddUserLikes.Designer.cs" />
     <Compile Remove="Migrations\20200829171959_AddUserLikes.cs" />
     <Compile Remove="Migrations\20200829171959_AddUserLikes.Designer.cs" />
+    <Compile Remove="Migrations\20200902141745_AddPostLikes.cs" />
+    <Compile Remove="Migrations\20200902141745_AddPostLikes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

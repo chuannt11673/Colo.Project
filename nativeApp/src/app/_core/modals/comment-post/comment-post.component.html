@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title></ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item-divider>
+        <ion-card>
+            <ion-card-subtitle>
+                <ion-item lines="none">
+                    <ion-avatar slot="start">
+                        <img [src]="item.user.avatar | imageUrl">
+                    </ion-avatar>
+                    <ion-label>{{item.user.name}}</ion-label>
+                </ion-item>
+            </ion-card-subtitle>
+
+
+            <img *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
+
+            <ion-card-content>
+                <p [innerHTML]="item.content | safeHtml"></p>
+                <ion-buttons>
+                    <ion-button (click)="like()">
+                        <img *ngIf="!item.isLiked" src="/assets/SVG/icons8-heart-2light.svg" alt="" style="width: 2.4em;">
+                        <img *ngIf="item.isLiked" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 3em;">
+                    </ion-button>
+                </ion-buttons>
+            </ion-card-content>
+        </ion-card>
+    </ion-item-divider>
+    <ion-list>
+        <ion-item *ngFor="let comment of item.comments">
+            <ion-avatar slot="start">
+                <img [src]="comment.user.avatar | imageUrl">
+            </ion-avatar>
+            <ion-label>
+                <h3>{{comment.user.name}}</h3>
+                <p class="content" [innerHTML]="comment.content | safeHtml"></p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <app-message-box [disableImageSelection]="true" [disableVideoSelection]="true" (onSend)="onSend($event)"></app-message-box>
+</ion-footer>

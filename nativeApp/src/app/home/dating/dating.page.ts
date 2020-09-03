@@ -1,9 +1,9 @@
 import { SignalRService } from './../../_services/signal-r.service';
 import { AuthService } from './../../_core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, IonInfiniteScroll } from '@ionic/angular';
 import { UserService } from './../../_services/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ import { forkJoin } from 'rxjs';
 })
 export class DatingPage implements OnInit {
 
-  users: any[];
+  data: any = {};
   userLikes: any[];
   constructor(public route: ActivatedRoute,
     public authService: AuthService,
@@ -21,15 +21,24 @@ export class DatingPage implements OnInit {
     private userService: UserService,
     private navController: NavController) { }
 
+  @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
+  pageIndex: number = 1;
+  pageSize: number = 10;
+
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.userLikes = data.data.userLikes;
-      this.users = data.data.suggestFriends.map((res: any) => {
-        return {
-          ...res,
-          isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
-        }
-      });
+
+      this.data = {
+        ...data.data.suggestFriends,
+        items: data.data.suggestFriends.items.map((res: any) => {
+          return {
+            ...res,
+            isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
+          }
+        })
+      };
+
     });
   }
 
@@ -47,6 +56,30 @@ export class DatingPage implements OnInit {
     forkJoin(likeUser, sendNotification).subscribe(_ => {
       user.isLiked = true;
     })
+  }
+
+  getData(callback: Function) {
+    this.userService.suggestFriends({ pageSize: this.pageSize, pageIndex: this.pageIndex }).subscribe(data => {
+
+      this.data = {
+        ...data,
+        items: this.data.items.concat(data.items)
+      };
+      
+      callback();
+    });
+  }
+  
+  loadData(event: any) {
+    setTimeout(() => {
+      this.pageIndex += 1;
+
+      this.getData(() => {
+        event.target.complete();
+        if (!this.data.hasNextPage)
+          event.target.disabled = true;
+      });
+    }, 500);
   }
 
   private buildLikeUserModel(user: any) {

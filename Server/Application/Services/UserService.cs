@@ -27,7 +27,7 @@ namespace Application.Services
         Task<List<UserModel>> GetFriendRequests();
         Task<FileModel> UpdateUserFile(IUserFileUpdateModel model);
         Task UpdateUserInfo(UserUpdateModel model);
-        Task<List<UserModel>> SuggestFriends();
+        Task<PagingationModel<UserModel>> SuggestFriends(PagingationRequestModel model);
         Task LikeUser(Guid userId);
         Task<IEnumerable<UserLikeModel>> GetUserLikes();
         Task<FriendShipModel> GetFriendShipState(Guid userId);
@@ -197,14 +197,14 @@ namespace Application.Services
             return Task.CompletedTask;
         }
 
-        public Task<List<UserModel>> SuggestFriends()
+        public Task<PagingationModel<UserModel>> SuggestFriends(PagingationRequestModel model)
         {
             var userId = _httpContext.User.Id();
 
-            var users = _userRepo.Get(x => x.Id != userId).ToList();
-            var friends = users.Select(x => x.MapTo<UserModel>()).ToList();
+            var users = _userRepo.Get(x => x.Id != userId);
 
-            return Task.FromResult(friends);
+            var result = PagingationModel<UserModel>.CreateLazyLoading(users, model.PageIndex, model.PageSize);
+            return Task.FromResult(result);
         }
 
         public Task LikeUser(Guid userId)

@@ -16,7 +16,8 @@ namespace Application.Profiles
 
             CreateMap<PostEntity, PostModel>().IgnoreAllNonExisting()
                 .ForMember(x => x.User, opt => opt.MapFrom(s => s.User.MapTo<BasicUserModel>()))
-                .ForMember(x => x.FileModels, opt => opt.MapFrom(x => x.PostImages.Select(x => x.File).AsQueryable().QueryTo<FileModel>()));
+                .ForMember(x => x.FileModels, opt => opt.MapFrom(x => x.PostImages.Select(x => x.File).AsQueryable().QueryTo<FileModel>()))
+                .ForMember(x => x.LikedUsers, opt => opt.MapFrom(x => x.PostLikes.Select(x => x.User).AsQueryable().QueryTo<BasicUserModel>()));
         }
     }
 }

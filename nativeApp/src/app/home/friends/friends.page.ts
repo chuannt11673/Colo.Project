@@ -17,7 +17,7 @@ export class FriendsPage implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.friends = data.friends;
+      this.friends = data.data;
     });
   }
 

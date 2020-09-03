@@ -3,6 +3,7 @@ import { UserService } from './../_services/user.service';
 import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-info',
@@ -14,6 +15,7 @@ export class UpdateInfoPage implements OnInit {
   form: FormGroup;
   constructor(private formBuilder: FormBuilder,
     public translateConfigService: TranslateConfigService,
+    public toastController: ToastController,
     private userService: UserService,
     private authService: AuthService) { }
 
@@ -36,8 +38,15 @@ export class UpdateInfoPage implements OnInit {
       gender: parseInt(this.form.get('gender').value)
     };
 
-    this.userService.updateUserInfo(model).subscribe(_ => {
+    this.userService.updateUserInfo(model).subscribe(async _ => {
       this.authService.updateUserProfile(model);
+      
+      const toast = await this.toastController.create({
+        message: this.translateConfigService.text.update_info_toast,
+        duration: 2000,
+        color: 'success'
+      });
+      toast.present();
     });
   }
 }

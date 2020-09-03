@@ -19,7 +19,10 @@
                             <ion-avatar slot="start">
                                 <img [src]="item.user.avatar | imageUrl">
                             </ion-avatar>
-                            <ion-label>{{item.user.name}}</ion-label>
+                            <ion-label>
+                                <h3>{{item.user.name}}</h3>
+                                <p>{{item.createdDateTime | date:'short'}}</p>
+                            </ion-label>
                         </ion-item>
                     </ion-card-subtitle>
 
@@ -29,11 +32,12 @@
                     <ion-card-content>
                         <p [innerHTML]="item.content | safeHtml"></p>
                         <ion-buttons>
-                            <ion-button>
-                                <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+                            <ion-button (click)="like(item)">
+                                <img *ngIf="!item.isLiked" src="/assets/SVG/icons8-heart-2light.svg" alt="" style="width: 2.4em;">
+                                <img *ngIf="item.isLiked" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 3em;">
                             </ion-button>
-                            <ion-button>
-                                <ion-icon slot="icon-only" name="chatbubble-outline"></ion-icon>
+                            <ion-button (click)="commentPost(item)">
+                                <img src="/assets/SVG/icons8-comments.svg" alt="" style="width: 2.1em;">
                             </ion-button>
                         </ion-buttons>
                     </ion-card-content>

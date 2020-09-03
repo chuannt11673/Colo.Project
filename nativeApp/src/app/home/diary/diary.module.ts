@@ -1,3 +1,4 @@
+import { CommentPostModule } from './../../_core/modals/comment-post/comment-post.module';
 import { CreatePostModule } from './../../_core/modals/create-post/create-post.module';
 import { PipesModule } from './../../_core/pipes/pipes.module';
 import { DiaryResolver } from './diary.resolver';
@@ -21,7 +22,8 @@ import { DiaryPage } from './diary.page';
     DiaryPageRoutingModule,
     ComponentsModule,
     PipesModule,
-    CreatePostModule
+    CreatePostModule,
+    CommentPostModule
   ],
   providers: [
     PostService,

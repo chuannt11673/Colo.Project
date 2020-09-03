@@ -1,6 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { map } from 'rxjs/operators';
 import { ChatService } from './../../_services/chat.service';
 import { Component, OnInit } from '@angular/core';
 

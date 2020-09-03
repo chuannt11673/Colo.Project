@@ -3,7 +3,12 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{translateConfigService.text.user_info_title}}</ion-title>
+        <ion-title></ion-title>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="!isMe" (click)="chat()">
+                <img src="/assets/SVG/icons8-speech-bubble.svg" style="width: 3.2em;" /> Chat
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -24,7 +29,7 @@
             </ion-row>
         </section>
         <app-divider></app-divider>
-        <ion-card-content>
+        <ion-card-content *ngIf="user.friendShip">
             <p *ngIf="user.friendShip.state != userState.accepted && !isMe">{{translateConfigService.text.user_info_make_friend_title}}</p>
             <ion-toolbar *ngIf="user.friendShip.state == userState.none && !isMe">
                 <section>
@@ -64,10 +69,45 @@
             </ion-toolbar>
         </ion-card-content>
     </div>
-    <div class="chat" *ngIf="!isMe">
-        <ion-button color="light" size="small" shape="round" (click)="chat()">
-            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-            Chat
-        </ion-button>
-    </div>
+
+    <ion-row *ngIf="(user.friendShip && user.friendShip.state == userState.accepted) || isMe">
+        <ion-col class="card-col" size="12" *ngFor="let item of postsData.items">
+            <ion-item-divider>
+                <ion-card>
+                    <ion-card-subtitle>
+                        <ion-item lines="none">
+                            <ion-avatar slot="start">
+                                <img [src]="item.user.avatar | imageUrl">
+                            </ion-avatar>
+                            <ion-label>
+                                <h3>{{item.user.name}}</h3>
+                                <p>{{item.createdDateTime | date:'short'}}</p>
+                            </ion-label>
+                        </ion-item>
+                    </ion-card-subtitle>
+
+
+                    <img *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
+
+                    <ion-card-content>
+                        <p [innerHTML]="item.content | safeHtml"></p>
+                        <ion-buttons>
+                            <ion-button (click)="like(item)">
+                                <img *ngIf="!item.isLiked" src="/assets/SVG/icons8-heart-2light.svg" alt="" style="width: 2.4em;">
+                                <img *ngIf="item.isLiked" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 3em;">
+                            </ion-button>
+                            <ion-button (click)="commentPost(item)">
+                                <img src="/assets/SVG/icons8-comments.svg" alt="" style="width: 2.1em;">
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-card-content>
+                </ion-card>
+            </ion-item-divider>
+        </ion-col>
+    </ion-row>
+
+    <ion-infinite-scroll *ngIf="(user.friendShip && user.friendShip.state == userState.accepted) || isMe" threshold="100px" (ionInfinite)="loadData($event)" #infiniteScroll>
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateConfigService } from './../../_core/services/translate-config.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CreatePostComponent } from 'src/app/_core/modals/create-post/create-post.component';
+import { CommentPostComponent } from 'src/app/_core/modals/comment-post/comment-post.component';
 
 @Component({
   selector: 'app-diary',
@@ -19,7 +20,7 @@ export class DiaryPage implements OnInit {
     public modalController: ModalController,
     public postService: PostService) { }
 
-  data: any;
+  data: any = {};
   pageSize: number = 10;
   pageIndex: number = 1;
 
@@ -27,7 +28,6 @@ export class DiaryPage implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      if (data.data)
         this.data = data.data;
     });
   }
@@ -42,6 +42,29 @@ export class DiaryPage implements OnInit {
       if (data.data) {
         (this.data.items as any[]).unshift(data.data);
       }
+    });
+  }
+
+  async commentPost(item: any) {
+    const modal = this.modalController.create({
+      component: CommentPostComponent,
+      componentProps: {
+        item: item
+      }
+    });
+
+    (await modal).present();
+    (await modal).onWillDismiss().then(data => {
+    });
+  }
+
+  like(item: any) {
+    if (item.isLiked)
+      return;
+
+    this.postService.like(item.id).subscribe(() => {
+      item.likedUsers.push(this.authService.userProfile);
+      item.isLiked = true;
     });
   }
 

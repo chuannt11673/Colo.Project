@@ -1,5 +1,6 @@
+import { map } from 'rxjs/operators';
 import { HttpService } from './../_core/services/http.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,10 @@ export class UserService {
   private getUserLikesEndpoint = this.endpoint + 'getUserLikes';
   private getFriendShipStateEndpoint = this.endpoint + 'getFriendShipState';
   constructor(private httpService: HttpService) { }
+
+  suggestFriendsData: any;
+  getFriendsData: any;
+  getUserLikesData: any;
 
   register() {
     return this.httpService.get(this.registerEndpoint);
@@ -42,7 +47,10 @@ export class UserService {
   }
 
   getFriends() {
-    return this.httpService.get(this.getFriendsEndpoint);
+    return this.httpService.get(this.getFriendsEndpoint).pipe(map(res => {
+      this.getFriendsData = res;
+      return res;
+    }));
   }
 
   acceptFriend(userId: string) {
@@ -61,8 +69,11 @@ export class UserService {
     return this.httpService.post(this.updateUserInfoEndpoint, model);
   }
 
-  suggestFriends() {
-    return this.httpService.get(this.suggestFriendsEndpoint);
+  suggestFriends(paginationModel: any) {
+    return this.httpService.post(this.suggestFriendsEndpoint, paginationModel).pipe(map(res => {
+      this.suggestFriendsData = res;
+      return res;
+    }));
   }
 
   likeUser(userId: string) {
@@ -70,7 +81,10 @@ export class UserService {
   }
 
   getUserLikes() {
-    return this.httpService.get(`${this.getUserLikesEndpoint}`);
+    return this.httpService.get(`${this.getUserLikesEndpoint}`).pipe(map(res => {
+      this.getUserLikesData = res;
+      return res;
+    }));
   }
 
   getFriendShipState(userId: string) {

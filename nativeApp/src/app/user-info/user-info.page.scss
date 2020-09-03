@@ -1,18 +1,52 @@
 .card {
     position: relative;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: auto;
     text-align: center;
     font-family: arial;
-    height: 100%;
     h3 {
         margin-top: 0;
         margin-bottom: 0;
     }
 }
 
-.chat {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+ion-col.card-col {
+    padding: 0;
+    ion-item-divider {
+        padding: 0;
+    }
+}
+
+ion-card {
+    margin: 0;
+    margin-top: 6px;
+    border: none;
+    border-radius: unset;
+    box-shadow: none;
+    span {
+        position: absolute;
+        top: 210px;
+        left: 0;
+        padding: 0 5px;
+        color: white;
+        opacity: 0.8;
+    }
+    ion-card-subtitle {
+        ion-avatar {
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
+        }
+    }
+    ion-card-content {
+        padding-top: 0;
+        ion-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+ion-card-content ion-icon {
+    margin-right: 0;
+    font-size: 21px;
 }

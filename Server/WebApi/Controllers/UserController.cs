@@ -139,10 +139,10 @@ namespace WebApi.Controllers
         /// Suggest Friends
         /// </summary>
         /// <returns></returns>
-        [HttpGet("SuggestFriends")]
-        public async Task<IActionResult> SuggestFriends()
+        [HttpPost("SuggestFriends")]
+        public async Task<IActionResult> SuggestFriends([FromBody] PagingationRequestModel model)
         {
-            var result = await _userService.SuggestFriends();
+            var result = await _userService.SuggestFriends(model);
             return Ok(result);
         }
 

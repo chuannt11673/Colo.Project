@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: FriendsPage,
     resolve: {
-      friends: FriendsResolver
+      data: FriendsResolver
     }
   }
 ];
