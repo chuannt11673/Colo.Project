@@ -16,8 +16,8 @@ export class FriendsPage implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.friends = data.data;
+    this.userService.getFriends().subscribe(res => {
+      this.friends = res;
     });
   }
 

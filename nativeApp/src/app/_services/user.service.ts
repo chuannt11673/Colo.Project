@@ -22,9 +22,6 @@ export class UserService {
   private getFriendShipStateEndpoint = this.endpoint + 'getFriendShipState';
   constructor(private httpService: HttpService) { }
 
-  suggestFriendsData: any;
-  getFriendsData: any;
-  getUserLikesData: any;
 
   register() {
     return this.httpService.get(this.registerEndpoint);
@@ -47,10 +44,7 @@ export class UserService {
   }
 
   getFriends() {
-    return this.httpService.get(this.getFriendsEndpoint).pipe(map(res => {
-      this.getFriendsData = res;
-      return res;
-    }));
+    return this.httpService.get(this.getFriendsEndpoint);
   }
 
   acceptFriend(userId: string) {
@@ -70,10 +64,7 @@ export class UserService {
   }
 
   suggestFriends(paginationModel: any) {
-    return this.httpService.post(this.suggestFriendsEndpoint, paginationModel).pipe(map(res => {
-      this.suggestFriendsData = res;
-      return res;
-    }));
+    return this.httpService.post(this.suggestFriendsEndpoint, paginationModel);
   }
 
   likeUser(userId: string) {
@@ -81,10 +72,7 @@ export class UserService {
   }
 
   getUserLikes() {
-    return this.httpService.get(`${this.getUserLikesEndpoint}`).pipe(map(res => {
-      this.getUserLikesData = res;
-      return res;
-    }));
+    return this.httpService.get(`${this.getUserLikesEndpoint}`);
   }
 
   getFriendShipState(userId: string) {

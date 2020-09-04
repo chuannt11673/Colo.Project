@@ -6,7 +6,7 @@
         </ion-buttons>
         <ion-chip *ngIf="user" style="background: none;" (click)="userInfo()">
             <ion-avatar>
-                <img [src]="user.avatar">
+                <img [src]="user.avatar | imageUrl">
             </ion-avatar>
             <ion-label>{{user.email}}</ion-label>
         </ion-chip>
@@ -22,7 +22,7 @@
                 <li class="clearfix" *ngFor="let message of chatHistory.items">
                     <div class="message-data" [ngClass]="{'align-right': message.isMyself}">
                         <span class="message-data-name">
-                            <img [src]="message.isMyself ? '/assets/SVG/kidaha-01.svg' : user.avatar" style="width: 13vw;">
+                            <img [src]="message.isMyself ? '/assets/SVG/kidaha-01.svg' : user.funnyIcon" style="width: 13vw;">
                         </span>
                     </div>
                     <div class="message" [ngClass]="{'other-message float-right': message.isMyself, 'my-message': !message.isMyself, 'bg-transparent': message.hasImage}" [innerHtml]="message.message | safeHtml"></div>

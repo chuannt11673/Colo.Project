@@ -62,5 +62,7 @@
     "notification_title": "Thông báo",
     "notification_no_records": "Chưa có thông báo nào",
 
-    "create_post_editable_placeholder": "Bạn đang nghĩ gì...?"
+    "create_post_editable_placeholder": "Bạn đang nghĩ gì...?",
+    "more_update_avatar": "Cập nhật ảnh đại diện thành công",
+    "more_update_cover": "Cập nhật ảnh nền thành công"
 }

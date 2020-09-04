@@ -11,7 +11,6 @@ import { IonicModule } from '@ionic/angular';
 import { FriendsPageRoutingModule } from './friends-routing.module';
 
 import { FriendsPage } from './friends.page';
-import { FriendsResolver } from './friends.resolver';
 
 @NgModule({
   imports: [
@@ -27,8 +26,7 @@ import { FriendsResolver } from './friends.resolver';
   ],
   providers: [
     WeatherForecastService,
-    UserService,
-    FriendsResolver
+    UserService
   ]
 })
 export class FriendsPageModule {}

@@ -15,7 +15,7 @@
         </ion-item-divider>
         <ion-item lines="none" *ngFor="let friend of friends" (click)="userInfo(friend)">
             <ion-avatar slot="start">
-                <img src="{{ friend.profileImage | imageUrl }}">
+                <img src="{{ friend.avatar | imageUrl }}">
             </ion-avatar>
             <ion-label>
                 <h3>{{friend.email}}</h3>

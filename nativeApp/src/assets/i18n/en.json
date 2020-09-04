@@ -64,5 +64,7 @@
     "notification_title": "Notification",
     "notification_no_records": "There is no notification",
 
-    "create_post_editable_placeholder": "What're you thinking...?"
+    "create_post_editable_placeholder": "What're you thinking...?",
+    "more_update_avatar": "Update avatar picture successfully",
+    "more_update_cover": "Update cover picture successfully"
 }

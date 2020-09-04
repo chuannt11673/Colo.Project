@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class PostService {
 
   constructor(private httpService: HttpService, private authService: AuthService) {
+    console.log('init postService')
   }
 
   private endpoint = 'api/posts/';
@@ -17,17 +18,11 @@ export class PostService {
   private getCommentsEndpoint = this.endpoint + 'getComments';
   private getPostsByUserEndpoint = this.endpoint + 'getPostsByUser';
 
-  getsData: any;
-
   gets(paginationModel: any) {
     return this.httpService.post(this.getEndpoint, paginationModel).pipe(map(res => {
-     
       res.items.map((item: any) => {
         item.isLiked = (item.likedUsers as any[]).findIndex(x => x.id == this.authService.userProfile.id) != -1;
       });
-
-      this.getsData = res;
-
       return res;
     }));
   }

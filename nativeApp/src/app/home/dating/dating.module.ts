@@ -1,5 +1,4 @@
 import { SignalRService } from './../../_services/signal-r.service';
-import { DatingResolver } from './dating.resolver';
 import { PipesModule } from './../../_core/pipes/pipes.module';
 import { UserService } from './../../_services/user.service';
 import { ComponentsModule } from 'src/app/_core/components/components.module';
@@ -24,8 +23,7 @@ import { DatingPage } from './dating.page';
   ],
   providers: [
     UserService,
-    SignalRService,
-    DatingResolver
+    SignalRService
   ],
   declarations: [DatingPage]
 })

@@ -1,7 +1,6 @@
 import { CommentPostModule } from './../../_core/modals/comment-post/comment-post.module';
 import { CreatePostModule } from './../../_core/modals/create-post/create-post.module';
 import { PipesModule } from './../../_core/pipes/pipes.module';
-import { DiaryResolver } from './diary.resolver';
 import { PostService } from './../../_services/post.service';
 import { ComponentsModule } from 'src/app/_core/components/components.module';
 import { NgModule } from '@angular/core';
@@ -26,8 +25,7 @@ import { DiaryPage } from './diary.page';
     CommentPostModule
   ],
   providers: [
-    PostService,
-    DiaryResolver
+    PostService
   ],
   declarations: [DiaryPage]
 })

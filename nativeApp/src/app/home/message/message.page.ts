@@ -14,8 +14,8 @@ export class MessagePage implements OnInit {
   constructor(private route: ActivatedRoute, private chatService: ChatService, private navController: NavController) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.messages = data.data;
+    this.chatService.getChatList().subscribe(res => {
+      this.messages = res;
     });
   }
 

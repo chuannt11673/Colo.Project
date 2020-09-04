@@ -1,8 +1,9 @@
+import { TranslateConfigService } from './../_core/services/translate-config.service';
 import { UserService } from './../_services/user.service';
 import { FileService } from './../_services/file.service';
 import { ImageReviewComponent } from './../_core/modals/image-review/image-review.component';
 import { Camera } from '@ionic-native/Camera/ngx';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController, ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../_core/services/auth.service';
 
@@ -135,12 +136,24 @@ export class UploadProfileActionSheet extends UploadFileActionSheet {
         public camera: Camera,
         public modalController: ModalController,
         public fileService: FileService, 
-        public userService: UserService) {
+        public userService: UserService,
+        public authService: AuthService,
+        public toastController: ToastController,
+        public translateConfigService: TranslateConfigService) {
         super(actionSheetController, camera, modalController, fileService);        
     }
 
     protected send(event: any, file: any) {
-        this.userService.updateUserProfileImage({ fileId: file.id }).subscribe(_ => {});
+        this.userService.updateUserProfileImage({ fileId: file.id }).subscribe(async fileModel => {
+            this.authService.userProfile.avatar = fileModel.url;
+
+            const toast = await this.toastController.create({
+                message: this.translateConfigService.text.more_update_avatar,
+                duration: 2000,
+                color: 'success'
+            });
+            toast.present();
+        });
     }
 }
 
@@ -152,11 +165,23 @@ export class UploadCoverActionSheet extends UploadFileActionSheet {
         public camera: Camera,
         public modalController: ModalController,
         public fileService: FileService, 
-        public userService: UserService) {
+        public userService: UserService,
+        public authService: AuthService,
+        public toastController: ToastController,
+        public translateConfigService: TranslateConfigService) {
         super(actionSheetController, camera, modalController, fileService);        
     }
 
     protected send(event: any, file: any) {
-        this.userService.updateUserCover({ fileId: file.id }).subscribe(_ => {});
+        this.userService.updateUserCover({ fileId: file.id }).subscribe(async fileModel => {
+            this.authService.userProfile.cover = fileModel.url;
+
+            const toast = await this.toastController.create({
+                message: this.translateConfigService.text.more_update_cover,
+                duration: 2000,
+                color: 'success'
+            });
+            toast.present();
+        });
     }
 }

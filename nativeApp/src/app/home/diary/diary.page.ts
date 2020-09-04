@@ -20,15 +20,16 @@ export class DiaryPage implements OnInit {
     public modalController: ModalController,
     public postService: PostService) { }
 
-  data: any = {};
+  data: any = {
+    items: []
+  };
   pageSize: number = 10;
   pageIndex: number = 1;
 
   @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-        this.data = data.data;
+    this.getData(() => {
     });
   }
 

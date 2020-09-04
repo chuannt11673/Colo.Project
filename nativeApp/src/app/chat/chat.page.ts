@@ -107,7 +107,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     .subscribe(user => {
       this.user = {
         ...user,
-        avatar: `/assets/SVG/kidaha-${kidahaIndex}.svg`
+        funnyIcon: `/assets/SVG/kidaha-${kidahaIndex}.svg`
       };
     });
   }

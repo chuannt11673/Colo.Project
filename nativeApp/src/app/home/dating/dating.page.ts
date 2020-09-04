@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { SignalRService } from './../../_services/signal-r.service';
 import { AuthService } from './../../_core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -26,19 +27,23 @@ export class DatingPage implements OnInit {
   pageSize: number = 10;
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.userLikes = data.data.userLikes;
+    let suggestFriends = this.userService.suggestFriends({ pageIndex: 1, pageSize: 10 });
+    let getUserLikes = this.userService.getUserLikes();
 
+    forkJoin({
+      suggestFriends: suggestFriends,
+      userLikes: getUserLikes
+    }).subscribe(res => {
+      this.userLikes = res.userLikes;
       this.data = {
-        ...data.data.suggestFriends,
-        items: data.data.suggestFriends.items.map((res: any) => {
+        ...res.suggestFriends,
+        items: res.suggestFriends.items.map((res: any) => {
           return {
             ...res,
             isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
           }
         })
       };
-
     });
   }
 
@@ -61,15 +66,22 @@ export class DatingPage implements OnInit {
   getData(callback: Function) {
     this.userService.suggestFriends({ pageSize: this.pageSize, pageIndex: this.pageIndex }).subscribe(data => {
 
+      let items = data.items.map(res => {
+        return {
+          ...res,
+          isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
+        }
+      });
+
       this.data = {
         ...data,
-        items: this.data.items.concat(data.items)
+        items: this.data.items.concat(items)
       };
-      
+
       callback();
     });
   }
-  
+
   loadData(event: any) {
     setTimeout(() => {
       this.pageIndex += 1;

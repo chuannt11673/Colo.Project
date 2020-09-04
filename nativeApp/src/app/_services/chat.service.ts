@@ -11,16 +11,11 @@ export class ChatService {
 
   constructor(private httpService: HttpService) { }
 
-  getChatListData: any;
-
   gets(model: any) {
     return this.httpService.post(this.getsEndpoint, model);
   }
 
   getChatList() {
-    return this.httpService.get(this.getChatListEndpoint).pipe(map(res => {
-      this.getChatListData = res;
-      return res;
-    }));
+    return this.httpService.get(this.getChatListEndpoint);
   }
 }
