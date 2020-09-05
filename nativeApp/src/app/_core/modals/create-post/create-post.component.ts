@@ -41,7 +41,7 @@ export class CreatePostComponent implements OnInit {
 
     let images = this.images.map(x => {
       return {
-        base64: x.src
+        base64: x.base64
       }
     });
 

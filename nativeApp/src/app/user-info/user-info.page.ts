@@ -58,6 +58,11 @@ export class UserInfoPage implements OnInit {
   addFriend() {
     this.userService.addFriend(this.user.id).subscribe(_ => {
       this.user.isFriend = true;
+      this.user.friendShip = {
+        state: this.userState.requested,
+        senderId: this.authService.userProfile.id,
+        receiverId: this.user.id
+      };
     });
   }
 

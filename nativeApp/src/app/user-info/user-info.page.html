@@ -29,9 +29,9 @@
             </ion-row>
         </section>
         <app-divider></app-divider>
-        <ion-card-content *ngIf="user.friendShip">
-            <p *ngIf="user.friendShip.state != userState.accepted && !isMe">{{translateConfigService.text.user_info_make_friend_title}}</p>
-            <ion-toolbar *ngIf="user.friendShip.state == userState.none && !isMe">
+        <ion-card-content>
+            <p *ngIf="(!user.friendShip || user.friendShip.state != userState.accepted) && !isMe">{{translateConfigService.text.user_info_make_friend_title}}</p>
+            <ion-toolbar *ngIf="!user.friendShip && !isMe">
                 <section>
                     <ion-row>
                         <ion-col></ion-col>
@@ -45,7 +45,7 @@
                     </ion-row>
                 </section>
             </ion-toolbar>
-            <ion-toolbar *ngIf="user.friendShip.state == userState.requested && user.friendShip.senderId == user.id && !isMe">
+            <ion-toolbar *ngIf="user.friendShip && user.friendShip.state == userState.requested && user.friendShip.senderId == user.id && !isMe">
                 <section>
                     <ion-row>
                         <ion-col></ion-col>
@@ -56,7 +56,7 @@
                     </ion-row>
                 </section>
             </ion-toolbar>
-            <ion-toolbar *ngIf="user.friendShip.state == userState.requested && user.friendShip.receiverId == user.id && !isMe">
+            <ion-toolbar *ngIf="user.friendShip && user.friendShip.state == userState.requested && user.friendShip.receiverId == user.id && !isMe">
                 <section>
                     <ion-row>
                         <ion-col></ion-col>
