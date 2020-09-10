@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Utilities;
 using Core.Entities;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;
 using IdentityServer4.Services;
@@ -44,65 +46,90 @@ namespace WebApplication.Controllers
         [AllowAnonymous]
         public IActionResult Challenge(string provider, string returnUrl = null)
         {
-            // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action("Callback", "External", new { ReturnUrl = returnUrl ?? Url.Action("Index", "Home") });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var callbackUrl = Url.Action("Callback", new { returnUrl });
 
-            return Challenge(properties, provider);
+            var props = new AuthenticationProperties
+            {
+                RedirectUri = callbackUrl,
+                Items =
+                {
+                    { "scheme", provider },
+                    { "returnUrl", returnUrl },
+                    { "prompt", "select_account" }
+                }
+            };
+
+            return Challenge(props, provider);
         }
 
         [HttpGet]
         public async Task<IActionResult> Callback(string returnUrl = null)
         {
-            // lookup our user and external provider info
-            var (user, provider, providerUserId) = await FindUserFromExternalProvider();
-
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            // delete temporary cookie used during external authentication
-            await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
-
-            // check if external login is in the context of an OIDC request
-            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true, context?.ClientId));
-
-            if (context != null)
+            var result = await HttpContext.AuthenticateAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            if (result?.Succeeded != true)
             {
-                if (await _clientStore.IsPkceClientAsync(context.ClientId))
-                {
-                    // if the client is PKCE then we assume it's native, so this change in how to
-                    // return the response is for better UX for the end user.
-                    return this.LoadingPage("Redirect", returnUrl);
-                }
+                throw new Exception("External authentication error");
             }
 
-            return Redirect(returnUrl);
-        }
+            // retrieve claims of the external user
+            var externalUser = result.Principal;
+            if (externalUser == null)
+            {
+                throw new Exception("External authentication error");
+            }
 
-        private async Task<Tuple<ApplicationUser, string, string>> FindUserFromExternalProvider()
-        {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            // retrieve claims of the external user
+            var claims = externalUser.Claims.ToList();
 
-            if (info == null)
-                throw new Exception("External login failed!");
+            // try to determine the unique id of the external user - the most common claim type for that are the sub claim and the NameIdentifier
+            // depending on the external provider, some other claim type might be used
+            var userIdClaim = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject);
+            if (userIdClaim == null)
+            {
+                userIdClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            }
+            if (userIdClaim == null)
+            {
+                throw new Exception("Unknown userid");
+            }
 
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            var userEmailClaim = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email);
+            if (userEmailClaim == null)
+            {
+                userEmailClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+            }
+            if (userEmailClaim == null)
+            {
+                throw new Exception("Unknown useremail");
+            }
 
+            var externalUserId = userIdClaim.Value;
+            var externalProvider = userIdClaim.Issuer;
+
+            var user = await _userManager.FindByLoginAsync(externalProvider, externalUserId);
             if (user == null)
             {
-                user = new ApplicationUser
-                {
-                    UserName = email,
-                    Email = email,
+                user = new ApplicationUser() {
+                    UserName = userEmailClaim.Value,
+                    Email = userEmailClaim.Value,
                     EmailConfirmed = true
                 };
 
                 await _userManager.CreateAsync(user);
-                await _userManager.AddLoginAsync(user, info);
+                await _userManager.AddLoginAsync(user, new UserLoginInfo(externalProvider, externalUserId, externalUserId));
             }
 
-            return new Tuple<ApplicationUser, string, string>(user, info.LoginProvider, info.ProviderKey);
+            await _signInManager.SignInAsync(user, new AuthenticationProperties());
+
+            await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+
+            // validate return URL and redirect back to authorization endpoint or a local page
+            if (_interaction.IsValidReturnUrl(returnUrl) || Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return Redirect("~/");
         }
     }
 }

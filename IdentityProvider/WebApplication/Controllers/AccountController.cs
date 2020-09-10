@@ -170,7 +170,7 @@ namespace WebApplication.Controllers
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
-            return Redirect(vm.PostLogoutRedirectUri);
+            return Redirect(vm.PostLogoutRedirectUri ?? "Login");
         }
 
         [HttpGet]

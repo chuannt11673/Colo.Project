@@ -1,5 +1,4 @@
 ﻿using IdentityServer4.Validation;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace Application.Services

@@ -5,6 +5,7 @@ using Core;
 using Core.Entities;
 using Elect.DI;
 using FluentValidation.AspNetCore;
+using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -38,9 +39,10 @@ namespace WebApplication
                 .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential();
 
-            services.AddAuthentication().AddGoogle("Google", options =>
+            services.AddAuthentication()
+            .AddGoogle("Google", options =>
             {
-                options.SignInScheme = IdentityConstants.ExternalScheme;
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                 options.ClientId = Configuration.GetSection("Google")["ClientId"];
                 options.ClientSecret = Configuration.GetSection("Google")["ClientSerect"];
             });
