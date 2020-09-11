@@ -65,7 +65,6 @@ export class DatingPage implements OnInit {
 
   getData(callback: Function) {
     this.userService.suggestFriends({ pageSize: this.pageSize, pageIndex: this.pageIndex }).subscribe(data => {
-
       let items = data.items.map(res => {
         return {
           ...res,
@@ -90,6 +89,16 @@ export class DatingPage implements OnInit {
         event.target.complete();
         if (!this.data.hasNextPage)
           event.target.disabled = true;
+      });
+    }, 500);
+  }
+  
+  doRefresh(event: any) {
+    setTimeout(() => {
+      this.pageIndex = 1;
+      this.data.items = [];
+      this.getData(() => {
+        event.target.complete();
       });
     }, 500);
   }

@@ -13,7 +13,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'https://webapplication20200905205313.azurewebsites.net/',
+  authority: 'http://localhost/RC/',
   client_id: 'webapp',
   client_secret: 'secret',
   popup_redirect_uri: 'http://localhost:8100/auth-callback',
@@ -25,7 +25,7 @@ export const clientSetting: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage })
 };
 
-export const httpEndpoint: string = 'https://webapi20200905211353.azurewebsites.net/';
+export const httpEndpoint: string = 'http://localhost/Api/';
 
 /*
  * For easier debugging in development mode, you can import the following file
