@@ -27,7 +27,7 @@
                     </ion-card-subtitle>
 
 
-                    <img *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
+                    <img style="max-height: 500px; width: 100%; object-fit: cover;" *ngFor="let fileModel of item.fileModels" [src]="fileModel.url | imageUrl" />
 
                     <ion-card-content>
                         <p [innerHTML]="item.content | safeHtml"></p>

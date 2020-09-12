@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 export class PostService {
 
   constructor(private httpService: HttpService, private authService: AuthService) {
-    console.log('init postService')
   }
 
   private endpoint = 'api/posts/';

@@ -26,6 +26,8 @@ export class HeaderComponent implements OnDestroy {
     this.subscription = this.signalRService.messageObservable.subscribe(res => {
       this.notifications.push(res);
     });
+
+    this.enableMore = false;
   }
 
   addFriend() {
