@@ -10,7 +10,7 @@ export const oidcGrantTypes = {
 }
 
 export const clientSetting: UserManagerSettings = {
-  authority: 'https://webapplication20200905205313.azurewebsites.net/',
+  authority: 'http://192.168.0.102/RC/',
   client_id: 'mobile',
   client_secret: 'secret',
   popup_redirect_uri: 'https://ionic-hats.com/auth-callback',
@@ -23,4 +23,4 @@ export const clientSetting: UserManagerSettings = {
   popupNavigator: new CordovaPopupNavigator()
 };
 
-export const httpEndpoint: string = 'https://webapi20200905211353.azurewebsites.net/';
+export const httpEndpoint: string = 'http://192.168.0.102/Api/';
