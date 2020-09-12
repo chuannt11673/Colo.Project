@@ -105,7 +105,7 @@ namespace WebApplication.Controllers
             var externalUserId = userIdClaim.Value;
             var externalProvider = userIdClaim.Issuer;
 
-            var user = await _userManager.FindByLoginAsync(externalProvider, externalUserId);
+            var user = await _userManager.FindByEmailAsync(userEmailClaim.Value);
             if (user == null)
             {
                 user = new ApplicationUser() {
