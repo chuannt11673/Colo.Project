@@ -12,6 +12,7 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace WebApplication.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IIdentityServerInteractionService _interactionService;
+        private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderHelper _emailSenderHelper;
 
         public AccountController(IIdentityServerInteractionService interaction,
             IClientStore clientStore,
@@ -36,7 +39,9 @@ namespace WebApplication.Controllers
             IEventService events,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IIdentityServerInteractionService interactionService)
+            IIdentityServerInteractionService interactionService,
+            IEmailSender emailSender,
+            IEmailSenderHelper emailSenderHelper)
         {
             _interaction = interaction;
             _clientStore = clientStore;
@@ -45,6 +50,8 @@ namespace WebApplication.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _interactionService = interactionService;
+            _emailSender = emailSender;
+            _emailSenderHelper = emailSenderHelper;
         }
 
         [HttpGet]
@@ -54,8 +61,9 @@ namespace WebApplication.Controllers
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
             AuthorizationRequest authorizationContext = await _interactionService.GetAuthorizationContextAsync(returnUrl);
-            
-            if (authorizationContext != null && needFilter) {
+
+            if (authorizationContext != null && needFilter)
+            {
                 var prompt = authorizationContext.Parameters["prompt"];
 
                 if (prompt == Prompts.Create)
@@ -184,7 +192,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(InputModel model)
         {
-           if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
             var user = new ApplicationUser
@@ -205,7 +213,41 @@ namespace WebApplication.Controllers
                 return View(model);
             }
 
+            var emailMessage = await _emailSenderHelper.GetRegisterUserEmailMessage(user.Id);
+            Task send = _emailSender.SendEmailAsync(model.Email, emailMessage.Subject, emailMessage.HtmlMessage);
+            send.RunBg();
+
             return RedirectToAction(nameof(Login), new { returnUrl = model.ReturnUrl, needFilter = false });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Confirm(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var result = await _userManager.ConfirmEmailAsync(user, token);
+
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = "Confirm email successfully";
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "User not found");
+            }
+
+            return View(new EmailConfirmModel());
         }
 
         private Task<InputModel> BuildInputModelAsync(string returnUrl)

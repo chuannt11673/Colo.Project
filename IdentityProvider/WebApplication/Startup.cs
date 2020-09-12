@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Application.IdentityServer4;
 using Application.Services;
+using Application.Utilities;
 using Core;
 using Core.Entities;
 using Elect.DI;
@@ -29,7 +30,9 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddIdentityServer()
                 .AddInMemoryApiResources(Config.ApiResources)
@@ -75,6 +78,9 @@ namespace WebApplication
                 else
                     throw new KeyNotFoundException();
             });
+
+            services.Configure<SmtpSettings>(Configuration.GetSection("Smtp"));
+            services.Configure<EmailTemplate>(Configuration.GetSection("EmailTemplate"));
 
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.Validations.InputModelValidator>());
