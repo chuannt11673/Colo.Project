@@ -15,3 +15,7 @@ ion-header {
         }
     }
 }
+
+.header-md::after {
+    content: none;
+}

@@ -13,9 +13,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./dating.page.scss'],
 })
 export class DatingPage implements OnInit {
-
-  data: any = {};
-  userLikes: any[];
+  
   constructor(public route: ActivatedRoute,
     public authService: AuthService,
     private signalRService: SignalRService,
@@ -25,6 +23,11 @@ export class DatingPage implements OnInit {
   @ViewChild('infiniteScroll') infiniteScroll: IonInfiniteScroll;
   pageIndex: number = 1;
   pageSize: number = 10;
+
+  data: any = {};
+  selectedUser: any;
+  userLikes: any[];
+  filterMode: string = 'Special';
 
   ngOnInit() {
     let suggestFriends = this.userService.suggestFriends({ pageIndex: 1, pageSize: 10 });
@@ -40,10 +43,14 @@ export class DatingPage implements OnInit {
         items: res.suggestFriends.items.map((res: any) => {
           return {
             ...res,
+            age: this.calculateAge(new Date(res.birthday)),
             isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
           }
         })
       };
+
+      if (this.data.items.length > 0)
+        this.selectedUser = this.data.items[0];
     });
   }
 
@@ -77,6 +84,9 @@ export class DatingPage implements OnInit {
         items: this.data.items.concat(items)
       };
 
+      if (this.data.items.length > 0)
+        this.selectedUser = this.data.items[0];
+
       callback();
     });
   }
@@ -103,6 +113,19 @@ export class DatingPage implements OnInit {
     }, 500);
   }
 
+  switchFilter() {
+    if (this.filterMode == 'Special') {
+      this.filterMode = 'Grid';
+    }
+    else {
+      this.filterMode = 'Special';
+    }
+  }
+
+  selectUser(user: any) {
+    this.selectedUser = user;
+  }
+
   private buildLikeUserModel(user: any) {
     let userProfile = this.authService.userProfile;
     return {
@@ -111,5 +134,11 @@ export class DatingPage implements OnInit {
       forAllUser: false,
       userId: user.id
     };
+  }
+
+  private calculateAge(birthday: Date) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 }

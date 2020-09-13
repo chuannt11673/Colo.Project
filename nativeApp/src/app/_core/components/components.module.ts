@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
   providers: [
     EmojiService,
     Keyboard,
-    Camera
+    Camera,
+    LocalNotifications 
   ]
 })
 export class ComponentsModule { }

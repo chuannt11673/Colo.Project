@@ -14,7 +14,7 @@
             <ion-button (click)="notify()">
                 <ion-icon slot="icon-only" color="light" name="notifications-outline">
                 </ion-icon>
-                <ion-badge *ngIf="notifications.length > 0" class="badge" color="danger">{{notifications.length}}</ion-badge>
+                <ion-badge *ngIf="notifications.length > 0 && false" class="badge" color="danger">{{notifications.length}}</ion-badge>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
