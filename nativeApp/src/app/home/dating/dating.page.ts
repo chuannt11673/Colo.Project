@@ -75,6 +75,7 @@ export class DatingPage implements OnInit {
       let items = data.items.map(res => {
         return {
           ...res,
+          age: this.calculateAge(new Date(res.birthday)),
           isLiked: this.userLikes.findIndex(x => x.receiverId == res.id) != -1
         }
       });

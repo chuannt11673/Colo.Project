@@ -33,6 +33,7 @@ namespace Application.Models
     {
         public Guid UserId { get; set; }
         public string UserEmail { get; set; }
+        public string Name { get; set; }
         public string Avatar { get; set; }
         public string Message { get; set; }
         public FileModel[] FileModels { get; set; }

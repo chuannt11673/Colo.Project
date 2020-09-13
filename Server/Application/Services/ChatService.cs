@@ -76,6 +76,7 @@ namespace Application.Services
             {
                 UserId = x.FromUserId == userId ? x.ToUserId : x.FromUserId,
                 UserEmail = x.FromUserId == userId ? x.ToUser.Email : x.FromUser.Email,
+                Name = x.FromUserId == userId ? x.ToUser.Name : x.FromUser.Name,
                 Avatar = x.FromUserId == userId ? x.ToUser.Avatar.File.Url : x.FromUser.Avatar.File.Url,
                 Message = x.Message,
                 FileModels = x.ChatFiles.Select(file => file.MapTo<FileModel>()).ToArray()

@@ -13,10 +13,15 @@
 </ion-header>
 <ion-content>
     <div class="card">
-        <img src="{{user.cover | imageUrl}}" alt="John" style="width:100%;height:25vh;object-fit:cover;">
+        <img class="cover" [src]="user.cover | imageUrl">
+        <div class="avatar">
+            <ion-fab-button class="btn-avatar" size="large">
+                <img [src]="user.avatar | imageUrl">
+            </ion-fab-button>
+        </div>
         <h3>{{user?.name}}</h3>
         <p>{{user?.email}}</p>
-        <section>
+        <!-- <section>
             <ion-row>
                 <ion-col></ion-col>
                 <ion-col size="5">
@@ -27,7 +32,7 @@
                 </ion-col>
                 <ion-col></ion-col>
             </ion-row>
-        </section>
+        </section> -->
         <app-divider></app-divider>
         <ion-card-content>
             <p *ngIf="(!user.friendShip || user.friendShip.state != userState.accepted) && !isMe">{{translateConfigService.text.user_info_make_friend_title}}</p>
