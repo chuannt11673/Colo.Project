@@ -3,13 +3,14 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-item *ngFor="let message of messages" (click)="chat(message.userEmail)">
+    <ion-item *ngFor="let message of messages" (click)="chat(message)">
         <ion-avatar slot="start">
             <img src="{{message.avatar | imageUrl}}">
         </ion-avatar>
         <ion-label>
             <h3>{{message.name}}</h3>
-            <p [innerHtml]="message.message | safeHtml"></p>
+            <span [innerHtml]="message.message | safeHtml"></span>
+            <img *ngIf="message.isNew" src="/assets/cloud/icons8-speech-bubble.svg" class="new">
         </ion-label>
     </ion-item>
 </ion-content>

@@ -12,7 +12,6 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
   notifications: any[] = [];
 
   @Input() enableChatbubble: boolean = false;
@@ -28,17 +27,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private eventName: string = 'Notification';
   
   ngOnInit() {
-    this.signalRService.registerSignalEvents(this.eventName);
-    this.subscription = this.signalRService.messageObservable.subscribe(res => {
-      this.notifications.push(res);
+    this.signalRService.registerSignalEvents(this.eventName, (data) => {
+      this.notifications.push(data);
       this.localNotifications.schedule({
-        id: res.id,
+        id: data.id,
         title: '',
         text: 'Someone liked you',
-        icon: '/assets/SVG/icons8-heart.svg'
+        icon: 'https://img.icons8.com/bubbles/50/000000/bookmark.png'
       });
     });
-
     this.enableMore = false;
   }
 
@@ -52,6 +49,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.signalRService.turnOffEvents(this.eventName);
-    this.subscription.unsubscribe();
   }
 }

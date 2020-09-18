@@ -10,7 +10,7 @@
     <ion-list>
         <ion-item *ngFor="let notification of notifications" (click)="onClick(notification)">
             <ion-label [innerHtml]="notification.message | safeHtml"></ion-label>
-            <img *ngIf="notification.type == 2" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 15vw;">
+            <img *ngIf="notification.type == 2" src="/assets/cloud/icons8-heart.svg" alt="" style="width: 15vw;">
         </ion-item>
         <ion-item *ngIf="!notifications || notifications.length == 0" class="text-center" lines="none">
             <ion-label>{{translateConfigService.text.notification_no_records}}</ion-label>

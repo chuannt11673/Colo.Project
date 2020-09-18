@@ -6,7 +6,7 @@
         <ion-title></ion-title>
         <ion-buttons slot="end">
             <ion-button *ngIf="!isMe" (click)="chat()">
-                <img src="/assets/SVG/icons8-speech-bubble.svg" style="width: 3.2em;" /> Chat
+                <img src="/assets/cloud/icons8-speech-bubble.svg" style="width: 3.2em;" /> Chat
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -98,11 +98,11 @@
                         <p [innerHTML]="item.content | safeHtml"></p>
                         <ion-buttons>
                             <ion-button (click)="like(item)">
-                                <img *ngIf="!item.isLiked" src="/assets/SVG/icons8-heart-2light.svg" alt="" style="width: 2.4em;">
-                                <img *ngIf="item.isLiked" src="/assets/SVG/icons8-heart.svg" alt="" style="width: 3em;">
+                                <img *ngIf="!item.isLiked" src="/assets/hand-drawn/icons8-heart.svg" alt="" style="width: 2.4em;">
+                                <img *ngIf="item.isLiked" src="/assets/cloud/icons8-heart.svg" alt="" style="width: 3em;">
                             </ion-button>
                             <ion-button (click)="commentPost(item)">
-                                <img src="/assets/SVG/icons8-comments.svg" alt="" style="width: 2.1em;">
+                                <img src="/assets/doodle/icons8-comments.svg" alt="" style="width: 2.1em;">
                             </ion-button>
                         </ion-buttons>
                     </ion-card-content>

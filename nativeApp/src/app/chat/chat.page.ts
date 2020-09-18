@@ -19,7 +19,6 @@ import { ImageReviewComponent } from '../_core/modals/image-review/image-review.
 })
 export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
 
-  private subscription: Subscription;
   private ionContent: any;
   currentUser: any;
   user: any;
@@ -39,26 +38,23 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     private navController: NavController) { }
 
   private eventName: string = "Message";
-  
+
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
     this.getUser();
 
-    this.signalRService.registerSignalEvents(this.eventName);
-    this.subscription = this.signalRService.messageObservable
-      .pipe(map(res => {
-        let obj = JSON.parse(res);
-        return {
-          userEmail: obj.UserEmail,
-          isMyself: obj.UserEmail == this.currentUser.email,
-          message: obj.Message,
-          time: new Date()
-        };
-      }))
-      .subscribe(res => {
-        this.chatHistory.items.push(res);
-        this.scrollToBottom();
-      });
+    this.signalRService.registerSignalEvents(this.eventName, (data) => {
+      let obj = JSON.parse(data);
+      let res = {
+        userEmail: obj.UserEmail,
+        isMyself: obj.UserEmail == this.currentUser.email,
+        message: obj.Message,
+        time: new Date()
+      };
+
+      this.chatHistory.items.push(res);
+      this.scrollToBottom();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -97,21 +93,21 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
 
     return res;
   }
- 
+
   private getUser() {
     let email = this.route.snapshot.paramMap.get('email');
     let kidahaIndex = this.getRandomArbitrary(2, 12);
     this.userService.searchEmail(email)
-    .pipe(map(res => {
-      this.getChatHistory(res.id, () => this.scrollToBottom());
-      return res;
-    }))
-    .subscribe(user => {
-      this.user = {
-        ...user,
-        funnyIcon: `/assets/SVG/kidaha-${kidahaIndex}.svg`
-      };
-    });
+      .pipe(map(res => {
+        this.getChatHistory(res.id, () => this.scrollToBottom());
+        return res;
+      }))
+      .subscribe(user => {
+        this.user = {
+          ...user,
+          funnyIcon: `/assets/characters/kidaha-${kidahaIndex}.svg`
+        };
+      });
   }
 
   send(event: any, files: any[] = []) {
@@ -173,14 +169,14 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
 
     return res.toString().length > 1 ? res : `0${res}`;
   }
-  
+
   private scrollToBottom() {
     setTimeout(() => {
       this.ionContent.scrollToBottom();
     }, 1);
   }
 
-  private uploadPicture(message:string, base64: string) {
+  private uploadPicture(message: string, base64: string) {
     this.fileService.uploadMultiple([{ base64: base64 }]).subscribe(res => {
       this.send({ message: message }, res);
     });
@@ -188,6 +184,5 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.signalRService.turnOffEvents(this.eventName);
-    this.subscription.unsubscribe();
   }
 }

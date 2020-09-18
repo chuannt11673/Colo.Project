@@ -13,17 +13,14 @@ export class SignalRService {
   private sendNotificationEndpoint = this.endpoint + '/sendNotification';
   private getNotificationsEndpoint = this.endpoint + '/getNotifications';
 
-  private messageSubject: Subject<any> = new Subject();
-  messageObservable: Observable<any> = this.messageSubject.asObservable();
-
   constructor(private authService: AuthService, private httpService: HttpService) {
     this.buildConnection();
     this.startConnection();
   }
 
-  registerSignalEvents(eventName: string) {
+  registerSignalEvents(eventName: string, callback: Function) {
     this.hubConnection.on(eventName, (data: any) => {
-      this.messageSubject.next(data);
+      callback(data);
     });
   }
 
