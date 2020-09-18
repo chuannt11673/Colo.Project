@@ -37,12 +37,14 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
     private datePipe: DatePipe,
     private modalController: ModalController,
     private navController: NavController) { }
+
+  private eventName: string = "Message";
   
   ngOnInit() {
     this.currentUser = this.authService.getUserProfile();
     this.getUser();
 
-    this.signalRService.registerSignalEvents('Message');
+    this.signalRService.registerSignalEvents(this.eventName);
     this.subscription = this.signalRService.messageObservable
       .pipe(map(res => {
         let obj = JSON.parse(res);
@@ -185,6 +187,7 @@ export class ChatPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    this.signalRService.turnOffEvents(this.eventName);
     this.subscription.unsubscribe();
   }
 }

@@ -27,6 +27,10 @@ export class SignalRService {
     });
   }
 
+  turnOffEvents(eventName: string) {
+    this.hubConnection.off(eventName);
+  }
+
   sendUser(userId: string, message: string, files: any[]) {
     return this.httpService.post(`${this.sendUserEndpoint}/${userId}`, { message: message, fileModels: files });
   }

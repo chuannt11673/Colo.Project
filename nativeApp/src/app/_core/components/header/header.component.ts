@@ -24,9 +24,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private navController: NavController,
     private signalRService: SignalRService,
     private localNotifications: LocalNotifications) { }
+
+  private eventName: string = 'Notification';
   
   ngOnInit() {
-    this.signalRService.registerSignalEvents('Notification');
+    this.signalRService.registerSignalEvents(this.eventName);
     this.subscription = this.signalRService.messageObservable.subscribe(res => {
       this.notifications.push(res);
       this.localNotifications.schedule({
@@ -49,6 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.signalRService.turnOffEvents(this.eventName);
     this.subscription.unsubscribe();
   }
 }
