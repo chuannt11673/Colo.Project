@@ -12,7 +12,7 @@ step to build sdk
 
 running on virtual device
 - ionic cordova emulate android --livereload
-- ionic cordova run android --prod -l
+- ionic cordova run android -l
 
 if you would like to use debug mode
 - ionic cordova run android --prod --device

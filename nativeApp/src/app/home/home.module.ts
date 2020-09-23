@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../_core/components/components.module';
 import { SignalRService } from './../_services/signal-r.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,8 @@ import { HomePageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    ComponentsModule
   ],
   declarations: [
     HomePage

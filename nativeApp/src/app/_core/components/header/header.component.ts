@@ -2,7 +2,6 @@ import { SignalRService } from './../../../_services/signal-r.service';
 import { NavController } from '@ionic/angular';
 import { TranslateConfigService } from './../../services/translate-config.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
@@ -27,13 +26,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private eventName: string = 'Notification';
   
   ngOnInit() {
-    this.signalRService.registerSignalEvents(this.eventName, (data) => {
+    this.signalRService.registerSignalEvents(this.eventName, (data: any) => {
       this.notifications.push(data);
       this.localNotifications.schedule({
         id: data.id,
-        title: '',
-        text: 'Someone liked you',
-        icon: 'https://img.icons8.com/bubbles/50/000000/bookmark.png'
+        title: 'Notification',
+        text: `You received a like!`,
+        smallIcon: 'res://ic_action_remove',
+        icon: 'res://icon'
       });
     });
     this.enableMore = false;
